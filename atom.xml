@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://lszdawn.github.io</id>
     <title>Gridea</title>
-    <updated>2020-06-18T12:37:05.791Z</updated>
+    <updated>2020-06-18T12:47:57.134Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://lszdawn.github.io"/>
     <link rel="self" href="https://lszdawn.github.io/atom.xml"/>
@@ -10,6 +10,16 @@
     <logo>https://lszdawn.github.io/images/avatar.png</logo>
     <icon>https://lszdawn.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[《计算机系统要素》实验和笔记]]></title>
+        <id>https://lszdawn.github.io/post/lesslessji-suan-ji-xi-tong-yao-su-greatergreater-shi-yan-he-bi-ji/</id>
+        <link href="https://lszdawn.github.io/post/lesslessji-suan-ji-xi-tong-yao-su-greatergreater-shi-yan-he-bi-ji/">
+        </link>
+        <updated>2020-06-18T12:41:51.000Z</updated>
+        <content type="html"><![CDATA[<p>从零开始构建计算机，<a href="https://book.douban.com/subject/1998341/?from=tag_all">豆瓣链接</a><br>
+前5章属于硬件知识，大概过了一下，重点放在后面的汇编器、虚拟机、编译器、操作系统章节。因为平时的工作还没深入到硬件底层，暂时就不看了。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[测试插入代码]]></title>
         <id>https://lszdawn.github.io/post/ce-shi-cha-ru-dai-ma/</id>
