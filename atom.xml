@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://lszdawn.github.io</id>
     <title>Gridea</title>
-    <updated>2020-06-18T11:52:37.172Z</updated>
+    <updated>2020-06-18T11:59:16.485Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://lszdawn.github.io"/>
     <link rel="self" href="https://lszdawn.github.io/atom.xml"/>
@@ -17,8 +17,8 @@
         </link>
         <updated>2020-06-18T11:40:09.000Z</updated>
         <content type="html"><![CDATA[<p>搭博客这事真的是一波三折。<br>
-1：之前买了个阿里云服务器，域名都配好了，TMD要备案，懒得弄，于是自然而然的无法访问。http://www.boatrain.top/，http因为未加密，很容易被劫持，识别到未备案，就不让你访问了。于是开了https：https://www.boatrain.top/，但还是时不时抽风，算是废了。</p>
-<p>2：后来又发现GitHub Pages不错：https://sspai.com/post/54608，怎奈Ruby源太鸡儿慢了，换了Ruby源，终于搭好了，但还是不尽如人意。</p>
+1：之前买了个阿里云服务器，域名都配好了，TMD要备案，懒得弄，于是自然而然的无法访问。<a href="http://www.boatrain.top/">http访问</a>，http因为未加密，很容易被劫持，识别到未备案，就不让你访问了。于是开了https：<a href="https://www.boatrain.top/">https访问</a>，但还是时不时抽风，算是废了。</p>
+<p>2：后来又发现GitHub Pages不错：<a href="https://sspai.com/post/54608">少数派文章</a>，怎奈Ruby源太鸡儿慢了，换了Ruby源，终于搭好了，但还是不尽如人意。</p>
 <p>3：不过少数派的这篇文章提到了Gridea：<br>
 <img src="https://lszdawn.github.io/post-images/1592481015374.jpg" alt="" loading="lazy"><br>
 赶紧试用一下，不错，傻瓜式操作，就它了。</p>
