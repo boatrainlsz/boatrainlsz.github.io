@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://lszdawn.github.io</id>
     <title>Gridea</title>
-    <updated>2020-06-18T12:49:56.832Z</updated>
+    <updated>2020-06-18T13:09:36.599Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://lszdawn.github.io"/>
     <link rel="self" href="https://lszdawn.github.io/atom.xml"/>
@@ -18,6 +18,10 @@
         <updated>2020-06-18T12:41:51.000Z</updated>
         <content type="html"><![CDATA[<p>从零开始构建计算机，<a href="https://book.douban.com/subject/1998341/?from=tag_all">豆瓣链接</a><br>
 前5章属于硬件知识，大概过了一下，重点放在后面的汇编器、虚拟机、编译器、操作系统章节。因为平时的工作还没深入到硬件底层，暂时就不看了。</p>
+<h3 id="第6章-汇编编译器">第6章 汇编编译器</h3>
+<h4 id="1语言规范">1.语言规范</h4>
+<p>二进制代码文件名后缀为.hack，汇编代码文件名后缀为.asm。那么汇编器的功能就是将hack文件翻译成asm文件。其中：<br>
+ asm文件由文本行组成，每一行由16和0/1的ASCII码组成。当被加载进内存执行时，第n行将被存储到地址为n的指令内存。</p>
 ]]></content>
     </entry>
     <entry>
