@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://lszdawn.github.io</id>
+    <id>https://boatrain.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-06-19T08:01:36.598Z</updated>
+    <updated>2020-06-19T08:52:32.316Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://lszdawn.github.io"/>
-    <link rel="self" href="https://lszdawn.github.io/atom.xml"/>
+    <link rel="alternate" href="https://boatrain.github.io"/>
+    <link rel="self" href="https://boatrain.github.io/atom.xml"/>
     <subtitle>吾生也有涯，而知也无涯</subtitle>
-    <logo>https://lszdawn.github.io/images/avatar.png</logo>
-    <icon>https://lszdawn.github.io/favicon.ico</icon>
+    <logo>https://boatrain.github.io/images/avatar.png</logo>
+    <icon>https://boatrain.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 画船听雨眠</rights>
     <entry>
         <title type="html"><![CDATA[神作也免不了烂尾的结局]]></title>
-        <id>https://lszdawn.github.io/post/shen-zuo-ye-mian-bu-liao-lan-wei-de-jie-ju/</id>
-        <link href="https://lszdawn.github.io/post/shen-zuo-ye-mian-bu-liao-lan-wei-de-jie-ju/">
+        <id>https://boatrain.github.io/post/shen-zuo-ye-mian-bu-liao-lan-wei-de-jie-ju/</id>
+        <link href="https://boatrain.github.io/post/shen-zuo-ye-mian-bu-liao-lan-wei-de-jie-ju/">
         </link>
         <updated>2020-06-19T06:12:42.000Z</updated>
         <content type="html"><![CDATA[<p>今天看了纯黑的《最后生还者2》攻略，差点没把自己气死。我是没想到乔尔会死得这么惨，正如<a href="https://jp.ign.com/the-last-of-us-2/44388/review/the-last-of-us-part-ii">日本IGN的评价</a>：<br>
-<img src="https://lszdawn.github.io/post-images/1592547584875.jpg" alt="" loading="lazy"><br>
+<img src="https://boatrain.github.io/post-images/1592547584875.jpg" alt="" loading="lazy"><br>
 与前一部的割裂太严重了，谁能想到一开局乔尔就会以这种屈辱的方式死去，唯一合理的解释就是编剧真的是脑子里有屎。<br>
 有趣的是，除了日本IGN骨头硬之外，其他的媒体给出的评分都是出奇的高，具体可见：https://www.gcores.com/articles/125084，真的是把它吹上了天。但是群众的眼睛是雪亮的，看看<a href="https://www.reddit.com/r/TheLastOfUs2/comments/hbq8jh/so_that_was_a_fucking_lie/">reddit上面的评价</a>就知道美末2引起了多大的公愤：<br>
-<img src="https://lszdawn.github.io/post-images/1592548126767.jpg" alt="" loading="lazy"></p>
+<img src="https://boatrain.github.io/post-images/1592548126767.jpg" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[《计算机系统要素》实验和笔记]]></title>
-        <id>https://lszdawn.github.io/post/lesslessji-suan-ji-xi-tong-yao-su-greatergreater-shi-yan-he-bi-ji/</id>
-        <link href="https://lszdawn.github.io/post/lesslessji-suan-ji-xi-tong-yao-su-greatergreater-shi-yan-he-bi-ji/">
+        <id>https://boatrain.github.io/post/lesslessji-suan-ji-xi-tong-yao-su-greatergreater-shi-yan-he-bi-ji/</id>
+        <link href="https://boatrain.github.io/post/lesslessji-suan-ji-xi-tong-yao-su-greatergreater-shi-yan-he-bi-ji/">
         </link>
         <updated>2020-06-18T12:41:51.000Z</updated>
         <content type="html"><![CDATA[<p>从零开始构建计算机，<a href="https://book.douban.com/subject/1998341/?from=tag_all">豆瓣链接</a><br>
@@ -39,8 +39,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[测试插入代码]]></title>
-        <id>https://lszdawn.github.io/post/ce-shi-cha-ru-dai-ma/</id>
-        <link href="https://lszdawn.github.io/post/ce-shi-cha-ru-dai-ma/">
+        <id>https://boatrain.github.io/post/ce-shi-cha-ru-dai-ma/</id>
+        <link href="https://boatrain.github.io/post/ce-shi-cha-ru-dai-ma/">
         </link>
         <updated>2020-06-18T12:34:36.000Z</updated>
         <content type="html"><![CDATA[<pre><code class="language-java">package thread_safe;
@@ -69,15 +69,15 @@ public class SecurityManager extends java.lang.SecurityManager {
     </entry>
     <entry>
         <title type="html"><![CDATA[博客搭好了]]></title>
-        <id>https://lszdawn.github.io/post/bo-ke-da-hao-liao/</id>
-        <link href="https://lszdawn.github.io/post/bo-ke-da-hao-liao/">
+        <id>https://boatrain.github.io/post/bo-ke-da-hao-liao/</id>
+        <link href="https://boatrain.github.io/post/bo-ke-da-hao-liao/">
         </link>
         <updated>2020-06-18T11:40:09.000Z</updated>
         <content type="html"><![CDATA[<p>搭博客这事真的是一波三折。<br>
 1：之前买了个阿里云服务器，域名都配好了，TMD要备案，懒得弄，于是自然而然的无法访问。<a href="http://www.boatrain.top/">http访问</a>，http因为未加密，很容易被劫持，识别到未备案，就不让你访问了。于是开了https：<a href="https://www.boatrain.top/">https访问</a>，但还是时不时抽风，算是废了。</p>
 <p>2：后来又发现GitHub Pages不错：<a href="https://sspai.com/post/54608">少数派文章</a>，怎奈Ruby源太鸡儿慢了，换了Ruby源，终于搭好了，但还是不尽如人意。</p>
 <p>3：不过少数派的这篇文章提到了Gridea：<br>
-<img src="https://lszdawn.github.io/post-images/1592481015374.jpg" alt="" loading="lazy"><br>
+<img src="https://boatrain.github.io/post-images/1592481015374.jpg" alt="" loading="lazy"><br>
 赶紧试用一下，不错，傻瓜式操作，就它了。</p>
 ]]></content>
     </entry>
