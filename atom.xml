@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-06-19T09:38:02.064Z</updated>
+    <updated>2020-06-20T12:40:41.315Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -10,6 +10,15 @@
     <logo>https://boatrainlsz.github.io/images/avatar.png</logo>
     <icon>https://boatrainlsz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 画船听雨眠</rights>
+    <entry>
+        <title type="html"><![CDATA[《x86汇编语言:从实模式到保护模式》笔记]]></title>
+        <id>https://boatrainlsz.github.io/post/lesslessx86-hui-bian-yu-yan-cong-shi-mo-shi-dao-bao-hu-mo-shi-greatergreater-bi-ji/</id>
+        <link href="https://boatrainlsz.github.io/post/lesslessx86-hui-bian-yu-yan-cong-shi-mo-shi-dao-bao-hu-mo-shi-greatergreater-bi-ji/">
+        </link>
+        <updated>2020-06-20T12:23:32.000Z</updated>
+        <content type="html"><![CDATA[<p><a href="https://book.douban.com/subject/20492528//">豆瓣链接</a></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[神作也免不了烂尾的结局]]></title>
         <id>https://boatrainlsz.github.io/post/shen-zuo-ye-mian-bu-liao-lan-wei-de-jie-ju/</id>
