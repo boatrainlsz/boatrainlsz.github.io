@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-06-20T12:41:02.808Z</updated>
+    <updated>2020-06-20T13:29:59.342Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -16,7 +16,9 @@
         <link href="https://boatrainlsz.github.io/post/lesslessx86-hui-bian-yu-yan-cong-shi-mo-shi-dao-bao-hu-mo-shi-greatergreater-bi-ji/">
         </link>
         <updated>2020-06-20T12:23:32.000Z</updated>
-        <content type="html"><![CDATA[<p><a href="https://book.douban.com/subject/20492528//">豆瓣链接</a></p>
+        <content type="html"><![CDATA[<p><a href="https://book.douban.com/subject/20492528//">豆瓣链接</a><br>
+<a href="">随书的小工具</a><br>
+<a href="http://www.ruanyifeng.com/blog/2015/09/0x7c00.html">为什么主引导记录的内存地址是0x7C00？</a></p>
 ]]></content>
     </entry>
     <entry>
