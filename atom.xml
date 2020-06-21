@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-06-21T08:03:00.639Z</updated>
+    <updated>2020-06-21T13:13:23.912Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -18,6 +18,22 @@
         <updated>2020-06-20T12:23:32.000Z</updated>
         <content type="html"><![CDATA[<p><a href="https://book.douban.com/subject/20492528//">豆瓣链接</a><br>
 <a href="https://drive.google.com/drive/folders/17lqWpm3Zu3xuTSrQKhj2--r-lqqQzQhF?usp=sharing">随书的小工具</a></p>
+<h3 id="第2章-处理器-内存和指令">第2章 处理器、内存和指令</h3>
+<h3 id="21-内存的分段">2.1 内存的分段</h3>
+<p><strong>段地址+偏移地址=物理地址</strong></p>
+<h3 id="22-8086cpu对分段内存的特殊处理">2.2 8086CPU对分段内存的特殊处理</h3>
+<p>前置知识：<strong>CPU的位数</strong>，比如8086是16位的CPU，16位指的是：</p>
+<ol>
+<li>ALU一次最多能处理16位的数据</li>
+<li>寄存器最大宽度为16位</li>
+<li>ALU与寄存器之间的通路为16位，如下图标注：<br>
+<img src="https://boatrainlsz.github.io/post-images/1592744460954.jpg" alt="" loading="lazy"><br>
+8086由于历史原因，CPU是16位的，但地址总线是20位的，如果按照2.1中的公式，两个16位的地址相加是得不到20位的地址的。<br>
+于是8086采用了<strong>段地址*16+偏移地址=物理地址</strong>的方法。<br>
+关于内存的分段和8086CPU对分段的特殊处理，<a href="https://book.douban.com/subject/25726019//">王爽的汇编语言</a>一书给出了两个形象的比喻：<br>
+<img src="https://boatrainlsz.github.io/post-images/1592745100667.jpg" alt="" loading="lazy"><br>
+<img src="https://boatrainlsz.github.io/post-images/1592745147135.jpg" alt="" loading="lazy"></li>
+</ol>
 <h3 id="第4章-虚拟机的安装与使用">第4章 虚拟机的安装与使用</h3>
 <p><a href="http://www.ruanyifeng.com/blog/2015/09/0x7c00.html">为什么主引导记录的内存地址是0x7C00？</a></p>
 <h4 id="41-磁盘的工作原理">4.1 磁盘的工作原理</h4>
