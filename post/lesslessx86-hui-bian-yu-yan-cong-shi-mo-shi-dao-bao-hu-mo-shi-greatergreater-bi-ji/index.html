@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>《x86汇编语言:从实模式到保护模式》笔记 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1592660532440">
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1592723892881">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="《x86汇编语言:从实模式到保护模式》笔记 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
@@ -13,8 +13,12 @@
 
     <meta name="description" content="豆瓣链接
 随书的小工具
+第4章 虚拟机的安装与使用
 为什么主引导记录的内存地址是0x7C00？
-..." />
+1.磁盘的工作原理
+书上说的是机械硬盘，可参考B站up主硬件茶谈的投稿，简而言之，机械磁盘的结构如下：
+
+硬盘由多个或一个碟片组成，后者称之为单..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -24,7 +28,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1592660532440" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1592723892881" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -84,7 +88,7 @@
                 2020-06-20
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
               
             </div>
@@ -92,12 +96,35 @@
             <div class="post-content-wrapper">
               <div class="post-content">
                 <p><a href="https://book.douban.com/subject/20492528//">豆瓣链接</a><br>
-<a href="https://drive.google.com/drive/folders/17lqWpm3Zu3xuTSrQKhj2--r-lqqQzQhF?usp=sharing">随书的小工具</a><br>
-<a href="http://www.ruanyifeng.com/blog/2015/09/0x7c00.html">为什么主引导记录的内存地址是0x7C00？</a></p>
+<a href="https://drive.google.com/drive/folders/17lqWpm3Zu3xuTSrQKhj2--r-lqqQzQhF?usp=sharing">随书的小工具</a></p>
+<h3 id="第4章-虚拟机的安装与使用">第4章 虚拟机的安装与使用</h3>
+<p><a href="http://www.ruanyifeng.com/blog/2015/09/0x7c00.html">为什么主引导记录的内存地址是0x7C00？</a></p>
+<h4 id="1磁盘的工作原理">1.磁盘的工作原理</h4>
+<p>书上说的是机械硬盘，可参考B站up主硬件茶谈的<a href="https://www.bilibili.com/video/BV1rE411Q71m">投稿</a>，简而言之，机械磁盘的结构如下：<br>
+<img src="https://boatrainlsz.github.io/post-images/1592723080928.jpg" alt="" loading="lazy"><br>
+硬盘由多个或一个碟片组成，后者称之为单碟。碟片串在同一个轴上，由电机带动旋转，转速(Round Per Minute)常见的有3600转、7200转。每个碟片拥有上下两个磁头，磁头编号从上至下从0开始。电机旋转带动碟片旋转时，磁头在碟片上画出的虚拟的圆称之为<strong>磁道</strong>，不同碟片的相同位置的磁道共同组成一个<strong>柱面</strong>。<br>
+从常识来看，我们会认为数据的写入是一个一个碟片从上到下写入的，其实不是的。因为移动磁头对于CPU来说实在是太慢了(具体的数据可以参考<a href="https://gist.github.com/hellerbarde/2843375">这个文档</a>)。所以写入时是一个一个柱面来写入的，这样就能保证尽量不会移动磁头。</p>
+<h4 id="2磁盘的chs模式和lba模式">2.磁盘的CHS模式和LBA模式</h4>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E7%AC%AC4%E7%AB%A0-%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8">第4章 虚拟机的安装与使用</a>
+<ul>
+<li><a href="#1%E7%A3%81%E7%9B%98%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86">1.磁盘的工作原理</a></li>
+<li><a href="#2%E7%A3%81%E7%9B%98%E7%9A%84chs%E6%A8%A1%E5%BC%8F%E5%92%8Clba%E6%A8%A1%E5%BC%8F">2.磁盘的CHS模式和LBA模式</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
               </div>
             </div>
           </article>
