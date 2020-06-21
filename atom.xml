@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-06-21T07:34:12.777Z</updated>
+    <updated>2020-06-21T07:59:24.411Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -10,6 +10,59 @@
     <logo>https://boatrainlsz.github.io/images/avatar.png</logo>
     <icon>https://boatrainlsz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 画船听雨眠</rights>
+    <entry>
+        <title type="html"><![CDATA[《x86汇编语言:从实模式到保护模式》笔记]]></title>
+        <id>https://boatrainlsz.github.io/post/lesslessx86-hui-bian-yu-yan-cong-shi-mo-shi-dao-bao-hu-mo-shi-greatergreater-bi-ji/</id>
+        <link href="https://boatrainlsz.github.io/post/lesslessx86-hui-bian-yu-yan-cong-shi-mo-shi-dao-bao-hu-mo-shi-greatergreater-bi-ji/">
+        </link>
+        <updated>2020-06-20T12:23:32.000Z</updated>
+        <content type="html"><![CDATA[<p><a href="https://book.douban.com/subject/20492528//">豆瓣链接</a><br>
+<a href="https://drive.google.com/drive/folders/17lqWpm3Zu3xuTSrQKhj2--r-lqqQzQhF?usp=sharing">随书的小工具</a></p>
+<h3 id="第4章-虚拟机的安装与使用">第4章 虚拟机的安装与使用</h3>
+<p><a href="http://www.ruanyifeng.com/blog/2015/09/0x7c00.html">为什么主引导记录的内存地址是0x7C00？</a></p>
+<h4 id="1磁盘的工作原理">1.磁盘的工作原理</h4>
+<p>书上说的是机械硬盘，可参考B站up主硬件茶谈的<a href="https://www.bilibili.com/video/BV1rE411Q71m">投稿</a>，简而言之，机械磁盘的结构如下：<br>
+<img src="https://boatrainlsz.github.io/post-images/1592723080928.jpg" alt="" loading="lazy"><br>
+硬盘由多个或一个盘片组成，后者称之为单碟。盘片串在同一个轴上，由电机带动旋转，转速(Round Per Minute)常见的有3600转、7200转。每个盘片拥有上下两个磁头，<strong>磁头</strong>(Heads)编号从上至下从0开始。电机旋转带动盘片旋转时，磁头在盘片上画出的虚拟的圆称之为<strong>磁道</strong>，不同盘片的相同位置的磁道共同组成一个<strong>柱面(Cylinder)</strong>。<br>
+从常识来看，我们会认为数据的写入是一个一个盘片从上到下写入的，其实不是的。因为移动磁头对于CPU来说实在是太慢了(具体的数据可以参考<a href="https://gist.github.com/hellerbarde/2843375">这个文档</a>)。所以写入时是<strong>一个一个柱面</strong>来写入的，这样就能保证尽量不会移动磁头。数据的写入不是以磁道为单位的，而是扇区，由上图可见：一个磁道划分为多个扇区，通常是63个扇区，扇区的编号从1开始。扇区<strong>由扇区头和数据区组成</strong>，扇区头记录了扇区的信息(磁道号、磁头号、扇区号)，数据区大小为512字节。</p>
+<h4 id="2磁盘的chs模式和lba模式">2.磁盘的CHS模式和LBA模式</h4>
+<p>上面说了，磁盘的最小单位是扇区，要访问扇区，就得知道它在哪个位置，比如0面0道1扇区就是大名鼎鼎的启动扇区，这种柱面+磁头+扇区的编号方式称之为CHS模式(Cylinder+Heads+Sector)。这种编号方式缺点就是要时刻注意编号不要弄错，比如我要在0面0道64扇区写入数据，但64扇区其实是不存在的。所以引入了LBA模式(Logical Block Address)，它不考虑扇区的物理位置，而是将它们统一编号， 比如一个硬盘有6个磁头，每面1000个磁道，每磁道有17个扇区。则逻辑扇区和物理扇区的对应关系如下：</p>
+<table>
+<thead>
+<tr>
+<th>逻辑扇区编号</th>
+<th>物理扇区编号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0扇区</td>
+<td>0面0道1扇区</td>
+</tr>
+<tr>
+<td>1扇区</td>
+<td>0面0道2扇区</td>
+</tr>
+<tr>
+<td>......</td>
+<td>......</td>
+</tr>
+<tr>
+<td>16扇区</td>
+<td>0面0道17扇区</td>
+</tr>
+<tr>
+<td>17扇区</td>
+<td>1面0道1扇区</td>
+</tr>
+</tbody>
+</table>
+<p>所以从上面看出，LBA的编号规律是一个一个柱面、从上到下编号的。LBA与CHS的换算公式如下：<br>
+LBA=C*磁头总数*每道扇区数+H*每道扇区数+(S-1)，<br>
+其中C、H、S分别是物理扇区所在的柱面、磁头、扇区号。<br>
+LBA模式在硬盘控制器上提供了硬件支持，所以性能非常好。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[神作也免不了烂尾的结局]]></title>
         <id>https://boatrainlsz.github.io/post/shen-zuo-ye-mian-bu-liao-lan-wei-de-jie-ju/</id>
