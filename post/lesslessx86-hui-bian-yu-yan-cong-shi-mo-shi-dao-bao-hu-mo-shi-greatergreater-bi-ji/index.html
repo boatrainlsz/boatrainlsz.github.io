@@ -1,102 +1,102 @@
+
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+<meta charset="utf-8" >
+
 <title>《x86汇编语言:从实模式到保护模式》笔记 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1592809366823">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<meta name="description" content="吾生也有涯，而知也无涯">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1592809476086">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="《x86汇编语言:从实模式到保护模式》笔记 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="豆瓣链接
-随书的小工具
-第2章 处理器、内存和指令
-处理器的发展史，几个第一次：
-1.第一次引入实模式和保护模式的是80286，引入的目的：在保护方式之下，可以保护操作系统，使之不像实模式或8086等不受保护的微处理器那样，在遇到异常应用时..." />
-    <meta name="keywords" content="笔记" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
   </head>
   <body>
-    <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1592809366823" alt="">
-  </a>
-  <h1 class="site-title">
-    画船听雨眠
-  </h1>
-  <p class="site-description">
-    吾生也有涯，而知也无涯
-  </p>
-  <div class="menu-container">
-    
-      
-        <a href="/" class="menu">
-          首页
-        </a>
-      
-    
-      
-        <a href="/archives" class="menu">
-          归档
-        </a>
-      
-    
-      
-        <a href="/tags" class="menu">
-          标签
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu">
-          关于
-        </a>
-      
-    
-  </div>
-  <div class="social-container">
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://boatrainlsz.github.io">
+        <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1592809476086" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://boatrainlsz.github.io">
+        <h1 class="site-title">画船听雨眠</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
   </div>
 </div>
 
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
         <div class="post-detail">
-          <article class="post">
-            <h2 class="post-title">
-              《x86汇编语言:从实模式到保护模式》笔记
-            </h2>
-            <div class="post-info">
-              <span>
-                2020-06-20
-              </span>
-              <span>
-                4 min read
-              </span>
-              
-                <a href="https://boatrainlsz.github.io/tag/notes/" class="post-tag">
-                  # 笔记
-                </a>
-              
-            </div>
+          
+          <h2 class="post-title">《x86汇编语言:从实模式到保护模式》笔记</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2020-06-20</span>
             
-            <div class="post-content-wrapper">
-              <div class="post-content">
-                <p><a href="https://book.douban.com/subject/20492528//">豆瓣链接</a><br>
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://boatrainlsz.github.io/tag/notes/">
+                    笔记
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p><a href="https://book.douban.com/subject/20492528//">豆瓣链接</a><br>
 <a href="https://drive.google.com/drive/folders/17lqWpm3Zu3xuTSrQKhj2--r-lqqQzQhF?usp=sharing">随书的小工具</a></p>
 <h3 id="第2章-处理器-内存和指令">第2章 处理器、内存和指令</h3>
 <p><a href="https://software.intel.com/content/www/cn/zh/develop/articles/book-multicore-multithread-technology_microprocessor_history.html">处理器的发展史</a>，几个第一次：<br>
@@ -162,98 +162,57 @@ LBA=C*磁头总数*每道扇区数+H*每道扇区数+(S-1)，<br>
 其中C、H、S分别是物理扇区所在的柱面、磁头、扇区号。<br>
 LBA模式在硬盘控制器上提供了硬件支持，所以性能非常好。</p>
 
-              </div>
-              <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#%E7%AC%AC2%E7%AB%A0-%E5%A4%84%E7%90%86%E5%99%A8-%E5%86%85%E5%AD%98%E5%92%8C%E6%8C%87%E4%BB%A4">第2章 处理器、内存和指令</a>
-<ul>
-<li><a href="#21-%E5%86%85%E5%AD%98%E7%9A%84%E5%88%86%E6%AE%B5">2.1 内存的分段</a></li>
-<li><a href="#22-8086cpu%E5%AF%B9%E5%88%86%E6%AE%B5%E5%86%85%E5%AD%98%E7%9A%84%E7%89%B9%E6%AE%8A%E5%A4%84%E7%90%86">2.2 8086CPU对分段内存的特殊处理</a></li>
-</ul>
-</li>
-<li><a href="#%E7%AC%AC4%E7%AB%A0-%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8">第4章 虚拟机的安装与使用</a>
-<ul>
-<li><a href="#41-%E7%A3%81%E7%9B%98%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86">4.1 磁盘的工作原理</a></li>
-<li><a href="#42-%E7%A3%81%E7%9B%98%E7%9A%84chs%E6%A8%A1%E5%BC%8F%E5%92%8Clba%E6%A8%A1%E5%BC%8F">4.2 磁盘的CHS模式和LBA模式</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-              </div>
-            </div>
-          </article>
+          </div>
         </div>
 
         
           <div class="next-post">
-            <div class="next">下一篇</div>
-            <a href="https://boatrainlsz.github.io/post/shen-zuo-ye-mian-bu-liao-lan-wei-de-jie-ju/">
+            <a class="purple-link" href="https://boatrainlsz.github.io/post/shen-zuo-ye-mian-bu-liao-lan-wei-de-jie-ju/">
               <h3 class="post-title">
-                神作也免不了烂尾的结局
+                下一篇：神作也免不了烂尾的结局
               </h3>
             </a>
           </div>
-        
+          
+      </div>
 
-        
+      
 
-        <div class="site-footer">
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="https://boatrainlsz.github.io/atom.xml" target="_blank">
-    <i class="ri-rss-line"></i> RSS
-  </a>
+      <div class="site-footer">
+  <div class="slogan">吾生也有涯，而知也无涯</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://boatrainlsz.github.io/atom.xml" target="_blank">RSS</a>
 </div>
 
-      </div>
+
     </div>
+    <script type="application/javascript">
 
-    <script>
-      hljs.initHighlightingOnLoad()
+hljs.initHighlightingOnLoad()
 
-      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
 
-      // This should probably be throttled.
-      // Especially because it triggers during smooth scrolling.
-      // https://lodash.com/docs/4.17.10#throttle
-      // You could do like...
-      // window.addEventListener("scroll", () => {
-      //    _.throttle(doThatStuff, 100);
-      // });
-      // Only not doing it here to keep this Pen dependency-free.
+</script>
 
-      window.addEventListener("scroll", event => {
-        let fromTop = window.scrollY;
 
-        mainNavLinks.forEach((link, index) => {
-          let section = document.getElementById(decodeURI(link.hash).substring(1));
-          let nextSection = null
-          if (mainNavLinks[index + 1]) {
-            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
-          }
-          if (section.offsetTop <= fromTop) {
-            if (nextSection) {
-              if (nextSection.offsetTop > fromTop) {
-                link.classList.add("current");
-              } else {
-                link.classList.remove("current");    
-              }
-            } else {
-              link.classList.add("current");
-            }
-          } else {
-            link.classList.remove("current");
-          }
-        });
-      });
 
-    </script>
+
   </body>
 </html>
