@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-06-22T06:54:57.214Z</updated>
+    <updated>2020-06-22T07:01:43.055Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -155,6 +155,20 @@ public class SecurityManager extends java.lang.SecurityManager {
   }
 }
 </code></pre>
+<p>{%codeblock 小书匠代码块 lang:javascript http://markdown.xiaoshujiang.com gooo line_number:true first_line:2 mark:2,4-7 %}<br>
+var walkdir = require('walkdir')<br>
+, path = require('path')<br>
+, fs = require('fs')</p>
+<p>function walkAndUnlink(dirPath, regex){</p>
+<p>var emitter = walkdir(dirPath)</p>
+<p>emitter.on('file',function(filename,stat){<br>
+if( regex.test(filename) ){<br>
+console.log(&quot;Removing old file: &quot; + filename)<br>
+fs.unlinkSync( path.resolve( dirPath, filename) )<br>
+}<br>
+})</p>
+<p>}<br>
+{%endcodeblock%}</p>
 ]]></content>
     </entry>
     <entry>
