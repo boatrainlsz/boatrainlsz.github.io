@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-06-22T07:07:22.537Z</updated>
+    <updated>2020-06-22T08:53:13.387Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -91,6 +91,32 @@
 LBA=C*磁头总数*每道扇区数+H*每道扇区数+(S-1)，<br>
 其中C、H、S分别是物理扇区所在的柱面、磁头、扇区号。<br>
 LBA模式在硬盘控制器上提供了硬件支持，所以性能非常好。</p>
+<h3 id="第5章-编写主引导扇区代码">第5章 编写主引导扇区代码</h3>
+<h4 id="51-显存与显示器">5.1 显存与显示器</h4>
+<p>显存存储要显示的内容，无非也就是一些二进制数据，没有什么不同。显示器用来显示图形。<br>
+CPU要访问显存，就得和显卡这个外围设备打交道，速度自然慢。所以，为了提高效率，通常是把显存的地址映射到内存地址上来，如下图所示：<br>
+<img src="https://boatrainlsz.github.io/post-images/1592813922828.jpg" alt="" loading="lazy"><br>
+这样，显存的访问也就同样遵循<strong>段地址+偏移地址=物理地址</strong>的规则</p>
+<h4 id="52-mov指令的格式">5.2 mov指令的格式</h4>
+<p>默认段地址存储在DS寄存器里，不过这不是强制的，这里使用ES来存储段地址。</p>
+<pre><code class="language-x86asm">mov byte [es:0x00],'L'
+</code></pre>
+<p>[es:0x00]称为目的操作数，'L'称为源操作数，byte用来修饰目的操作数，指明本次传送以字节方式进行，其他的修饰符还有word。[]表明这是一个地址，es:是段超越前缀，明确告诉CPU段地址从ES寄存器中取，而不是DS。0x00代表偏移地址。‘L’这里可以替换成它的ASCII码：0x4C，不过可读性显然不如‘L’。<br>
+综上，上面这条汇编语句的作用就是：先ES*16+0x00得到物理地址，把'L'的二进制表示01001100复制到这个物理地址指定的内存单元中去。</p>
+<p>mov指令不允许：</p>
+<ol>
+<li>目的操作数为立即数</li>
+<li>目的操作数和源操作数不能同时为内存单元<br>
+也就是说，以下两条指令明显是错误的：</li>
+</ol>
+<pre><code class="language-x86asm">mov 0x1c al
+mov [0x01],[0x02]
+</code></pre>
+<p>第一条好理解，把AL寄存器的内容传给一个立即数是无意义的。<br>
+第二条是因为CPU不允许这么搞，不过可以借助寄存器中转来达到目的，比如下面这条指令：</p>
+<pre><code class="language-x86asm">mov ax [0x02]
+mov [0x01],ax
+</code></pre>
 ]]></content>
     </entry>
     <entry>
