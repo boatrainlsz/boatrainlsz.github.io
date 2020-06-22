@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>《x86汇编语言:从实模式到保护模式》笔记 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1592829597455">
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1592830121077">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="《x86汇编语言:从实模式到保护模式》笔记 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
@@ -30,7 +30,7 @@ hljs.initLineNumbersOnLoad();
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1592829597455" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1592830121077" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -308,6 +308,11 @@ mov [0x01],ax
 000001FE 55AA                                db 0x55,0xaa
 
 </code></pre>
+<ol>
+<li>注释以;开始</li>
+<li>文件一共有五列，分别为：行号、汇编地址、编译后的机器代码、源代码、注释。</li>
+<li>第98行的infi第100行的number等符号，称之为标号，它代表了该行指令的汇编地址，比如infi就代表了0x0000012B，number代表了0000012，紧跟在infi后面的冒号可以省略。</li>
+</ol>
 
               </div>
               <div class="toc-container">

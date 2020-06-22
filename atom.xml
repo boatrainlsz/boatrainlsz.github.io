@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-06-22T12:40:00.918Z</updated>
+    <updated>2020-06-22T12:48:44.769Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -233,6 +233,11 @@ mov [0x01],ax
 000001FE 55AA                                db 0x55,0xaa
 
 </code></pre>
+<ol>
+<li>注释以;开始</li>
+<li>文件一共有五列，分别为：行号、汇编地址、编译后的机器代码、源代码、注释。</li>
+<li>第98行的infi第100行的number等符号，称之为标号，它代表了该行指令的汇编地址，比如infi就代表了0x0000012B，number代表了0000012，紧跟在infi后面的冒号可以省略。</li>
+</ol>
 ]]></content>
     </entry>
     <entry>
