@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-06-22T12:48:44.769Z</updated>
+    <updated>2020-06-22T13:43:37.998Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -238,6 +238,11 @@ mov [0x01],ax
 <li>文件一共有五列，分别为：行号、汇编地址、编译后的机器代码、源代码、注释。</li>
 <li>第98行的infi第100行的number等符号，称之为标号，它代表了该行指令的汇编地址，比如infi就代表了0x0000012B，number代表了0000012，紧跟在infi后面的冒号可以省略。</li>
 </ol>
+<h4 id="54-如何在屏幕上显示302">5.4 如何在屏幕上显示302？</h4>
+<p>十进制的61238是二进制的1110111100110110，直接把1110111100110110传送给显存是显示不出61238的，具体可见<a href="https://www.zhihu.com/question/21323244/answer/106609419">这个回答</a>，所以需要辗转相除法得到每个数位6、1、2、3、8，然后分别把他们对应的ASCII码传送给显存，就能显示出来了。</p>
+<h4 id="55-如何做除法">5.5 如何做除法</h4>
+<p>上面提到了要对61238作辗转相除法，相除得到的数必须要保存起来以备后用，存到寄存器中不太可行，因为寄存器数量有限。因此，第100行用DB指令声明<strong>字节</strong>用来存放数位，DB代表Declare Byte，即声明字数据，此外还有DW(Declare Word)：声明字数据、DD(Declare Double Word)：声明双字数据、DQ(Declare Quad Word)：声明四字数据等。这些指令统称为伪指令(Pseudo Instruction)，伪指令只是汇编指令，没有对应的机器指令。这里声明了5个字节并初始化为0。<br>
+初始化工作做好了，接下来就开始除法了。</p>
 ]]></content>
     </entry>
     <entry>
