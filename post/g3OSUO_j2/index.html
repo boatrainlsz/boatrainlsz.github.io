@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Java系列 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1592902842127">
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1592919580318">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="Java系列 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
@@ -12,7 +12,12 @@
 
 
     <meta name="description" content="来源：Google和《深入理解Java虚拟机》
-" />
+之前零零碎碎整理过一些思维导图：Java的垃圾回收、虚拟机类加载机制等。没有形成系列，这次统一整理一下。
+1 Java的历史
+见图：
+
+一些重大变更的版本和新增的内容：
+JDK1.1：jar文..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -22,7 +27,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1592902842127" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1592919580318" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -82,18 +87,53 @@
                 2020-06-23
               </span>
               <span>
-                1 min read
+                3 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>来源：Google和<a href="https://book.douban.com/subject/34907497/">《深入理解Java虚拟机》</a></p>
+                <p>来源：Google和<a href="https://book.douban.com/subject/34907497/">《深入理解Java虚拟机》</a><br>
+之前零零碎碎整理过一些思维导图：<a href="https://www.processon.com/view/link/5ef1f83e6376891e81e24cd9">Java的垃圾回收</a>、<a href="https://www.processon.com/view/link/5ef1f7f66376891e81e24bf8">虚拟机类加载机制</a>等。没有形成系列，这次统一整理一下。</p>
+<h3 id="1-java的历史">1 Java的历史</h3>
+<p>见图：<br>
+<img src="https://boatrainlsz.github.io/post-images/1592916495501.jpg" alt="" loading="lazy"><br>
+一些重大变更的版本和新增的内容：<br>
+<strong>JDK1.1</strong>：jar文件格式、JDBC、内部类、反射。<br>
+<strong>JDK1.2</strong>：开始区分J2SE、J2EE、J2ME，分别面向桌面、企业级、移动端。<br>
+<strong>JDK1.3</strong>：HotSpot虚拟机开始成为默认虚拟机。<br>
+<strong>JDK1.4</strong>：正则表达式、NIO等技术。<br>
+<strong>JDK5</strong>：自动装箱、<strong>泛型</strong>、动态注解、枚举、可变长参数、foreach循环、<strong>java.util.concurrent包</strong>，从这个版本开始，放弃JDK 1.x的命名(估计是觉得不够霸气)，改为JDK x。<br>
+<strong>JDK6</strong>：改变从JDK1.2开始的J2SE、J2EE、J2ME命名，转为Java SE 6、Java EE 6、Java ME 6，同时对锁与同步、垃圾回收、类加载等方面大幅改进。<br>
+<strong>JDK7</strong>：开始开源，开源的称之为OpenJDK7，原来的称之为SunJDK7。本来JDK7被寄予厚望，包括但不限于：<br>
+·Lambda项目：支持Lambda表达式，支持函数式编程。<br>
+·Jigsaw项目：虚拟机层面的模块化支持。<br>
+·动态语言支持：Java是静态语言，为其他运行在Java虚拟机上的动态语言提供支持。<br>
+·Garbage-First收集器。<br>
+·Coin项目：Java语法细节进化。<br>
+怎奈Sun公司此时深陷商业竞争和技术竞争的泥潭，眼看JDK7的目标就要泡汤了。Oracle收购Sun之后，大手一挥，砍掉了Lambda项目和Jigsaw项目和部分Coin项目,将其移到了JDK8中，这样保证了JDK7的如期发布。<br>
+从JDK JDK 7 Update 4开始，Java SE终于可以在Mac OS X上运行。<br>
+<strong>JDK8</strong>：Lambda表达式、新的日期API(JDK7以前的日期API有多被嫌弃，Google一下&quot;Java7 date sucks&quot;就知道了)、彻底移除HotSpot的永久代。不过说好的Jigsaw项目则继续跳票。<br>
+<strong>JDK9</strong>：经过一番巨头们(Oracle、IBM、Redhat)的撕逼，Jigsaw终于在JDK9中发布。<br>
+<strong>JDK10</strong>：内部重构，对程序员来说，感知不强。<br>
+<strong>JDK11</strong>：革命性的ZGC垃圾收集器。<br>
+<strong>JDK12</strong>：引入Redhat开发的Shenandoah收集器，作为ZGC的竞争对手，且Shenandoah不是Oracle的亲儿子，Oracle随即就在OracleJDK中通过条件编译的方式剔除了Shenandoah。Shenandoah也成为目前为止唯一一个OpenJDK能用但OracleJDK不能用的功能。</p>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#1-java%E7%9A%84%E5%8E%86%E5%8F%B2">1 Java的历史</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
               </div>
             </div>
           </article>
