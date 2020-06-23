@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-06-23T07:51:38.455Z</updated>
+    <updated>2020-06-23T08:06:17.564Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -10,6 +10,19 @@
     <logo>https://boatrainlsz.github.io/images/avatar.png</logo>
     <icon>https://boatrainlsz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 画船听雨眠</rights>
+    <entry>
+        <title type="html"><![CDATA[常用的Linux命令]]></title>
+        <id>https://boatrainlsz.github.io/post/fzwfJhHdW/</id>
+        <link href="https://boatrainlsz.github.io/post/fzwfJhHdW/">
+        </link>
+        <updated>2020-06-23T08:01:49.000Z</updated>
+        <content type="html"><![CDATA[<p>遇到有帮助的，就整理下放在这，便于以后排查问题。</p>
+<h3 id="1-网络篇">1. 网络篇</h3>
+<h4 id="11-统计各个状态的tcp连接数">1.1 统计各个状态的TCP连接数</h4>
+<pre><code class="language-shell">netstat -t -n | grep -oP '\w+\s*$' | sort | uniq -c
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[数据结构与算法系列]]></title>
         <id>https://boatrainlsz.github.io/post/A2HjUbbYY/</id>
@@ -316,42 +329,6 @@ mov [0x01],ax
 <h4 id="1语言规范">1.语言规范</h4>
 <p>二进制代码文件名后缀为.hack，汇编代码文件名后缀为.asm。那么汇编器的功能就是将hack文件翻译成asm文件。其中：<br>
  asm文件由文本行组成，每一行由16和0/1的ASCII码组成。当被加载进内存执行时，第n行将被存储到地址为n的指令内存。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[测试插入代码]]></title>
-        <id>https://boatrainlsz.github.io/post/ce-shi-cha-ru-dai-ma/</id>
-        <link href="https://boatrainlsz.github.io/post/ce-shi-cha-ru-dai-ma/">
-        </link>
-        <updated>2020-06-18T12:34:36.000Z</updated>
-        <content type="html"><![CDATA[<link rel="stylesheet"
-      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<script src="//cdn.bootcss.com/highlightjs-line-numbers.js/1.1.0/highlightjs-line-numbers.min.js"></script>
-<script>hljs.initLineNumbersOnLoad();</script>
-<pre><code class="language-java">package thread_safe;
-
-import java.security.Permission;
-import java.util.ArrayList;
-import java.util.List;
-
-public class SecurityManager extends java.lang.SecurityManager {
-  private final List&lt;Permission&gt; deniedPermissions =
-      new ArrayList&lt;Permission&gt;();
-
-  @Override
-  public void checkPermission(Permission p) {
-    if (deniedPermissions.contains(p)) {
-      throw new SecurityException(&quot;Denied!&quot;);
-    }
-  }
-
-  public void deny(Permission p) {
-    deniedPermissions.add(p);
-  }
-}
-</code></pre>
 ]]></content>
     </entry>
 </feed>
