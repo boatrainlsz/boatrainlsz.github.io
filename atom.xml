@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-06-23T01:18:10.581Z</updated>
+    <updated>2020-06-23T01:44:22.953Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -324,12 +324,25 @@ public class SecurityManager extends java.lang.SecurityManager {
         <link href="https://boatrainlsz.github.io/post/bo-ke-da-hao-liao/">
         </link>
         <updated>2020-06-18T11:40:09.000Z</updated>
-        <content type="html"><![CDATA[<p>搭博客这事真的是一波三折。<br>
-1：之前买了个阿里云服务器，域名都配好了，TMD要备案，懒得弄，于是自然而然的无法访问。<a href="http://www.boatrain.top/">http访问</a>，http因为未加密，很容易被劫持，识别到未备案，就不让你访问了。于是开了https：<a href="https://www.boatrain.top/">https访问</a>，但还是时不时抽风，算是废了。</p>
-<p>2：后来又发现GitHub Pages不错：<a href="https://sspai.com/post/54608">少数派文章</a>，怎奈Ruby源太鸡儿慢了，换了Ruby源，终于搭好了，但还是不尽如人意。</p>
-<p>3：不过少数派的这篇文章提到了Gridea：<br>
+        <content type="html"><![CDATA[<h3 id="1搭博客这事真的是一波三折">1.搭博客这事真的是一波三折。</h3>
+<h4 id="11阿里云">1.1：阿里云</h4>
+<p>之前买了个阿里云服务器，域名都配好了，TMD要备案，懒得弄，于是自然而然的无法访问。<a href="http://www.boatrain.top/">http访问</a>，http因为未加密，很容易被劫持，识别到未备案，就不让你访问了。于是开了https：<a href="https://www.boatrain.top/">https访问</a>，但还是时不时抽风，算是废了。</p>
+<h4 id="12github-pages">1.2：GitHub Pages</h4>
+<p>后来又发现GitHub Pages不错：<a href="https://sspai.com/post/54608">少数派文章</a>，怎奈Ruby源太鸡儿慢了，换了Ruby源，终于搭好了，但还是不尽如人意。</p>
+<h4 id="13gridea">1.3：Gridea</h4>
+<p>不过少数派的这篇文章提到了Gridea：<br>
 <img src="https://boatrainlsz.github.io/post-images/1592481015374.jpg" alt="" loading="lazy"><br>
 赶紧试用一下，不错，傻瓜式操作，就它了。</p>
+<h3 id="2为什么写博客">2.为什么写博客</h3>
+<h4 id="21强迫自己慢下来">2.1：强迫自己慢下来</h4>
+<p>我看书有个特别不好的毛病，就是追求速度，恨不得一目十行，总觉得作者啰嗦，写博客就是强迫自己理解了之后再写出自己的理解。发在网上的东西，千万不要误导别人，一定要是正确的。</p>
+<h4 id="22好记性不如烂笔头">2.2：好记性不如烂笔头</h4>
+<p>很多知识都是这样，当时似懂非懂了，过一段时间就全忘了，或者稍微变一下形，就完全不认识了。所以一定要自己理解了后，记下来，记住它的本质，为什么是这样的？它相比于其他技术的优点是什么，它的代价又是什么，有没有什么改进方案？</p>
+<h4 id="23-不要瞎几把发博客">2.3 不要瞎几把发博客</h4>
+<p>现在中文互联网的信息基本上是<a href="https://www.zhihu.com/question/49684783">没法看了</a>，说这话可能有装逼的嫌疑，但事实确实如此。我自己认为有两大原因：一是微信公众号成了信息孤岛，现在很多有技术、有想法的大佬都只在自己的公众号上发表文章，除非你关注了，或者你去搜狗微信搜索，不然你百度是搜不到公众号的信息的。这一点，微信真是恶心。二是以CSDN、百家号为首的一些垃圾博客网站污染了整个中文互联网，什么狗屁文章都敢发出来，要排版没有排版，要逻辑没有逻辑。百家号的小编体现在都成了一个梗了。<br>
+说这么多，是想告诫自己和那些想写博客的人，弄懂了再来发博客，你写的东西是会被搜索引擎检索的，自己不懂就算了，发出来误导了别人就是贻笑大方了。</p>
+<h3 id="3如何获取有效信息">3.如何获取有效信息</h3>
+<p>所以，对于技术开发者来说，能Google就尽量Google，毕竟计算机科学从最基础的光刻机到最上层的操作系统，都是西方搞出来的，在这一点上，我同意<a href="https://coolshell.cn/articles/19464.html">耗子叔的观点</a>。所以说，学好英语很重要！</p>
 ]]></content>
     </entry>
 </feed>
