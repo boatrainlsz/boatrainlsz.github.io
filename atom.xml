@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-06-22T13:45:21.419Z</updated>
+    <updated>2020-06-23T01:18:10.581Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -10,6 +10,15 @@
     <logo>https://boatrainlsz.github.io/images/avatar.png</logo>
     <icon>https://boatrainlsz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 画船听雨眠</rights>
+    <entry>
+        <title type="html"><![CDATA[柳宗元的《江雪》]]></title>
+        <id>https://boatrainlsz.github.io/post/EwTf-Crho/</id>
+        <link href="https://boatrainlsz.github.io/post/EwTf-Crho/">
+        </link>
+        <updated>2020-06-23T01:05:02.000Z</updated>
+        <content type="html"><![CDATA[<p>初读这首诗，不会感到有什么特别之处，无非就是描绘雪景。但经历过2008年南方冰雪灾害的我，对这首诗只能说两个字：写的真他妈的好！那年我还在读小学，小孩子对于什么冰雪灾害没有什么概念，只觉得那段时间冰很厚，雪很大。有一天早上我起来尿尿，大冬天的早晨，冷风扑面而来，被窝里带出来的热气瞬间被吹没了。外面白雪皑皑，竹子都被雪压成了90度，时不时传来树枝压断的声音。这时我突然就想起了“千山鸟飞绝，万径人踪灭”这句诗。当时还不懂什么是文学，脑海里闪现过这句诗就赶紧抖擞精神提起裤子滚回被窝了。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[FUCK CSDN]]></title>
         <id>https://boatrainlsz.github.io/post/fuck-csdn/</id>
