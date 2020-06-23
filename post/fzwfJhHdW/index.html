@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>常用的Linux命令 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1592899867882">
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1592902842127">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="常用的Linux命令 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
@@ -24,7 +24,7 @@ netstat -t -n | grep -oP '\w+\s*$' ..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1592899867882" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1592902842127" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -84,7 +84,7 @@ netstat -t -n | grep -oP '\w+\s*$' ..." />
                 2020-06-23
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
               
             </div>
@@ -96,8 +96,20 @@ netstat -t -n | grep -oP '\w+\s*$' ..." />
 <h4 id="11-统计各个状态的tcp连接数">1.1 统计各个状态的TCP连接数</h4>
 <pre><code class="language-shell">netstat -t -n | grep -oP '\w+\s*$' | sort | uniq -c
 </code></pre>
-<p>-t代表tcp，表示查看tcp链接<br>
--n代表numeric，</p>
+<p>输出结果如下：<br>
+<img src="https://boatrainlsz.github.io/post-images/1592902823200.jpg" alt="" loading="lazy"><br>
+-t代表tcp，表示查看tcp链接<br>
+-n代表numeric，表明使用数字，而不是符号显示，比如显示127.0.0.1，而不是localhost<br>
+-o代表only-matching，只打印匹配到的字符，而不是它所在的整行，并把匹配到的字符单独打印在每一行。见<a href="https://stackoverflow.com/questions/1546711/can-grep-show-only-words-that-match-search-pattern">这个例子</a>。<br>
+-P代表Perl，将pattern解释为Perl标准的正则，Perl和POSIX的区别见<a href="https://liujiacai.net/blog/2014/12/07/regexp-favors/">这篇文章</a>。<br>
+接下来的正则表达式看<a href="https://www.wikiwand.com/zh/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F">维基百科</a>就行了：<br>
+\w代表匹配包括下划线的任何单词字符。等价于[A-Za-z0-9_]，注意Unicode正则表达式会匹配中文字符。<br>
++代表匹配前面的子表达式一次或多次<br>
+\s代表匹配任何空白字符，包括空格、制表符、换页符等等。等价于[ \f\n\r\t\v]，注意Unicode正则表达式会匹配全角空格符。<br>
+*代表匹配前面的子表达式零次或多次<br>
+$代表匹配输入字符串的结束位置<br>
+sort代表排序，将文本的每一行作为一个单位，相互比较，比较原则是从首字符向后，依次按ASCII码值进行比较，最后将他们按升序输出。<br>
+uniq -c代表忽略重复行，并输出重复出现的次数。</p>
 
               </div>
               <div class="toc-container">
