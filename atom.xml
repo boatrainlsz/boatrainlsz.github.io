@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-06-24T09:26:17.076Z</updated>
+    <updated>2020-06-26T13:36:20.222Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -55,6 +55,10 @@ uniq -c代表忽略重复行，并输出重复出现的次数。</p>
         </link>
         <updated>2020-06-23T07:48:12.000Z</updated>
         <content type="html"><![CDATA[<p>来源：<a href="https://coding.imooc.com/class/207.html">慕课网</a></p>
+<h3 id="链表">链表</h3>
+<h4 id="1-dummyhead">1 dummyHead</h4>
+<p><img src="https://boatrainlsz.github.io/post-images/1593178011276.jpg" alt="" loading="lazy"><br>
+dummyHead的<a href="https://www.1point3acres.com/bbs/thread-107020-1-1.html">好处</a>：有了dummy之后，所有的节点都变成拥有前置节点的节点了。所以就不用担心处理头节点这个特殊情况了。</p>
 ]]></content>
     </entry>
     <entry>
