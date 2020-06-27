@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>《x86汇编语言:从实模式到保护模式》笔记 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1593270832263">
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1593270868482">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="《x86汇编语言:从实模式到保护模式》笔记 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
@@ -30,7 +30,7 @@ hljs.initLineNumbersOnLoad();
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1593270832263" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1593270868482" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -352,7 +352,7 @@ div byte [0xf002]
 <p>xor指令：称为异或指令，顾名思义，相异才为1，比如0 xor 1 = 1 。这条指令常用来清空一个寄存器，比如:</p>
 <pre><code class="language-java">xor dx,dx
 </code></pre>
-<p>把dx寄存器清空，因为两个相同的数字异或得到0。那为什么不用 mov dx,0这样的指令呢？因为异或操作生成的机器码较短，且异或指令操作的是两个通用寄存器，速度快一点。</p>
+<p>这条指令把dx寄存器清空，因为两个相同的数字异或得到0。那为什么不用 mov dx,0这样的指令呢？因为异或操作生成的机器码较短，且异或指令操作的是两个通用寄存器，速度快一点。</p>
 
               </div>
               <div class="toc-container">
