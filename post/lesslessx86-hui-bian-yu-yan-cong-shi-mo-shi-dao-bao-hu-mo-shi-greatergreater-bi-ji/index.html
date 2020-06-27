@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>《x86汇编语言:从实模式到保护模式》笔记 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1593269740599">
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1593270776216">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="《x86汇编语言:从实模式到保护模式》笔记 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
@@ -30,7 +30,7 @@ hljs.initLineNumbersOnLoad();
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1593269740599" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1593270776216" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -348,6 +348,11 @@ div byte [0xf002]
 <li>32位/16位<br>
 这种情况下，因为8086是16位的CPU，无法提供32位的被除数，所以规定<strong>被除数的高16位在DX中，低16位在AX中。<strong>这时，通常用DX:AX来描述被除数。除数来自</strong>16位的通用寄存器或者内存单元</strong>。得到的<strong>商存在AX寄存器</strong>中，<strong>余数在DX寄存器</strong>中。</li>
 </ol>
+<h5 id="52-用异或操作清空寄存器">5.2 用异或操作清空寄存器</h5>
+<p>xor指令：称为异或指令，顾名思义，相异才为1，比如0 xor 1 = 1 。这条指令常用来清空一个寄存器，比如:</p>
+<pre><code class="language-java">xor dx,dx
+</code></pre>
+<p>把dx寄存器清空，因为两个相同的数字异或得到0。那为什么不用 mov dx,0这样的指令呢？因为异或操作生成的机器码较短，且异或指令操作的是两个通用寄存器，速度快一点。</p>
 
               </div>
               <div class="toc-container">
@@ -377,6 +382,7 @@ div byte [0xf002]
 <li><a href="#55-%E5%A6%82%E4%BD%95%E5%81%9A%E9%99%A4%E6%B3%95">5.5 如何做除法</a>
 <ul>
 <li><a href="#551-8086%E7%9A%84%E4%B8%A4%E7%A7%8D%E9%99%A4%E6%B3%95">5.5.1 8086的两种除法</a></li>
+<li><a href="#52-%E7%94%A8%E5%BC%82%E6%88%96%E6%93%8D%E4%BD%9C%E6%B8%85%E7%A9%BA%E5%AF%84%E5%AD%98%E5%99%A8">5.2 用异或操作清空寄存器</a></li>
 </ul>
 </li>
 </ul>

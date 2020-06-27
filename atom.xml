@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-06-27T14:57:02.598Z</updated>
+    <updated>2020-06-27T15:12:59.267Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -472,6 +472,11 @@ div byte [0xf002]
 <li>32位/16位<br>
 这种情况下，因为8086是16位的CPU，无法提供32位的被除数，所以规定<strong>被除数的高16位在DX中，低16位在AX中。<strong>这时，通常用DX:AX来描述被除数。除数来自</strong>16位的通用寄存器或者内存单元</strong>。得到的<strong>商存在AX寄存器</strong>中，<strong>余数在DX寄存器</strong>中。</li>
 </ol>
+<h5 id="52-用异或操作清空寄存器">5.2 用异或操作清空寄存器</h5>
+<p>xor指令：称为异或指令，顾名思义，相异才为1，比如0 xor 1 = 1 。这条指令常用来清空一个寄存器，比如:</p>
+<pre><code class="language-java">xor dx,dx
+</code></pre>
+<p>把dx寄存器清空，因为两个相同的数字异或得到0。那为什么不用 mov dx,0这样的指令呢？因为异或操作生成的机器码较短，且异或指令操作的是两个通用寄存器，速度快一点。</p>
 ]]></content>
     </entry>
     <entry>
