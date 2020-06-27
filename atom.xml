@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-06-26T14:14:55.036Z</updated>
+    <updated>2020-06-27T14:55:45.746Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -442,6 +442,36 @@ mov [0x01],ax
 <h4 id="55-如何做除法">5.5 如何做除法</h4>
 <p>上面提到了要对61238作辗转相除法，相除得到的数必须要保存起来以备后用，存到寄存器中不太可行，因为寄存器数量有限。因此，第100行用DB指令声明<strong>字节</strong>用来存放数位，DB代表Declare Byte，即声明字数据，此外还有DW(Declare Word)：声明字数据、DD(Declare Double Word)：声明双字数据、DQ(Declare Quad Word)：声明四字数据等。这些指令统称为伪指令(Pseudo Instruction)，伪指令只是汇编指令，没有对应的机器指令。这里声明了5个字节并初始化为0。<br>
 初始化工作做好了，接下来就开始除法了。</p>
+<h5 id="551-8086的两种除法">5.5.1 8086的两种除法</h5>
+<ol>
+<li>16位/8位<br>
+这种情况下，被除数来自<strong>AX寄存器</strong>，也就是说必须要事先送到AX寄存器中去，除数来自<strong>8位的通用寄存器或者内存单元</strong>。得到的<strong>商存在AL寄存器</strong>中，<strong>余数在AH寄存器</strong>中。比如，如下两条指令：</li>
+</ol>
+<pre><code class="language-java">div cl
+div byte [0x0023]
+</code></pre>
+<p>第一条指令除数来自cl<br>
+第二条指令，除数位于数据段中偏移地址为0x0023的地址中。执行时，CPU从DS寄存器中拿到段地址并左移四位，再加上0x0023得到物理地址，并从这个物理地址取出除数。当然，如果段地址存在CS或ES中，则要使用段超越前缀了：</p>
+<pre><code class="language-java">div byte [cs:0x0023]
+div byte [es:0x0023]
+</code></pre>
+<p>但是一般编写汇编程序时，不可能知道汇编地址的具体数值，这时就要用到前面说的标号了，如下：</p>
+<pre><code class="language-java">divdnd dw 0x3f0
+divsor db 0x3f
+
+......
+
+mov ax, [divdnd]
+div byte [divsor]
+</code></pre>
+<p>汇编器编译时，会把divdnd、divsor这两个标号换成具体的汇编地址，假设divdnd、divsor代表的地址分别是0xf000、0xf002，则最后的汇编指令是这样的：</p>
+<pre><code class="language-java">mov ax, [0xf000]
+div byte [0xf002]
+</code></pre>
+<ol>
+<li>32位/16位<br>
+这种情况下，因为8086是16位的CPU，无法提供32位的被除数，所以规定<strong>被除数的高16位在DX中，低16位在AX中。<strong>这时，通常用DX:AX来描述被除数。除数来自</strong>16位的通用寄存器或者内存单元</strong>。得到的<strong>商存在AX寄存器</strong>中，<strong>余数在DX寄存器</strong>中。</li>
+</ol>
 ]]></content>
     </entry>
     <entry>
