@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-06-28T13:49:50.549Z</updated>
+    <updated>2020-06-28T13:54:25.635Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -70,7 +70,7 @@ uniq -c代表忽略重复行，并输出重复出现的次数。</p>
 <li>看能否套用现成的数据结构：堆、栈、队列、树、图等。</li>
 <li>时间与空间的交换，比如哈希表。</li>
 <li>对输入进行预处理，比如排序。</li>
-<li>在瓶颈处分析，比如O(nlogn)+O(n<sup>2)，就要想办法优化O(n</sup>2)。</li>
+<li>在瓶颈处分析，比如O(nlogn)+O(n^2)，就要想办法优化O(n^2)。</li>
 </ol>
 <p><strong>极端条件的判断：</strong><br>
 数组为空、字符串为空、数量为0、空指针。</p>
