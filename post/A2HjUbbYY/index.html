@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>数据结构与算法系列 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1593331594405">
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1593351766353">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="数据结构与算法系列 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
@@ -11,15 +11,14 @@
 
 
 
-    <meta name="description" content="来源：慕课网
-链表
-1 基本定义
-package com.lsz.数据结构与算法.linkedlist;
+    <meta name="description" content="套路：
 
-public class LinkedList&lt;E&gt; {
-
-    private class Node {
-     ..." />
+先想个暴力解法
+再进行优化，常见的算法思路：索引、指针、递归、分治，贪心、动态规划等
+看能否套用现成的数据结构：堆、栈、队列、树、图等。
+时间与空间的交换，比如哈希表。
+对输入进行预处理，比如排序。
+在瓶颈处分析，比如O(nlog..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -29,7 +28,7 @@ public class LinkedList&lt;E&gt; {
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1593331594405" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1593351766353" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -89,14 +88,32 @@ public class LinkedList&lt;E&gt; {
                 2020-06-23
               </span>
               <span>
-                2 min read
+                3 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>来源：<a href="https://coding.imooc.com/class/207.html">慕课网</a></p>
+                <p><strong>套路：</strong></p>
+<ol>
+<li>先想个暴力解法</li>
+<li>再进行优化，常见的算法思路：索引、指针、递归、分治，贪心、动态规划等</li>
+<li>看能否套用现成的数据结构：堆、栈、队列、树、图等。</li>
+<li>时间与空间的交换，比如哈希表。</li>
+<li>对输入进行预处理，比如排序。</li>
+<li>在瓶颈处分析，比如O(nlogn)+O(n<sup>2)，就要想办法优化O(n</sup>2)。</li>
+</ol>
+<p><strong>极端条件的判断：</strong><br>
+数组为空、字符串为空、数量为0、空指针。</p>
+<p><strong>空间复杂度</strong><br>
+注意递归调用也是要花费空间的，因为要保存调用栈。递归调用n次，则空间复杂度为O(n)。</p>
+<p><strong>时间复杂度</strong><br>
+O(n):循环C*n次，其中C为常数<br>
+O(n^2):循环C *n^2次，其中C为常数<br>
+O(logn):以二分查找为例，最坏的查找过程如下：<br>
+<img src="https://boatrainlsz.github.io/post-images/1593351170456.jpg" alt="" loading="lazy"><br>
+假设经过x次查找才能让n变为1，则正好满足2^x=n，故x=log2n</p>
 <h3 id="链表">链表</h3>
 <h3 id="1-基本定义">1 基本定义</h3>
 <pre><code class="language-java">package com.lsz.数据结构与算法.linkedlist;

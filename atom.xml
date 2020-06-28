@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-06-28T08:06:37.665Z</updated>
+    <updated>2020-06-28T13:49:50.549Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -10,6 +10,15 @@
     <logo>https://boatrainlsz.github.io/images/avatar.png</logo>
     <icon>https://boatrainlsz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 画船听雨眠</rights>
+    <entry>
+        <title type="html"><![CDATA[排序算法]]></title>
+        <id>https://boatrainlsz.github.io/post/aoDfrREmP/</id>
+        <link href="https://boatrainlsz.github.io/post/aoDfrREmP/">
+        </link>
+        <updated>2020-06-28T12:05:27.000Z</updated>
+        <content type="html"><![CDATA[<h4 id="1-选择排序">1. 选择排序</h4>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Java HashMap Infinite Loop]]></title>
         <id>https://boatrainlsz.github.io/post/pdVCXY0e0/</id>
@@ -54,7 +63,25 @@ uniq -c代表忽略重复行，并输出重复出现的次数。</p>
         <link href="https://boatrainlsz.github.io/post/A2HjUbbYY/">
         </link>
         <updated>2020-06-23T07:48:12.000Z</updated>
-        <content type="html"><![CDATA[<p>来源：<a href="https://coding.imooc.com/class/207.html">慕课网</a></p>
+        <content type="html"><![CDATA[<p><strong>套路：</strong></p>
+<ol>
+<li>先想个暴力解法</li>
+<li>再进行优化，常见的算法思路：索引、指针、递归、分治，贪心、动态规划等</li>
+<li>看能否套用现成的数据结构：堆、栈、队列、树、图等。</li>
+<li>时间与空间的交换，比如哈希表。</li>
+<li>对输入进行预处理，比如排序。</li>
+<li>在瓶颈处分析，比如O(nlogn)+O(n<sup>2)，就要想办法优化O(n</sup>2)。</li>
+</ol>
+<p><strong>极端条件的判断：</strong><br>
+数组为空、字符串为空、数量为0、空指针。</p>
+<p><strong>空间复杂度</strong><br>
+注意递归调用也是要花费空间的，因为要保存调用栈。递归调用n次，则空间复杂度为O(n)。</p>
+<p><strong>时间复杂度</strong><br>
+O(n):循环C*n次，其中C为常数<br>
+O(n^2):循环C *n^2次，其中C为常数<br>
+O(logn):以二分查找为例，最坏的查找过程如下：<br>
+<img src="https://boatrainlsz.github.io/post-images/1593351170456.jpg" alt="" loading="lazy"><br>
+假设经过x次查找才能让n变为1，则正好满足2^x=n，故x=log2n</p>
 <h3 id="链表">链表</h3>
 <h3 id="1-基本定义">1 基本定义</h3>
 <pre><code class="language-java">package com.lsz.数据结构与算法.linkedlist;
@@ -530,20 +557,6 @@ div byte [0xf002]
 <pre><code class="language-java">xor dx,dx
 </code></pre>
 <p>这条指令把dx寄存器清空，因为两个相同的数字异或得到0。那为什么不用 mov dx,0这样的指令呢？因为异或操作生成的机器码较短，且异或指令操作的是两个通用寄存器，速度快一点。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[神作也免不了烂尾的结局]]></title>
-        <id>https://boatrainlsz.github.io/post/shen-zuo-ye-mian-bu-liao-lan-wei-de-jie-ju/</id>
-        <link href="https://boatrainlsz.github.io/post/shen-zuo-ye-mian-bu-liao-lan-wei-de-jie-ju/">
-        </link>
-        <updated>2020-06-19T06:12:42.000Z</updated>
-        <content type="html"><![CDATA[<p>今天看了纯黑的《最后生还者2》攻略，差点没把自己气死。我是没想到乔尔会死得这么惨，正如<a href="https://jp.ign.com/the-last-of-us-2/44388/review/the-last-of-us-part-ii">日本IGN的评价</a>：<br>
-<img src="https://boatrainlsz.github.io/post-images/1592547584875.jpg" alt="" loading="lazy"><br>
-与前一部的割裂太严重了，谁能想到一开局乔尔就会以这种屈辱的方式死去，唯一合理的解释就是编剧真的是脑子里有屎。<br>
-有趣的是，除了日本IGN骨头硬之外，其他的媒体给出的评分都是出奇的高，具体可见：https://www.gcores.com/articles/125084，真的是把它吹上了天。我寻思着，国外媒体瞎几把吹也就算了，毕竟LGBT在国外是政治正确，但是国内一群缺钙的媒体怎么就跪舔的下去呢？我真的怀疑他们有没有认真玩过前作。但是群众的眼睛是雪亮的，看看<a href="https://www.reddit.com/r/TheLastOfUs2/comments/hbq8jh/so_that_was_a_fucking_lie/">reddit上面的评价</a>就知道美末2引起了多大的公愤：<br>
-<img src="https://boatrainlsz.github.io/post-images/1592548126767.jpg" alt="" loading="lazy"><br>
-神作跌下神坛这事我见过不止一次两次了，《舌尖上的中国》、《权力的游戏》、《行尸走肉》不胜枚举。只能说很想给编剧寄一根高尔夫球棒，自己敲死自己谢罪！</p>
 ]]></content>
     </entry>
 </feed>

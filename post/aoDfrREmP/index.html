@@ -2,19 +2,17 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>神作也免不了烂尾的结局 | 画船听雨眠</title>
+<title>排序算法 | 画船听雨眠</title>
 <link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1593351766353">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="神作也免不了烂尾的结局 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="排序算法 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="今天看了纯黑的《最后生还者2》攻略，差点没把自己气死。我是没想到乔尔会死得这么惨，正如日本IGN的评价：
-
-与前一部的割裂太严重了，谁能想到一开局乔尔就会以这种屈辱的方式死去，唯一合理的解释就是编剧真的是脑子里有屎。
-有趣的是，除了日本IG..." />
+    <meta name="description" content="1. 选择排序
+" />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -77,30 +75,40 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              神作也免不了烂尾的结局
+              排序算法
             </h2>
             <div class="post-info">
               <span>
-                2020-06-19
+                2020-06-28
               </span>
               <span>
-                2 min read
+                1 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>今天看了纯黑的《最后生还者2》攻略，差点没把自己气死。我是没想到乔尔会死得这么惨，正如<a href="https://jp.ign.com/the-last-of-us-2/44388/review/the-last-of-us-part-ii">日本IGN的评价</a>：<br>
-<img src="https://boatrainlsz.github.io/post-images/1592547584875.jpg" alt="" loading="lazy"><br>
-与前一部的割裂太严重了，谁能想到一开局乔尔就会以这种屈辱的方式死去，唯一合理的解释就是编剧真的是脑子里有屎。<br>
-有趣的是，除了日本IGN骨头硬之外，其他的媒体给出的评分都是出奇的高，具体可见：https://www.gcores.com/articles/125084，真的是把它吹上了天。我寻思着，国外媒体瞎几把吹也就算了，毕竟LGBT在国外是政治正确，但是国内一群缺钙的媒体怎么就跪舔的下去呢？我真的怀疑他们有没有认真玩过前作。但是群众的眼睛是雪亮的，看看<a href="https://www.reddit.com/r/TheLastOfUs2/comments/hbq8jh/so_that_was_a_fucking_lie/">reddit上面的评价</a>就知道美末2引起了多大的公愤：<br>
-<img src="https://boatrainlsz.github.io/post-images/1592548126767.jpg" alt="" loading="lazy"><br>
-神作跌下神坛这事我见过不止一次两次了，《舌尖上的中国》、《权力的游戏》、《行尸走肉》不胜枚举。只能说很想给编剧寄一根高尔夫球棒，自己敲死自己谢罪！</p>
+                <h4 id="1-选择排序">1. 选择排序</h4>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#1-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F">1. 选择排序</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
               </div>
             </div>
           </article>
@@ -109,9 +117,9 @@
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://boatrainlsz.github.io/post/lesslessji-suan-ji-xi-tong-yao-su-greatergreater-shi-yan-he-bi-ji/">
+            <a href="https://boatrainlsz.github.io/post/pdVCXY0e0/">
               <h3 class="post-title">
-                《计算机系统要素》实验和笔记
+                Java HashMap Infinite Loop
               </h3>
             </a>
           </div>
