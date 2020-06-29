@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-06-29T08:09:33.324Z</updated>
+    <updated>2020-06-29T08:10:58.901Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -187,8 +187,8 @@ dummyHead的<a href="https://www.1point3acres.com/bbs/thread-107020-1-1.html">�
     </entry>
     <entry>
         <title type="html"><![CDATA[Mysql系列]]></title>
-        <id>https://boatrainlsz.github.io/post/_if3VXOLw/</id>
-        <link href="https://boatrainlsz.github.io/post/_if3VXOLw/">
+        <id>https://boatrainlsz.github.io/post/mysqlSeries/</id>
+        <link href="https://boatrainlsz.github.io/post/mysqlSeries/">
         </link>
         <updated>2020-06-23T07:44:44.000Z</updated>
         <content type="html"><![CDATA[<p>来源：<a href="https://dev.mysql.com/doc/">Mysql官网</a>和[微信公众号]https://mp.weixin.qq.com/s/syli7vs7Jw_VOTl5B2YUqg)</p>

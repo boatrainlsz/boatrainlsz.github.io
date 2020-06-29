@@ -1,0 +1,268 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mysql系列 | 画船听雨眠</title>
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1593418253726">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Mysql系列 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="来源：Mysql官网和[微信公众号]https://mp.weixin.qq.com/s/syli7vs7Jw_VOTl5B2YUqg)
+1.redo log 和bin log
+1.1 redo log的结构：
+
+InnoDB的redo l..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://boatrainlsz.github.io">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1593418253726" alt="">
+  </a>
+  <h1 class="site-title">
+    画船听雨眠
+  </h1>
+  <p class="site-description">
+    吾生也有涯，而知也无涯
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Mysql系列
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-06-23
+              </span>
+              <span>
+                5 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>来源：<a href="https://dev.mysql.com/doc/">Mysql官网</a>和[微信公众号]https://mp.weixin.qq.com/s/syli7vs7Jw_VOTl5B2YUqg)</p>
+<h4 id="1redo-log-和bin-log">1.redo log 和bin log</h4>
+<h5 id="11-redo-log的结构">1.1 redo log的结构：</h5>
+<p><img src="https://boatrainlsz.github.io/post-images/1593314027202.png" alt="" loading="lazy"><br>
+InnoDB的redo log大小是固定的，4个文件每个文件1G。逻辑上可以认为是一个环。write pos是当前日志写到的位置，checkpoint则是已经写入磁盘的位置，写入磁盘后checkpoint会将日志上的相关记录擦除掉。即：<br>
+write pos-&gt;checkpoint之间的部分是redo log空着的部分，用于记录新的记录。<br>
+checkpoint-&gt;write pos之间是redo log待写入磁盘的数据修改记录。<br>
+当以下两种情况发生了，才会写入磁盘(也就是将checkpoint推进一点)：</p>
+<ol>
+<li>系统闲的时候</li>
+<li>redo log写满的时候，也就是write posz追上了checkpoint。</li>
+</ol>
+<h5 id="12-bin-log是server层的日志是逻辑日志-它与redo-log的区别">1.2 bin log是Server层的日志，是逻辑日志。它与redo log的区别：</h5>
+<ol>
+<li><strong>所在的层次不同</strong>：<br>
+redo log是<strong>InnoDB引擎特有</strong>的；binlog是MySQL的Server层实现的，所有引擎都可以使用。</li>
+<li><strong>日志类型不同</strong>：<br>
+redo log是<strong>物理日志</strong>，记录的是“在某个数据页上做了什么修改”；binlog是<strong>逻辑日志</strong>，记录的是这个语句的原始逻辑，比如“给ID=2这一行的c字段加1 ”。</li>
+<li><strong>文件写入方式不同</strong>：<br>
+redo log是<strong>循环写的，空间固定会用完</strong>；binlog<strong>是可以追加写入的</strong>。“追加写”是指binlog文件写到一定大小后会切换到下一个，并不会覆盖以前的日志。</li>
+<li><strong>作用不同</strong>：<br>
+redo log用来<strong>确保事务的持久性</strong>，当我们修改数据的时候，写完内存了，但数据还没真正写到磁盘的时候。此时我们的数据库挂了，数据没有持久化，但是redo log已经持久化。系统可以根据redo log的内容，将所有数据恢复到最新的状态。<br>
+而bin log主要用来主从复制和恢复数据用。</li>
+</ol>
+<h5 id="13-为什么会有两套日志系统">1.3 为什么会有两套日志系统？</h5>
+<p>因为最开始MySQL里并没有InnoDB引擎。MySQL自带的引擎是MyISAM，但是MyISAM没有crash-safe的能力，binlog日志只能用于归档。而InnoDB是另一个公司以插件形式引入MySQL的，既然只依靠binlog是没有crash-safe能力的，所以InnoDB使用另外一套日志系统——也就是redo log来实现crash-safe能力。</p>
+<h5 id="14-两套日志怎么保证一致">1.4 两套日志怎么保证一致？</h5>
+<p>既然引入了两套日志，一致性就很重要了，MySQL用了<strong>两阶段提交</strong>来保证这一点。</p>
+<h4 id="2数据库的隔离级别">2.数据库的隔离级别</h4>
+<p>图片来源：1995年的那篇<a href="https://arxiv.org/ftp/cs/papers/0701/0701157.pdf">经典论文</a>，这篇文章对<a href="https://www.contrib.andrew.cmu.edu/~shadow/sql/sql1992.txt">SQL:1992标准</a>提出了改进方案，不过<a href="https://www.wikiwand.com/en/SQL-92">MySQL官方</a>现在还是支持<a href="https://www.wikiwand.com/en/SQL-92">SQL:1992标准</a>。以下讨论均基于SQL:1992。<br>
+SQL:1992定义了三种现象和为了避免这三种现象而引出的四种隔离级别：</p>
+<h5 id="21-三种现象">2.1 三种现象</h5>
+<ol>
+<li>P1 (Dirty Read)：即脏读，事务T1更改了数据，但是还未提交，此时事务T2读到了更改的数据，紧接着T1进行了回滚操作，那T2读到的这个数据就是从未存在过的数据。</li>
+<li>P2 (Non-repeatable or Fuzzy Read)：非可重复读，或称模糊读，T1读取了数据，T2改了并提交了，那T1再读取数据时，得到的就是被改过了的数据。这样，T1事务开始时读的数据和第二次读的数据不一致，<strong>非可重复读</strong>因此得名。</li>
+<li>P3 (Phantom)：幻读，T1按照一定的<strong>搜索条件</strong>读取了N行数据，然后T2按照这个条件生成了一行或多行满足这个搜索条件的数据，此时T1再按同样的搜索条件读取时，就会得到不同的数据了。看起来和非可重复读差不多，它们的区别在于：非可重复读针对的是同一个记录的数据内容被修改了，幻读是数据行记录变多了或者少了。</li>
+</ol>
+<h5 id="22-四种隔离级别">2.2 四种隔离级别</h5>
+<ol>
+<li>READ UNCOMMITTED：即T2可读取T1未提交的数据</li>
+<li>READ COMMITTED：即T2只能读取T1提交的数据</li>
+<li>REPEATABLE READ：可重复读，保证<strong>非可重复读</strong>现象不会发生。</li>
+<li>SERIALIZABLE：串行执行，隔离级别最高，T1读写先加锁，T2只能等着。<br>
+这四种隔离级别从上至下并发性依次降低，安全性依次增加。InnoDB的默认级别是REPEATABLE READ。</li>
+</ol>
+<h5 id="23-三种现象与四种隔离级别的关系">2.3 三种现象与四种隔离级别的关系</h5>
+<figure data-type="image" tabindex="1"><img src="https://boatrainlsz.github.io/post-images/1593331088109.jpg" alt="" loading="lazy"></figure>
+<h5 id="24-mysql对隔离级别的实现">2.4 MySQL对隔离级别的实现</h5>
+<p>SQL:1992只是规定了这四种隔离级别，不同的数据库对隔离级别的实现方式是不一样的，MySQL的<a href="https://dev.mysql.com/doc/refman/5.6/en/innodb-transaction-isolation-levels.html#isolevel_read-uncommitted">实现</a>如下：</p>
+<ol>
+<li>READ UNCOMMITTED：这个最简单，无锁就行。</li>
+<li>READ COMMITTED、REPEATABLE READ：快照。</li>
+<li>SERIALIZABLE：加锁。</li>
+</ol>
+<h4 id="2-innodb架构与细节">2. InnoDB架构与细节</h4>
+<p>InnoDB的整体架构如下(图片来自<a href="https://dev.mysql.com/doc/refman/5.6/en/innodb-architecture.html">MySQL官网</a>)：<br>
+<img src="https://boatrainlsz.github.io/post-images/1593413722395.png" alt="" loading="lazy"><br>
+<a href="https://mp.weixin.qq.com/s/zKHNaWY5AS0OMmag1mQTKQ">整体架构解读</a></p>
+<h5 id="21-buffer-pool详解">2.1 <a href="https://mp.weixin.qq.com/s/nA6UHBh87U774vu4VvGhyw">Buffer Pool详解</a></h5>
+<h5 id="22-change-buffer详解">2.2 <a href="https://mp.weixin.qq.com/s/PF21mUtpM8-pcEhDN4dOIw">Change Buffer详解</a></h5>
+<h5 id="23-adaptive-hash-index详解">2.3 <a href="https://mp.weixin.qq.com/s/vQsilZmyMaaVkYGkn-WXew">Adaptive Hash Index详解</a></h5>
+<h5 id="24-log-buffer详解">2.4 <a href="https://mp.weixin.qq.com/s/-Hx2KKYMEQCcTC-ADEuwVA">Log Buffer详解</a></h5>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#1redo-log-%E5%92%8Cbin-log">1.redo log 和bin log</a>
+<ul>
+<li><a href="#11-redo-log%E7%9A%84%E7%BB%93%E6%9E%84">1.1 redo log的结构：</a></li>
+<li><a href="#12-bin-log%E6%98%AFserver%E5%B1%82%E7%9A%84%E6%97%A5%E5%BF%97%E6%98%AF%E9%80%BB%E8%BE%91%E6%97%A5%E5%BF%97-%E5%AE%83%E4%B8%8Eredo-log%E7%9A%84%E5%8C%BA%E5%88%AB">1.2 bin log是Server层的日志，是逻辑日志。它与redo log的区别：</a></li>
+<li><a href="#13-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%9C%89%E4%B8%A4%E5%A5%97%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F">1.3 为什么会有两套日志系统？</a></li>
+<li><a href="#14-%E4%B8%A4%E5%A5%97%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E4%BF%9D%E8%AF%81%E4%B8%80%E8%87%B4">1.4 两套日志怎么保证一致？</a></li>
+</ul>
+</li>
+<li><a href="#2%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB">2.数据库的隔离级别</a>
+<ul>
+<li><a href="#21-%E4%B8%89%E7%A7%8D%E7%8E%B0%E8%B1%A1">2.1 三种现象</a></li>
+<li><a href="#22-%E5%9B%9B%E7%A7%8D%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB">2.2 四种隔离级别</a></li>
+<li><a href="#23-%E4%B8%89%E7%A7%8D%E7%8E%B0%E8%B1%A1%E4%B8%8E%E5%9B%9B%E7%A7%8D%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E7%9A%84%E5%85%B3%E7%B3%BB">2.3 三种现象与四种隔离级别的关系</a></li>
+<li><a href="#24-mysql%E5%AF%B9%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E7%9A%84%E5%AE%9E%E7%8E%B0">2.4 MySQL对隔离级别的实现</a></li>
+</ul>
+</li>
+<li><a href="#2-innodb%E6%9E%B6%E6%9E%84%E4%B8%8E%E7%BB%86%E8%8A%82">2. InnoDB架构与细节</a>
+<ul>
+<li><a href="#21-buffer-pool%E8%AF%A6%E8%A7%A3">2.1 Buffer Pool详解</a></li>
+<li><a href="#22-change-buffer%E8%AF%A6%E8%A7%A3">2.2 Change Buffer详解</a></li>
+<li><a href="#23-adaptive-hash-index%E8%AF%A6%E8%A7%A3">2.3 Adaptive Hash Index详解</a></li>
+<li><a href="#24-log-buffer%E8%AF%A6%E8%A7%A3">2.4 Log Buffer详解</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://boatrainlsz.github.io/post/g3OSUO_j2/">
+              <h3 class="post-title">
+                Java系列
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://boatrainlsz.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
