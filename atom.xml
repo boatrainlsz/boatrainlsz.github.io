@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-06-28T13:54:25.635Z</updated>
+    <updated>2020-06-29T07:00:51.006Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -191,7 +191,7 @@ dummyHead的<a href="https://www.1point3acres.com/bbs/thread-107020-1-1.html">�
         <link href="https://boatrainlsz.github.io/post/_if3VXOLw/">
         </link>
         <updated>2020-06-23T07:44:44.000Z</updated>
-        <content type="html"><![CDATA[<p>来源：<a href="https://dev.mysql.com/doc/">Mysql官网</a>和<a href="https://time.geekbang.org/column/intro/139">极客时间</a></p>
+        <content type="html"><![CDATA[<p>来源：<a href="https://dev.mysql.com/doc/">Mysql官网</a>和[微信公众号]https://mp.weixin.qq.com/s/syli7vs7Jw_VOTl5B2YUqg)</p>
 <h4 id="1redo-log-和bin-log">1.redo log 和bin log</h4>
 <h5 id="11-redo-log的结构">1.1 redo log的结构：</h5>
 <p><img src="https://boatrainlsz.github.io/post-images/1593314027202.png" alt="" loading="lazy"><br>
@@ -245,6 +245,14 @@ SQL:1992定义了三种现象和为了避免这三种现象而引出的四种隔
 <li>READ COMMITTED、REPEATABLE READ：快照。</li>
 <li>SERIALIZABLE：加锁。</li>
 </ol>
+<h4 id="2-innodb架构与细节">2. InnoDB架构与细节</h4>
+<p>InnoDB的整体架构如下(图片来自<a href="https://dev.mysql.com/doc/refman/5.6/en/innodb-architecture.html">MySQL官网</a>)：<br>
+<img src="https://boatrainlsz.github.io/post-images/1593413722395.png" alt="" loading="lazy"><br>
+<a href="https://mp.weixin.qq.com/s/zKHNaWY5AS0OMmag1mQTKQ">整体架构解读</a></p>
+<h5 id="21-buffer-pool详解">2.1 <a href="https://mp.weixin.qq.com/s/nA6UHBh87U774vu4VvGhyw">Buffer Pool详解</a></h5>
+<h5 id="22-change-buffer详解">2.2 <a href="https://mp.weixin.qq.com/s/PF21mUtpM8-pcEhDN4dOIw">Change Buffer详解</a></h5>
+<h5 id="23-adaptive-hash-index详解">2.3 <a href="https://mp.weixin.qq.com/s/vQsilZmyMaaVkYGkn-WXew">Adaptive Hash Index详解</a></h5>
+<h5 id="24-log-buffer详解">2.4 <a href="https://mp.weixin.qq.com/s/-Hx2KKYMEQCcTC-ADEuwVA">Log Buffer详解</a></h5>
 ]]></content>
     </entry>
     <entry>
