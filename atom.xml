@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-06-29T14:03:24.294Z</updated>
+    <updated>2020-06-29T14:03:57.150Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -16,10 +16,17 @@
         <link href="https://boatrainlsz.github.io/post/suan-fa-dai-ma-zhong-de-bian-jie-tiao-jian/">
         </link>
         <updated>2020-06-29T13:41:39.000Z</updated>
-        <content type="html"><![CDATA[<p>很多时候，代码的边界判定比较蛋疼，写错了一点，整个程序就不会按照你想要的方式运行。<br>
-关键在于：<strong>确定变量的实际意义，并在程序中至始至终维护这个意义。</strong><br>
-以二分查找为例，解释放在了注释里：</p>
-<pre><code class="language-java">public class BinarySearch {
+        <content type="html"><![CDATA[<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="//cdn.bootcss.com/highlightjs-line-numbers.js/1.1.0/highlightjs-line-numbers.min.js"></script>
+<script>hljs.initLineNumbersOnLoad();</script>
+很多时候，代码的边界判定比较蛋疼，写错了一点，整个程序就不会按照你想要的方式运行。
+关键在于：**确定变量的实际意义，并在程序中至始至终维护这个意义。**
+以二分查找为例，解释放在了注释里：
+```java
+public class BinarySearch {
     /**
      * @param array  已经升序排列的数组
      * @param n      数组长度
@@ -30,11 +37,11 @@
         //意义：在[l,r]区间内寻找target
         int l = 0, r = n - 1;
         //l=r时，就是一个元素，[l,r]区间仍然是有意义的
-        while (l &lt;= r) {
+        while (l <= r) {
             int mid = (l + r) / 2;
             if (array[mid] == target)
                 return mid;
-            if (target &gt; array[mid])
+            if (target > array[mid])
                 //array[mid]已经被判定为不等于target，那么左边界自然不用包括mid了
                 l = mid + 1;
             else
@@ -43,9 +50,8 @@
         return -1;
     }
 }
-</code></pre>
-<p>从始至终，[l,r]区间的意义就是：在[l,r]区间内寻找target。在后续的左边界移动、右边界移动操作中，都是在维护这个意义。这里的[l,r]其实就是个<a href="https://www.wikiwand.com/zh-hans/%E5%BE%AA%E7%8E%AF%E4%B8%8D%E5%8F%98%E9%87%8F">循环不变量</a></p>
-]]></content>
+```
+从始至终，[l,r]区间的意义就是：在[l,r]区间内寻找target。在后续的左边界移动、右边界移动操作中，都是在维护这个意义。这里的[l,r]其实就是个[循环不变量](https://www.wikiwand.com/zh-hans/%E5%BE%AA%E7%8E%AF%E4%B8%8D%E5%8F%98%E9%87%8F)]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[排序算法]]></title>
