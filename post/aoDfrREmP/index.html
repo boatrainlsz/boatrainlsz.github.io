@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>排序算法 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1593418253726">
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1593436093172">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="排序算法 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
@@ -11,8 +11,14 @@
 
 
 
-    <meta name="description" content="1. 选择排序
-" />
+    <meta name="description" content="0.排序模板
+package com.lsz.数据结构与算法.sort;
+import java.util.Arrays;
+import java.util.concurrent.ThreadLocalRandom;
+
+/**
+ * 排序
+..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -22,7 +28,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1593418253726" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1593436093172" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -82,14 +88,90 @@
                 2020-06-28
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h4 id="1-选择排序">1. 选择排序</h4>
+                <h4 id="0排序模板">0.排序模板</h4>
+<pre><code class="language-java">package com.lsz.数据结构与算法.sort;
+import java.util.Arrays;
+import java.util.concurrent.ThreadLocalRandom;
+
+/**
+ * 排序
+ */
+public class Sort {
+    public static void main(String[] args) {
+        Sort sort = new Sort();
+        int[] array = sort.generateRandomArray(10, 30, 65);
+        System.out.println(&quot;排序前:&quot; + Arrays.toString(array));
+        sort.selectionSort(array);
+        System.out.println(&quot;排序后:&quot; + Arrays.toString(array));
+    }
+
+    /**
+     * 交换array中的下标为i,j的元素
+     *
+     * @param array
+     * @param i
+     * @param j
+     */
+    private  void swap(int[] array, int i, int j) {
+        //这种交换不好，i=j时会犯错
+//        array[i] = array[i] + array[j];
+//        array[j] = array[i] - array[j];
+//        array[i] = array[i] - array[j];
+        int temp  =array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+
+    /**
+     * 生成随机数组
+     *
+     * @param n
+     * @param min
+     * @param max
+     * @return
+     */
+    public int[] generateRandomArray(int n, int min, int max) {
+        int[] array = new int[n];
+        for (int i = 0; i &lt; n; i++) {
+            array[i] = ThreadLocalRandom.current().nextInt(min, max + 1);
+        }
+        return array;
+    }
+}
+</code></pre>
+<h4 id="1-选择排序">1. 选择排序</h4>
+<p>遍历数组，把<strong>当前元素</strong>和<strong>后面未排序元素中最小的元素</strong>交换。</p>
+<pre><code class="language-java">private int[] selectionSort(int[] array) {
+        for (int i = 0; i &lt; array.length; i++) {
+            //找出[i,n]中最小的
+            int minIndex = i;
+            for (int j = i + 1; j &lt; array.length; j++)
+                if (array[minIndex] &gt; array[j])
+                    minIndex = j;
+            //找到了最小的，进行交换
+            swap(array, minIndex, i);
+        }
+        return array;
+    }
+</code></pre>
+<h4 id="2-插入排序">2. 插入排序</h4>
+<p>打牌时，整理牌的算法。让<strong>未排序元素</strong>在<strong>已排序元素</strong>中找到合适位置并插入。</p>
+<pre><code class="language-java">private void insertSort(int[] array) {
+        //从第二个元素开始，因为第一个元素已经是有序的
+        for (int i = 1; i &lt; array.length; i++) {
+            for (int j = i; j &gt; 0 &amp;&amp; array[j] &lt; array[j - 1]; j--) {
+                swap(array, j, j - 1);
+            }
+        }
+    }
+</code></pre>
 
               </div>
               <div class="toc-container">
@@ -100,7 +182,9 @@
 <ul>
 <li>
 <ul>
+<li><a href="#0%E6%8E%92%E5%BA%8F%E6%A8%A1%E6%9D%BF">0.排序模板</a></li>
 <li><a href="#1-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F">1. 选择排序</a></li>
+<li><a href="#2-%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F">2. 插入排序</a></li>
 </ul>
 </li>
 </ul>

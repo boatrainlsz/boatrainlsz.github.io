@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-06-29T08:13:00.473Z</updated>
+    <updated>2020-06-29T13:08:15.992Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -16,7 +16,83 @@
         <link href="https://boatrainlsz.github.io/post/aoDfrREmP/">
         </link>
         <updated>2020-06-28T12:05:27.000Z</updated>
-        <content type="html"><![CDATA[<h4 id="1-选择排序">1. 选择排序</h4>
+        <content type="html"><![CDATA[<h4 id="0排序模板">0.排序模板</h4>
+<pre><code class="language-java">package com.lsz.数据结构与算法.sort;
+import java.util.Arrays;
+import java.util.concurrent.ThreadLocalRandom;
+
+/**
+ * 排序
+ */
+public class Sort {
+    public static void main(String[] args) {
+        Sort sort = new Sort();
+        int[] array = sort.generateRandomArray(10, 30, 65);
+        System.out.println(&quot;排序前:&quot; + Arrays.toString(array));
+        sort.selectionSort(array);
+        System.out.println(&quot;排序后:&quot; + Arrays.toString(array));
+    }
+
+    /**
+     * 交换array中的下标为i,j的元素
+     *
+     * @param array
+     * @param i
+     * @param j
+     */
+    private  void swap(int[] array, int i, int j) {
+        //这种交换不好，i=j时会犯错
+//        array[i] = array[i] + array[j];
+//        array[j] = array[i] - array[j];
+//        array[i] = array[i] - array[j];
+        int temp  =array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+
+    /**
+     * 生成随机数组
+     *
+     * @param n
+     * @param min
+     * @param max
+     * @return
+     */
+    public int[] generateRandomArray(int n, int min, int max) {
+        int[] array = new int[n];
+        for (int i = 0; i &lt; n; i++) {
+            array[i] = ThreadLocalRandom.current().nextInt(min, max + 1);
+        }
+        return array;
+    }
+}
+</code></pre>
+<h4 id="1-选择排序">1. 选择排序</h4>
+<p>遍历数组，把<strong>当前元素</strong>和<strong>后面未排序元素中最小的元素</strong>交换。</p>
+<pre><code class="language-java">private int[] selectionSort(int[] array) {
+        for (int i = 0; i &lt; array.length; i++) {
+            //找出[i,n]中最小的
+            int minIndex = i;
+            for (int j = i + 1; j &lt; array.length; j++)
+                if (array[minIndex] &gt; array[j])
+                    minIndex = j;
+            //找到了最小的，进行交换
+            swap(array, minIndex, i);
+        }
+        return array;
+    }
+</code></pre>
+<h4 id="2-插入排序">2. 插入排序</h4>
+<p>打牌时，整理牌的算法。让<strong>未排序元素</strong>在<strong>已排序元素</strong>中找到合适位置并插入。</p>
+<pre><code class="language-java">private void insertSort(int[] array) {
+        //从第二个元素开始，因为第一个元素已经是有序的
+        for (int i = 1; i &lt; array.length; i++) {
+            for (int j = i; j &gt; 0 &amp;&amp; array[j] &lt; array[j - 1]; j--) {
+                swap(array, j, j - 1);
+            }
+        }
+    }
+</code></pre>
 ]]></content>
     </entry>
     <entry>
