@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-06-29T13:59:00.910Z</updated>
+    <updated>2020-06-29T14:03:24.294Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -44,7 +44,7 @@
     }
 }
 </code></pre>
-<p>从始至终，[l,r]区间的意义就是：在[l,r]区间内寻找target。在后续的左边界移动、右边界移动操作中，都是在维护这个意义。</p>
+<p>从始至终，[l,r]区间的意义就是：在[l,r]区间内寻找target。在后续的左边界移动、右边界移动操作中，都是在维护这个意义。这里的[l,r]其实就是个<a href="https://www.wikiwand.com/zh-hans/%E5%BE%AA%E7%8E%AF%E4%B8%8D%E5%8F%98%E9%87%8F">循环不变量</a></p>
 ]]></content>
     </entry>
     <entry>
