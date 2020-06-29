@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-06-29T13:08:15.992Z</updated>
+    <updated>2020-06-29T13:59:00.910Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -10,6 +10,43 @@
     <logo>https://boatrainlsz.github.io/images/avatar.png</logo>
     <icon>https://boatrainlsz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 画船听雨眠</rights>
+    <entry>
+        <title type="html"><![CDATA[算法代码中的边界条件]]></title>
+        <id>https://boatrainlsz.github.io/post/suan-fa-dai-ma-zhong-de-bian-jie-tiao-jian/</id>
+        <link href="https://boatrainlsz.github.io/post/suan-fa-dai-ma-zhong-de-bian-jie-tiao-jian/">
+        </link>
+        <updated>2020-06-29T13:41:39.000Z</updated>
+        <content type="html"><![CDATA[<p>很多时候，代码的边界判定比较蛋疼，写错了一点，整个程序就不会按照你想要的方式运行。<br>
+关键在于：<strong>确定变量的实际意义，并在程序中至始至终维护这个意义。</strong><br>
+以二分查找为例，解释放在了注释里：</p>
+<pre><code class="language-java">public class BinarySearch {
+    /**
+     * @param array  已经升序排列的数组
+     * @param n      数组长度
+     * @param target 要查找的目标值
+     * @return
+     */
+    int binarySearch(int[] array, int n, int target) {
+        //意义：在[l,r]区间内寻找target
+        int l = 0, r = n - 1;
+        //l=r时，就是一个元素，[l,r]区间仍然是有意义的
+        while (l &lt;= r) {
+            int mid = (l + r) / 2;
+            if (array[mid] == target)
+                return mid;
+            if (target &gt; array[mid])
+                //array[mid]已经被判定为不等于target，那么左边界自然不用包括mid了
+                l = mid + 1;
+            else
+                r = mid - 1;
+        }
+        return -1;
+    }
+}
+</code></pre>
+<p>从始至终，[l,r]区间的意义就是：在[l,r]区间内寻找target。在后续的左边界移动、右边界移动操作中，都是在维护这个意义。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[排序算法]]></title>
         <id>https://boatrainlsz.github.io/post/aoDfrREmP/</id>
@@ -381,266 +418,6 @@ SQL:1992定义了三种现象和为了避免这三种现象而引出的四种隔
         <updated>2020-06-22T06:40:49.000Z</updated>
         <content type="html"><![CDATA[<p>CSDN有多恶心可以看这篇帖子:https://juejin.im/post/5cd39a80e51d453b0d1c24aa<br>
 推荐一个<a href="https://greasyfork.org/zh-CN/scripts/1682-google-hit-hider-by-domain-search-filter-block-sites">油猴脚本</a>，屏蔽CSDN的搜索结果</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[《x86汇编语言:从实模式到保护模式》笔记]]></title>
-        <id>https://boatrainlsz.github.io/post/lesslessx86-hui-bian-yu-yan-cong-shi-mo-shi-dao-bao-hu-mo-shi-greatergreater-bi-ji/</id>
-        <link href="https://boatrainlsz.github.io/post/lesslessx86-hui-bian-yu-yan-cong-shi-mo-shi-dao-bao-hu-mo-shi-greatergreater-bi-ji/">
-        </link>
-        <updated>2020-06-20T12:23:32.000Z</updated>
-        <content type="html"><![CDATA[<link rel="stylesheet"
-      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<script src="//cdn.bootcss.com/highlightjs-line-numbers.js/1.1.0/highlightjs-line-numbers.min.js"></script>
-<script>hljs.initLineNumbersOnLoad();</script>
-<p><a href="https://book.douban.com/subject/20492528//">豆瓣链接</a><br>
-<a href="https://drive.google.com/drive/folders/17lqWpm3Zu3xuTSrQKhj2--r-lqqQzQhF?usp=sharing">随书的小工具</a></p>
-<h3 id="第2章-处理器-内存和指令">第2章 处理器、内存和指令</h3>
-<p><a href="https://software.intel.com/content/www/cn/zh/develop/articles/book-multicore-multithread-technology_microprocessor_history.html">处理器的发展史</a>，几个第一次：<br>
-1.第一次引入实模式和保护模式的是80286，引入的目的：在保护方式之下，可以保护操作系统，使之不像实模式或8086等不受保护的微处理器那样，在遇到异常应用时会使系统停机。<br>
-2.第一次引入CPU Cache的是80386<br>
-3.第一次在80x86系列中采用了RISC（精简指令集）技术的是80486</p>
-<h4 id="21-内存的分段">2.1 内存的分段</h4>
-<p><strong>段地址+偏移地址=物理地址</strong></p>
-<h4 id="22-8086cpu对分段内存的特殊处理">2.2 8086CPU对分段内存的特殊处理</h4>
-<p>前置知识：<strong>CPU的位数</strong>，比如8086是16位的CPU，16位指的是：</p>
-<ol>
-<li>ALU一次最多能处理16位的数据</li>
-<li>寄存器最大宽度为16位</li>
-<li>ALU与寄存器之间的通路为16位，如下图标注：<br>
-<img src="https://boatrainlsz.github.io/post-images/1592744460954.jpg" alt="" loading="lazy"><br>
-8086由于历史原因，CPU是16位的，但地址总线是20位的，如果按照2.1中的公式，两个16位的地址相加是得不到20位的地址的。<br>
-于是8086采用了<strong>段地址*16+偏移地址=物理地址</strong>的方法。<br>
-关于内存的分段和8086CPU对分段的特殊处理，<a href="https://book.douban.com/subject/25726019//">王爽的汇编语言</a>一书给出了两个形象的比喻：<br>
-<img src="https://boatrainlsz.github.io/post-images/1592745100667.jpg" alt="" loading="lazy"><br>
-<img src="https://boatrainlsz.github.io/post-images/1592745147135.jpg" alt="" loading="lazy"></li>
-</ol>
-<h3 id="第4章-虚拟机的安装与使用">第4章 虚拟机的安装与使用</h3>
-<p><a href="http://www.ruanyifeng.com/blog/2015/09/0x7c00.html">为什么主引导记录的内存地址是0x7C00？</a></p>
-<h4 id="41-磁盘的工作原理">4.1 磁盘的工作原理</h4>
-<p>书上说的是机械硬盘，可参考B站up主硬件茶谈的<a href="https://www.bilibili.com/video/BV1rE411Q71m">投稿</a>，简而言之，机械磁盘的结构如下：<br>
-<img src="https://boatrainlsz.github.io/post-images/1592723080928.jpg" alt="" loading="lazy"><br>
-硬盘由多个或一个盘片组成，后者称之为单碟。盘片串在同一个轴上，由电机带动旋转，转速(Round Per Minute)常见的有3600转、7200转。每个盘片拥有上下两个磁头，<strong>磁头</strong>(Heads)编号从上至下从0开始。电机旋转带动盘片旋转时，磁头在盘片上画出的虚拟的圆称之为<strong>磁道</strong>，不同盘片的相同位置的磁道共同组成一个<strong>柱面(Cylinder)</strong>。<br>
-从常识来看，我们会认为数据的写入是一个一个盘片从上到下写入的，其实不是的。因为移动磁头对于CPU来说实在是太慢了(具体的数据可以参考<a href="https://gist.github.com/hellerbarde/2843375">这个文档</a>)。所以写入时是<strong>一个一个柱面</strong>来写入的，这样就能保证尽量不会移动磁头。数据的写入不是以磁道为单位的，而是扇区，由上图可见：一个磁道划分为多个扇区，通常是63个扇区，扇区的编号从1开始。扇区<strong>由扇区头和数据区组成</strong>，扇区头记录了扇区的信息(磁道号、磁头号、扇区号)，数据区大小为512字节。</p>
-<h4 id="42-磁盘的chs模式和lba模式">4.2 磁盘的CHS模式和LBA模式</h4>
-<p>上面说了，磁盘的最小单位是扇区，要访问扇区，就得知道它在哪个位置，比如0面0道1扇区就是大名鼎鼎的启动扇区，这种柱面+磁头+扇区的编号方式称之为CHS模式(Cylinder+Heads+Sector)。这种编号方式缺点就是要时刻注意编号不要弄错，比如我要在0面0道64扇区写入数据，但64扇区其实是不存在的。所以引入了LBA模式(Logical Block Address)，它不考虑扇区的物理位置，而是将它们统一编号， 比如一个硬盘有6个磁头，每面1000个磁道，每磁道有17个扇区。则逻辑扇区和物理扇区的对应关系如下：</p>
-<table>
-<thead>
-<tr>
-<th>逻辑扇区编号</th>
-<th>物理扇区编号</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0扇区</td>
-<td>0面0道1扇区</td>
-</tr>
-<tr>
-<td>1扇区</td>
-<td>0面0道2扇区</td>
-</tr>
-<tr>
-<td>......</td>
-<td>......</td>
-</tr>
-<tr>
-<td>16扇区</td>
-<td>0面0道17扇区</td>
-</tr>
-<tr>
-<td>17扇区</td>
-<td>1面0道1扇区</td>
-</tr>
-</tbody>
-</table>
-<p>所以从上面看出，LBA的编号规律是一个一个柱面、从上到下编号的。LBA与CHS的换算公式如下：<br>
-LBA=C*磁头总数*每道扇区数+H*每道扇区数+(S-1)，<br>
-其中C、H、S分别是物理扇区所在的柱面、磁头、扇区号。<br>
-LBA模式在硬盘控制器上提供了硬件支持，所以性能非常好。</p>
-<h3 id="第5章-编写主引导扇区代码">第5章 编写主引导扇区代码</h3>
-<h4 id="51-显存与显示器">5.1 显存与显示器</h4>
-<p>显存存储要显示的内容，无非也就是一些二进制数据，没有什么不同。显示器用来显示图形。<br>
-CPU要访问显存，就得和显卡这个外围设备打交道，速度自然慢。所以，为了提高效率，通常是把显存的地址映射到内存地址上来，如下图所示：<br>
-<img src="https://boatrainlsz.github.io/post-images/1592813922828.jpg" alt="" loading="lazy"><br>
-这样，显存的访问也就同样遵循<strong>段地址+偏移地址=物理地址</strong>的规则</p>
-<h4 id="52-mov指令的格式">5.2 mov指令的格式</h4>
-<p>默认段地址存储在DS寄存器里，不过这不是强制的，这里使用ES来存储段地址。</p>
-<pre><code class="language-java">mov byte [es:0x00],'L'
-</code></pre>
-<p>[es:0x00]称为目的操作数，'L'称为源操作数，byte用来修饰目的操作数，指明本次传送以字节方式进行，其他的修饰符还有word。[]表明这是一个地址，es:是段超越前缀，明确告诉CPU段地址从ES寄存器中取，而不是DS。0x00代表偏移地址。‘L’这里可以替换成它的ASCII码：0x4C，不过可读性显然不如‘L’。<br>
-综上，上面这条汇编语句的作用就是：先ES*16+0x00得到物理地址，把'L'的二进制表示01001100复制到这个物理地址指定的内存单元中去。</p>
-<p>mov指令不允许：</p>
-<ol>
-<li>目的操作数为立即数</li>
-<li>目的操作数和源操作数不能同时为内存单元<br>
-也就是说，以下两条指令明显是错误的：</li>
-</ol>
-<pre><code class="language-java">mov 0x1c al
-mov [0x01],[0x02]
-</code></pre>
-<p>第一条好理解，把AL寄存器的内容传给一个立即数是无意义的。<br>
-第二条是因为CPU不允许这么搞，不过可以借助寄存器中转来达到目的，比如下面这条指令：</p>
-<pre><code class="language-java">mov ax [0x02]
-mov [0x01],ax
-</code></pre>
-<h4 id="53-汇编地址与偏移地址">5.3 汇编地址与偏移地址</h4>
-<p>为了支持<strong>段地址+偏移地址=物理地址</strong>这种访问模式，汇编器在编译阶段会<strong>将源程序看作一个段</strong>来处理。也就是说，会从0开始为每一条指令计算地址，这个地址称为<strong>汇编地址</strong>。从这一点来看，<strong>编译阶段的汇编地址和加载进内存后的偏移地址是完全相等的</strong>。如下所示：<br>
-<img src="https://boatrainlsz.github.io/post-images/1592828890240.jpg" alt="" loading="lazy"><br>
-之所以图中的箭头是交叉的，是因为物理地址是从低地址向高地址增长，而源程序的编译是从上到下的。<br>
-下面对编译后的lst文件进行一些说明：</p>
-<pre><code class="language-java">                                          ;代码清单5-1 
-                                          ;文件名：c05_mbr.asm
-                                          ;文件说明：硬盘主引导扇区代码
-                                          ;创建日期：2011-3-31 21:15 
-                                          
-00000000 B800B8                           mov ax,0xb800                 ;指向文本模式的显示缓冲区
-00000003 8EC0                             mov es,ax
-                                 
-                                          ;以下显示字符串&quot;Label offset:&quot;
-00000005 26C60600004C                     mov byte [es:0x00],'L'
-0000000B 26C606010007                     mov byte [es:0x01],0x07
-00000011 26C606020061                     mov byte [es:0x02],'a'
-00000017 26C606030007                     mov byte [es:0x03],0x07
-0000001D 26C606040062                     mov byte [es:0x04],'b'
-00000023 26C606050007                     mov byte [es:0x05],0x07
-00000029 26C606060065                     mov byte [es:0x06],'e'
-0000002F 26C606070007                     mov byte [es:0x07],0x07
-00000035 26C60608006C                     mov byte [es:0x08],'l'
-0000003B 26C606090007                     mov byte [es:0x09],0x07
-00000041 26C6060A0020                     mov byte [es:0x0a],' '
-00000047 26C6060B0007                     mov byte [es:0x0b],0x07
-0000004D 26C6060C006F                     mov byte [es:0x0c],&quot;o&quot;
-00000053 26C6060D0007                     mov byte [es:0x0d],0x07
-00000059 26C6060E0066                     mov byte [es:0x0e],'f'
-0000005F 26C6060F0007                     mov byte [es:0x0f],0x07
-00000065 26C606100066                     mov byte [es:0x10],'f'
-0000006B 26C606110007                     mov byte [es:0x11],0x07
-00000071 26C606120073                     mov byte [es:0x12],'s'
-00000077 26C606130007                     mov byte [es:0x13],0x07
-0000007D 26C606140065                     mov byte [es:0x14],'e'
-00000083 26C606150007                     mov byte [es:0x15],0x07
-00000089 26C606160074                     mov byte [es:0x16],'t'
-0000008F 26C606170007                     mov byte [es:0x17],0x07
-00000095 26C60618003A                     mov byte [es:0x18],':'
-0000009B 26C606190007                     mov byte [es:0x19],0x07
-                                 
-000000A1 B8[2E01]                         mov ax,number                 ;取得标号number的偏移地址
-000000A4 BB0A00                           mov bx,10
-                                 
-                                          ;设置数据段的基地址
-000000A7 8CC9                             mov cx,cs
-000000A9 8ED9                             mov ds,cx
-                                 
-                                          ;求个位上的数字
-000000AB BA0000                           mov dx,0
-000000AE F7F3                             div bx
-000000B0 8816[2E7D]                       mov [0x7c00+number+0x00],dl   ;保存个位上的数字
-                                 
-                                          ;求十位上的数字
-000000B4 31D2                             xor dx,dx
-000000B6 F7F3                             div bx
-000000B8 8816[2F7D]                       mov [0x7c00+number+0x01],dl   ;保存十位上的数字
-                                 
-                                          ;求百位上的数字
-000000BC 31D2                             xor dx,dx
-000000BE F7F3                             div bx
-000000C0 8816[307D]                       mov [0x7c00+number+0x02],dl   ;保存百位上的数字
-                                 
-                                          ;求千位上的数字
-000000C4 31D2                             xor dx,dx
-000000C6 F7F3                             div bx
-000000C8 8816[317D]                       mov [0x7c00+number+0x03],dl   ;保存千位上的数字
-                                 
-                                          ;求万位上的数字 
-000000CC 31D2                             xor dx,dx
-000000CE F7F3                             div bx
-000000D0 8816[327D]                       mov [0x7c00+number+0x04],dl   ;保存万位上的数字
-                                 
-                                          ;以下用十进制显示标号的偏移地址
-000000D4 A0[327D]                         mov al,[0x7c00+number+0x04]
-000000D7 0430                             add al,0x30
-000000D9 26A21A00                         mov [es:0x1a],al
-000000DD 26C6061B0004                     mov byte [es:0x1b],0x04
-                                          
-000000E3 A0[317D]                         mov al,[0x7c00+number+0x03]
-000000E6 0430                             add al,0x30
-000000E8 26A21C00                         mov [es:0x1c],al
-000000EC 26C6061D0004                     mov byte [es:0x1d],0x04
-                                          
-000000F2 A0[307D]                         mov al,[0x7c00+number+0x02]
-000000F5 0430                             add al,0x30
-000000F7 26A21E00                         mov [es:0x1e],al
-000000FB 26C6061F0004                     mov byte [es:0x1f],0x04
-                                 
-00000101 A0[2F7D]                         mov al,[0x7c00+number+0x01]
-00000104 0430                             add al,0x30
-00000106 26A22000                         mov [es:0x20],al
-0000010A 26C606210004                     mov byte [es:0x21],0x04
-                                 
-00000110 A0[2E7D]                         mov al,[0x7c00+number+0x00]
-00000113 0430                             add al,0x30
-00000115 26A22200                         mov [es:0x22],al
-00000119 26C606230004                     mov byte [es:0x23],0x04
-                                          
-0000011F 26C606240044                     mov byte [es:0x24],'D'
-00000125 26C606250007                     mov byte [es:0x25],0x07
-                                           
-0000012B E9FDFF                     infi: jmp near infi                 ;无限循环
-                                       
-0000012E 0000000000                number db 0,0,0,0,0
-                                   
-00000133 00&lt;rept&gt;                  times 203 db 0
-000001FE 55AA                                db 0x55,0xaa
-
-</code></pre>
-<ol>
-<li>注释以;开始</li>
-<li>文件一共有五列，分别为：行号、汇编地址、编译后的机器代码、源代码、注释。</li>
-<li>第98行的infi第100行的number等符号，称之为标号，它代表了该行指令的汇编地址，比如infi就代表了0x0000012B，number代表了0000012，紧跟在infi后面的冒号可以省略。</li>
-</ol>
-<h4 id="54-如何在屏幕上显示61238">5.4 如何在屏幕上显示61238？</h4>
-<p>十进制的61238是二进制的1110111100110110，直接把1110111100110110传送给显存是显示不出61238的，具体可见<a href="https://www.zhihu.com/question/21323244/answer/106609419">这个回答</a>，所以需要辗转相除法得到每个数位6、1、2、3、8，然后分别把他们对应的ASCII码传送给显存，就能显示出来了。</p>
-<h4 id="55-如何做除法">5.5 如何做除法</h4>
-<p>上面提到了要对61238作辗转相除法，相除得到的数必须要保存起来以备后用，存到寄存器中不太可行，因为寄存器数量有限。因此，第100行用DB指令声明<strong>字节</strong>用来存放数位，DB代表Declare Byte，即声明字数据，此外还有DW(Declare Word)：声明字数据、DD(Declare Double Word)：声明双字数据、DQ(Declare Quad Word)：声明四字数据等。这些指令统称为伪指令(Pseudo Instruction)，伪指令只是汇编指令，没有对应的机器指令。这里声明了5个字节并初始化为0。<br>
-初始化工作做好了，接下来就开始除法了。</p>
-<h5 id="551-8086的两种除法">5.5.1 8086的两种除法</h5>
-<ol>
-<li>16位/8位<br>
-这种情况下，被除数来自<strong>AX寄存器</strong>，也就是说必须要事先送到AX寄存器中去，除数来自<strong>8位的通用寄存器或者内存单元</strong>。得到的<strong>商存在AL寄存器</strong>中，<strong>余数在AH寄存器</strong>中。比如，如下两条指令：</li>
-</ol>
-<pre><code class="language-java">div cl
-div byte [0x0023]
-</code></pre>
-<p>第一条指令除数来自cl<br>
-第二条指令，除数位于数据段中偏移地址为0x0023的地址中。执行时，CPU从DS寄存器中拿到段地址并左移四位，再加上0x0023得到物理地址，并从这个物理地址取出除数。当然，如果段地址存在CS或ES中，则要使用段超越前缀了：</p>
-<pre><code class="language-java">div byte [cs:0x0023]
-div byte [es:0x0023]
-</code></pre>
-<p>但是一般编写汇编程序时，不可能知道汇编地址的具体数值，这时就要用到前面说的标号了，如下：</p>
-<pre><code class="language-java">divdnd dw 0x3f0
-divsor db 0x3f
-
-......
-
-mov ax, [divdnd]
-div byte [divsor]
-</code></pre>
-<p>汇编器编译时，会把divdnd、divsor这两个标号换成具体的汇编地址，假设divdnd、divsor代表的地址分别是0xf000、0xf002，则最后的汇编指令是这样的：</p>
-<pre><code class="language-java">mov ax, [0xf000]
-div byte [0xf002]
-</code></pre>
-<ol>
-<li>32位/16位<br>
-这种情况下，因为8086是16位的CPU，无法提供32位的被除数，所以规定<strong>被除数的高16位在DX中，低16位在AX中。<strong>这时，通常用DX:AX来描述被除数。除数来自</strong>16位的通用寄存器或者内存单元</strong>。得到的<strong>商存在AX寄存器</strong>中，<strong>余数在DX寄存器</strong>中。</li>
-</ol>
-<h5 id="552-用异或操作清空寄存器">5.5.2 用异或操作清空寄存器</h5>
-<p>xor指令：称为异或指令，顾名思义，相异才为1，比如0 xor 1 = 1 。这条指令常用来清空一个寄存器，比如:</p>
-<pre><code class="language-java">xor dx,dx
-</code></pre>
-<p>这条指令把dx寄存器清空，因为两个相同的数字异或得到0。那为什么不用 mov dx,0这样的指令呢？因为异或操作生成的机器码较短，且异或指令操作的是两个通用寄存器，速度快一点。</p>
 ]]></content>
     </entry>
 </feed>

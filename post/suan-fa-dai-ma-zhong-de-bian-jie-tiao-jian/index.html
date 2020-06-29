@@ -2,22 +2,19 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>排序算法 | 画船听雨眠</title>
+<title>算法代码中的边界条件 | 画船听雨眠</title>
 <link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1593439133745">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="排序算法 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="算法代码中的边界条件 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="0.排序模板
-package com.lsz.数据结构与算法.sort;
-import java.util.Arrays;
-import java.util.concurrent.ThreadLocalRandom;
-
-/**
- * 排序
+    <meta name="description" content="很多时候，代码的边界判定比较蛋疼，写错了一点，整个程序就不会按照你想要的方式运行。
+关键在于：确定变量的实际意义，并在程序中至始至终维护这个意义。
+以二分查找为例，解释放在了注释里：
+public class BinarySearch {
 ..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
@@ -81,11 +78,11 @@ import java.util.concurrent.ThreadLocalRandom;
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              排序算法
+              算法代码中的边界条件
             </h2>
             <div class="post-info">
               <span>
-                2020-06-28
+                2020-06-29
               </span>
               <span>
                 2 min read
@@ -95,104 +92,39 @@ import java.util.concurrent.ThreadLocalRandom;
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h4 id="0排序模板">0.排序模板</h4>
-<pre><code class="language-java">package com.lsz.数据结构与算法.sort;
-import java.util.Arrays;
-import java.util.concurrent.ThreadLocalRandom;
-
-/**
- * 排序
- */
-public class Sort {
-    public static void main(String[] args) {
-        Sort sort = new Sort();
-        int[] array = sort.generateRandomArray(10, 30, 65);
-        System.out.println(&quot;排序前:&quot; + Arrays.toString(array));
-        sort.selectionSort(array);
-        System.out.println(&quot;排序后:&quot; + Arrays.toString(array));
-    }
-
+                <p>很多时候，代码的边界判定比较蛋疼，写错了一点，整个程序就不会按照你想要的方式运行。<br>
+关键在于：<strong>确定变量的实际意义，并在程序中至始至终维护这个意义。</strong><br>
+以二分查找为例，解释放在了注释里：</p>
+<pre><code class="language-java">public class BinarySearch {
     /**
-     * 交换array中的下标为i,j的元素
-     *
-     * @param array
-     * @param i
-     * @param j
-     */
-    private  void swap(int[] array, int i, int j) {
-        //这种交换不好，i=j时会犯错
-//        array[i] = array[i] + array[j];
-//        array[j] = array[i] - array[j];
-//        array[i] = array[i] - array[j];
-        int temp  =array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-
-    /**
-     * 生成随机数组
-     *
-     * @param n
-     * @param min
-     * @param max
+     * @param array  已经升序排列的数组
+     * @param n      数组长度
+     * @param target 要查找的目标值
      * @return
      */
-    public int[] generateRandomArray(int n, int min, int max) {
-        int[] array = new int[n];
-        for (int i = 0; i &lt; n; i++) {
-            array[i] = ThreadLocalRandom.current().nextInt(min, max + 1);
+    int binarySearch(int[] array, int n, int target) {
+        //意义：在[l,r]区间内寻找target
+        int l = 0, r = n - 1;
+        //l=r时，就是一个元素，[l,r]区间仍然是有意义的
+        while (l &lt;= r) {
+            int mid = (l + r) / 2;
+            if (array[mid] == target)
+                return mid;
+            if (target &gt; array[mid])
+                //array[mid]已经被判定为不等于target，那么左边界自然不用包括mid了
+                l = mid + 1;
+            else
+                r = mid - 1;
         }
-        return array;
+        return -1;
     }
 }
 </code></pre>
-<h4 id="1-选择排序">1. 选择排序</h4>
-<p>遍历数组，把<strong>当前元素</strong>和<strong>后面未排序元素中最小的元素</strong>交换。</p>
-<pre><code class="language-java">private int[] selectionSort(int[] array) {
-        for (int i = 0; i &lt; array.length; i++) {
-            //找出[i,n]中最小的
-            int minIndex = i;
-            for (int j = i + 1; j &lt; array.length; j++)
-                if (array[minIndex] &gt; array[j])
-                    minIndex = j;
-            //找到了最小的，进行交换
-            swap(array, minIndex, i);
-        }
-        return array;
-    }
-</code></pre>
-<h4 id="2-插入排序">2. 插入排序</h4>
-<p>打牌时，整理牌的算法。让<strong>未排序元素</strong>在<strong>已排序元素</strong>中找到合适位置并插入。</p>
-<pre><code class="language-java">private void insertSort(int[] array) {
-        //从第二个元素开始，因为第一个元素已经是有序的
-        for (int i = 1; i &lt; array.length; i++) {
-            for (int j = i; j &gt; 0 &amp;&amp; array[j] &lt; array[j - 1]; j--) {
-                swap(array, j, j - 1);
-            }
-        }
-    }
-</code></pre>
+<p>从始至终，[l,r]区间的意义就是：在[l,r]区间内寻找target。在后续的左边界移动、右边界移动操作中，都是在维护这个意义。</p>
 
               </div>
               <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#0%E6%8E%92%E5%BA%8F%E6%A8%A1%E6%9D%BF">0.排序模板</a></li>
-<li><a href="#1-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F">1. 选择排序</a></li>
-<li><a href="#2-%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F">2. 插入排序</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
+                
               </div>
             </div>
           </article>
@@ -201,9 +133,9 @@ public class Sort {
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://boatrainlsz.github.io/post/pdVCXY0e0/">
+            <a href="https://boatrainlsz.github.io/post/aoDfrREmP/">
               <h3 class="post-title">
-                Java HashMap Infinite Loop
+                排序算法
               </h3>
             </a>
           </div>
