@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-06-29T14:06:22.556Z</updated>
+    <updated>2020-06-30T13:54:41.770Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -292,7 +292,35 @@ public class LinkedList&lt;E&gt; {
 <h4 id="2-dummyhead">2 dummyHead</h4>
 <p>基本定义中的添加元素的add方法需要对头节点的情况做特殊处理，很不优雅，可以引入dummyHead的概念，这样一来，所有的节点都拥有前置节点，所以就无需对头节点做特殊处理。<br>
 <img src="https://boatrainlsz.github.io/post-images/1593178011276.jpg" alt="" loading="lazy"><br>
-dummyHead的<a href="https://www.1point3acres.com/bbs/thread-107020-1-1.html">好处</a>：</p>
+dummyHead的<a href="https://www.1point3acres.com/bbs/thread-107020-1-1.html">好处</a></p>
+<h4 id="3-递归的删除链表元素">3 递归的删除链表元素</h4>
+<p>递归分三步：<br>
+<strong>明确函数功能：要清楚你写这个函数是想要做什么；<br>
+确认递归终点：递归一定要有递归终点，不然会永远递归下去，禁止套娃；<br>
+找出递推关系：开始实现递归，一步一步递推出最终结果。</strong><br>
+明白了这个道理，代码也就不难了，如下：</p>
+<pre><code class="language-java">/** 作用就是保证以head为头节点的链表中不存在值为val的节点
+     * @param head 链表头节点
+     * @param val  要删除的值
+     * @return 删除值后，剩下的链表的头节点
+     */
+    public Node removeElement(Node head, E val) {
+        //如何递归调用
+        //1.确定递归终点，当head为null时
+        if (head == null) return null;
+        //2.假设[head-&gt;next, ...]这区间内已经删除了val
+        Node node = removeElement(head.next, val);
+        //3.分情况讨论
+        if (head.e == val){
+            //head需要删除
+            return node;
+        }else {
+            //head不需要删除
+            head.next = node;
+            return head;
+        }
+    }
+</code></pre>
 ]]></content>
     </entry>
     <entry>
