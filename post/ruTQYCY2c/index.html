@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Redis系列 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1593588776218">
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1593591579076">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="Redis系列 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
@@ -16,8 +16,9 @@
 2. Redis线程模型
 3. Redis持久化
 4. Redis主从同步
-5. Redis过期算法
-..." />
+4.1 CAP定理
+P出现时，C、A无法都满足。
+Redis无法保证强一..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -27,7 +28,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1593588776218" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1593591579076" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -87,7 +88,7 @@
                 2020-06-23
               </span>
               <span>
-                1 min read
+                3 min read
               </span>
               
             </div>
@@ -99,6 +100,31 @@
 <h4 id="2-redis线程模型">2. Redis线程模型</h4>
 <h4 id="3-redis持久化">3. Redis持久化</h4>
 <h4 id="4-redis主从同步">4. Redis主从同步</h4>
+<h5 id="41-cap定理">4.1 <a href="https://www.wikiwand.com/zh-hans/CAP%E5%AE%9A%E7%90%86">CAP定理</a></h5>
+<p>P出现时，C、A无法都满足。<br>
+Redis无法保证强一致性，只能保证最终一致性。</p>
+<h5 id="42-增量同步">4.2 增量同步</h5>
+<p>主节点将指令记录在内存的环形数组中，开启异步线程将指令同步给从节点，从节点执行指令并反馈同步进度(偏移量)<br>
+<img src="https://boatrainlsz.github.io/post-images/1593589301879.jpg" alt="" loading="lazy"><br>
+缺点：因为数组是环形的，如果满了，就会覆盖旧的指令。如果网络太差或者数组本身太小，就会发生覆盖的情况。</p>
+<h5 id="43-快照同步">4.3 快照同步</h5>
+<p>快照同步，就是主节点用<a href="http://redisdoc.com/persistence/bgsave.html">bgsave指令</a>将内存数据全部dump到磁盘文件中，再将磁盘文件发给从节点，从节点加载磁盘文件恢复内存数据，加载完成后再进行增量同步把快照同步这段时间内的操作同步过来。<br>
+如果快照同步时间过长或者数组太小，那么快照同步后的增量同步仍然无法避免覆盖的问题。这样一来就只能再次快照同步，就会陷入快照同步的死循环。</p>
+<h5 id="44-无盘复制since-redis-2818">4.4 无盘复制(since Redis 2.8.18)</h5>
+<p>无盘复制是对快照同步的改进，快照同步的磁盘文件，它的生成、传输都需要花费不少时间。无盘复制的思想就是主节点一边遍历内存，一边通过socket发送快照内容给从节点，从节点存储到磁盘中，再一次性加载。</p>
+<h5 id="45-wait指令">4.5 <a href="http://redis.cn/commands/wait.html">wait指令</a></h5>
+<p>以上几种同步都是异步的，wait指令可以进行同步复制。此命令<strong>阻塞当前客户端</strong>，直到所有以前的写命令都成功的传输确认。它的用法如下：</p>
+<pre><code class="language-java">wait n timeout
+</code></pre>
+<p>其中，n代表从节点个数，timeout代表同步操作最多等待timeout毫秒，timeout为0则代表一直等。</p>
+<h4 id="5-redis-sentinel">5. <a href="https://redis.io/topics/sentinel">Redis Sentinel</a></h4>
+<p>如果节点挂了怎么办？Redis官方提供了Redis Sentinel来提供高可用的服务。一般至少3台Redis Sentinel机器组成一个集群。它的处理流程如下：<br>
+客户端向sentinel询问当前提供服务的master节点，然后去连接master节点进行交互：<br>
+<img src="https://boatrainlsz.github.io/post-images/1593591162483.jpg" alt="" loading="lazy"><br>
+当master挂了，客户端要求sentine提供新的master地址，sentinel将选择一个最优的从节点提拔为新的master节点，并告知客户端：<br>
+<img src="https://boatrainlsz.github.io/post-images/1593591284328.jpg" alt="" loading="lazy"><br>
+sentinel会继续监控挂了的节点，当原来的master恢复了，它重新加入集群成为从节点。并重新执行一遍快照同步+增量同步：<br>
+<img src="https://boatrainlsz.github.io/post-images/1593591553434.jpg" alt="" loading="lazy"></p>
 <h4 id="5-redis过期算法">5. Redis过期算法</h4>
 
               </div>
@@ -113,7 +139,16 @@
 <li><a href="#1-redis%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">1. Redis基础数据结构</a></li>
 <li><a href="#2-redis%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B">2. Redis线程模型</a></li>
 <li><a href="#3-redis%E6%8C%81%E4%B9%85%E5%8C%96">3. Redis持久化</a></li>
-<li><a href="#4-redis%E4%B8%BB%E4%BB%8E%E5%90%8C%E6%AD%A5">4. Redis主从同步</a></li>
+<li><a href="#4-redis%E4%B8%BB%E4%BB%8E%E5%90%8C%E6%AD%A5">4. Redis主从同步</a>
+<ul>
+<li><a href="#41-cap%E5%AE%9A%E7%90%86">4.1 CAP定理</a></li>
+<li><a href="#42-%E5%A2%9E%E9%87%8F%E5%90%8C%E6%AD%A5">4.2 增量同步</a></li>
+<li><a href="#43-%E5%BF%AB%E7%85%A7%E5%90%8C%E6%AD%A5">4.3 快照同步</a></li>
+<li><a href="#44-%E6%97%A0%E7%9B%98%E5%A4%8D%E5%88%B6since-redis-2818">4.4 无盘复制(since Redis 2.8.18)</a></li>
+<li><a href="#45-wait%E6%8C%87%E4%BB%A4">4.5 wait指令</a></li>
+</ul>
+</li>
+<li><a href="#5-redis-sentinel">5. Redis Sentinel</a></li>
 <li><a href="#5-redis%E8%BF%87%E6%9C%9F%E7%AE%97%E6%B3%95">5. Redis过期算法</a></li>
 </ul>
 </li>
