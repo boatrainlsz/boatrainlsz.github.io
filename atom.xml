@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-07-01T08:19:43.649Z</updated>
+    <updated>2020-07-01T09:15:37.137Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -361,6 +361,9 @@ Redis无法保证强一致性，只能保证最终一致性。</p>
 <img src="https://boatrainlsz.github.io/post-images/1593591284328.jpg" alt="" loading="lazy"><br>
 sentinel会继续监控挂了的节点，当原来的master恢复了，它重新加入集群成为从节点。并重新执行一遍快照同步+增量同步：<br>
 <img src="https://boatrainlsz.github.io/post-images/1593591553434.jpg" alt="" loading="lazy"></p>
+<h4 id="6-redis的集群方案">6. Redis的集群方案</h4>
+<p>国人自研的<a href="https://github.com/CodisLabs/codis/">Codis</a>，很久没维护了，不多说。<br>
+目前用的最多的是官方的<a href="https://redis.io/topics/cluster-tutorial">Redis Cluster</a>，下面详细讲讲Redis Cluster：</p>
 <h4 id="5-redis过期算法">5. Redis过期算法</h4>
 ]]></content>
     </entry>

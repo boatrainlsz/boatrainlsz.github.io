@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Redis系列 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1593591579076">
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1593594933919">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="Redis系列 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
@@ -28,7 +28,7 @@ Redis无法保证强一..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1593591579076" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1593594933919" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -125,6 +125,9 @@ Redis无法保证强一致性，只能保证最终一致性。</p>
 <img src="https://boatrainlsz.github.io/post-images/1593591284328.jpg" alt="" loading="lazy"><br>
 sentinel会继续监控挂了的节点，当原来的master恢复了，它重新加入集群成为从节点。并重新执行一遍快照同步+增量同步：<br>
 <img src="https://boatrainlsz.github.io/post-images/1593591553434.jpg" alt="" loading="lazy"></p>
+<h4 id="6-redis的集群方案">6. Redis的集群方案</h4>
+<p>国人自研的<a href="https://github.com/CodisLabs/codis/">Codis</a>，很久没维护了，不多说。<br>
+目前用的最多的是官方的<a href="https://redis.io/topics/cluster-tutorial">Redis Cluster</a>，下面详细讲讲Redis Cluster：</p>
 <h4 id="5-redis过期算法">5. Redis过期算法</h4>
 
               </div>
@@ -149,6 +152,7 @@ sentinel会继续监控挂了的节点，当原来的master恢复了，它重新
 </ul>
 </li>
 <li><a href="#5-redis-sentinel">5. Redis Sentinel</a></li>
+<li><a href="#6-redis%E7%9A%84%E9%9B%86%E7%BE%A4%E6%96%B9%E6%A1%88">6. Redis的集群方案</a></li>
 <li><a href="#5-redis%E8%BF%87%E6%9C%9F%E7%AE%97%E6%B3%95">5. Redis过期算法</a></li>
 </ul>
 </li>
