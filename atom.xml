@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-07-01T09:15:37.137Z</updated>
+    <updated>2020-07-01T14:02:36.608Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -363,7 +363,9 @@ sentinel会继续监控挂了的节点，当原来的master恢复了，它重新
 <img src="https://boatrainlsz.github.io/post-images/1593591553434.jpg" alt="" loading="lazy"></p>
 <h4 id="6-redis的集群方案">6. Redis的集群方案</h4>
 <p>国人自研的<a href="https://github.com/CodisLabs/codis/">Codis</a>，很久没维护了，不多说。<br>
-目前用的最多的是官方的<a href="https://redis.io/topics/cluster-tutorial">Redis Cluster</a>，下面详细讲讲Redis Cluster：</p>
+目前用的最多的是官方的<a href="https://redis.io/topics/cluster-tutorial">Redis Cluster</a>，下面详细讲讲Redis Cluster：<br>
+首先先认识下<a href="https://www.zsythink.net/archives/1182">一致性哈希算法</a><br>
+为什么不用一致性哈希算法？这个我搜索了一大圈，实在找不到什么理由，有人说是因为一致性哈希在删除节点增加节点时需要进行数据迁移，那redis采用的哈希槽不同样存在数据迁移的问题吗？有人说是因为一致性哈希会出现偏斜问题，这个其实完全可以通过虚拟节点解决，这一点在上面的引用文章里有说明，感觉<a href="https://www.zhihu.com/question/53927336/answer/137347302">这个答案</a>比较靠谱点。</p>
 <h4 id="5-redis过期算法">5. Redis过期算法</h4>
 ]]></content>
     </entry>
