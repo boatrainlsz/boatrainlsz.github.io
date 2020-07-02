@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Redis系列 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1593676022223">
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1593683711541">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="Redis系列 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
@@ -24,7 +24,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1593676022223" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1593683711541" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -99,7 +99,7 @@
 <p>两种持久化机制：RDB和AOF</p>
 <h6 id="31-rdb">3.1 RDB</h6>
 <p>RDB代表Redis DataBase，就是快照机制，RDB采用Linux的<a href="https://www.wikiwand.com/zh-hans/%E5%AF%AB%E5%85%A5%E6%99%82%E8%A4%87%E8%A3%BD">COW机制</a>来进行快照的dump。<br>
-父进程fork出一个子进程，父进程负责处理请求，子进程负责持久化。fork完成的一瞬间，父子进程共享同一个页面，当父进程要改写页面数据时，就将共享页面复制一份出来给父进程用。所以对于子进程来说，从他诞生的那一刻起，它看到的内存信息就是冻结了的。一般来说，冷数据比较多，所以复制的页面不会太多。</p>
+父进程fork出一个子进程，父进程负责处理请求，子进程负责持久化。fork完成后，父子进程共享同一个页面，当父进程要改写页面数据时，就将共享页面复制一份出来给父进程用。所以对于子进程来说，从他诞生的那一刻起，它看到的内存信息就是冻结了的。一般来说，冷数据比较多，所以复制的页面不会太多。</p>
 <h6 id="32-aof">3.2 AOF</h6>
 <p>AOF代表Append Only File，这个其实和mysql的bin log有点像，它记录了Redis的指令序列，采用了<a href="https://www.wikiwand.com/zh-hans/%E9%A2%84%E5%86%99%E5%BC%8F%E6%97%A5%E5%BF%97">WAL技术</a>，也就是先写日志，再写磁盘。<br>
 当Redis收到指令后，先校验合法性，再写入AOF日志，再执行指令，这样就保证了crash-safe的能力，宕机重启时重放AOF文件即可。</p>
