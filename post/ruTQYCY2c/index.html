@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Redis系列 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1593674355147">
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1593675592085">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="Redis系列 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
@@ -14,10 +14,7 @@
     <meta name="description" content="来源：Redis官网，Redis深度历险：核心原理和应用实践
 1. Redis基础数据结构
 2. Redis线程模型
-3. Redis持久化
-两种持久化机制：RDB和AOF
-3.1 RDB
-RDB代表Redis DataBase，就是快照机..." />
+经常见到的一个问题就是：为什么Redis是单线程的，仍然可以支持高并发？详细解释可以看这篇文章。简单来说，初期，作者认为多..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -27,7 +24,7 @@ RDB代表Redis DataBase，就是快照机..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1593674355147" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1593675592085" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -97,6 +94,7 @@ RDB代表Redis DataBase，就是快照机..." />
                 <p>来源：<a href="https://redis.io/">Redis官网</a>，<a href="https://book.douban.com/subject/30386804/">Redis深度历险：核心原理和应用实践</a></p>
 <h4 id="1-redis基础数据结构">1. Redis基础数据结构</h4>
 <h4 id="2-redis线程模型">2. Redis线程模型</h4>
+<p>经常见到的一个问题就是：为什么Redis是单线程的，仍然可以支持高并发？详细解释可以看<a href="https://draveness.me/whys-the-design-redis-single-thread/">这篇文章</a>。简单来说，初期，作者认为多线程麻烦，而且瓶颈在IO而不是CPU，</p>
 <h4 id="3-redis持久化">3. Redis持久化</h4>
 <p>两种持久化机制：RDB和AOF</p>
 <h6 id="31-rdb">3.1 RDB</h6>
