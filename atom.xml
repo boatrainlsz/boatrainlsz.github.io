@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-07-02T07:39:54.996Z</updated>
+    <updated>2020-07-02T07:47:09.680Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -484,6 +484,8 @@ SQL:1992定义了三种现象和为了避免这三种现象而引出的四种隔
 <strong>JDK10</strong>：内部重构，对程序员来说，感知不强。<br>
 <strong>JDK11</strong>：革命性的ZGC垃圾收集器。<br>
 <strong>JDK12</strong>：引入Redhat开发的Shenandoah收集器，作为ZGC的竞争对手，且Shenandoah不是Oracle的亲儿子，Oracle随即就在OracleJDK中通过条件编译的方式剔除了Shenandoah。Shenandoah也成为目前为止唯一一个OpenJDK能用但OracleJDK不能用的功能。</p>
+<h3 id="序号待定-java的热点代码探测">序号待定 Java的热点代码探测</h3>
+<figure data-type="image" tabindex="1"><img src="https://boatrainlsz.github.io/post-images/1593676010125.jpg" alt="" loading="lazy"></figure>
 ]]></content>
     </entry>
     <entry>
