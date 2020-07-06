@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-07-02T09:59:09.819Z</updated>
+    <updated>2020-07-06T13:26:34.169Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -484,6 +484,12 @@ SQL:1992定义了三种现象和为了避免这三种现象而引出的四种隔
 <strong>JDK10</strong>：内部重构，对程序员来说，感知不强。<br>
 <strong>JDK11</strong>：革命性的ZGC垃圾收集器。<br>
 <strong>JDK12</strong>：引入Redhat开发的Shenandoah收集器，作为ZGC的竞争对手，且Shenandoah不是Oracle的亲儿子，Oracle随即就在OracleJDK中通过条件编译的方式剔除了Shenandoah。Shenandoah也成为目前为止唯一一个OpenJDK能用但OracleJDK不能用的功能。</p>
+<h3 id="2-java的内存区域">2 Java的内存区域</h3>
+<h3 id="3-java的内存模型">3 Java的内存模型</h3>
+<h3 id="4-java的垃圾回收">4 Java的垃圾回收</h3>
+<h3 id="5-java的class文件">5 Java的class文件</h3>
+<p>class文件的详细结构见<a href="https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html">Oracle的这篇文档</a>，这里重点说一下常量池。<br>
+其实常量池非常类似于其他语言中的<a href="https://www.wikiwand.com/zh-hans/%E7%AC%A6%E5%8F%B7%E8%A1%A8">符号表</a>，它的作用在于：存储编译期间生成的字面量和符号引用，并在类加载后存放到方法区中的运行时常量池中。</p>
 <h3 id="序号待定-java的热点代码探测">序号待定 Java的热点代码探测</h3>
 <figure data-type="image" tabindex="1"><img src="https://boatrainlsz.github.io/post-images/1593676010125.jpg" alt="" loading="lazy"></figure>
 ]]></content>

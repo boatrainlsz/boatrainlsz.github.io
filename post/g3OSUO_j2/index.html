@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Java系列 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1593683907102">
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1594041991329">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="Java系列 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
@@ -27,7 +27,7 @@ JDK1.1：jar文..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1593683907102" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1594041991329" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -119,6 +119,12 @@ JDK1.1：jar文..." />
 <strong>JDK10</strong>：内部重构，对程序员来说，感知不强。<br>
 <strong>JDK11</strong>：革命性的ZGC垃圾收集器。<br>
 <strong>JDK12</strong>：引入Redhat开发的Shenandoah收集器，作为ZGC的竞争对手，且Shenandoah不是Oracle的亲儿子，Oracle随即就在OracleJDK中通过条件编译的方式剔除了Shenandoah。Shenandoah也成为目前为止唯一一个OpenJDK能用但OracleJDK不能用的功能。</p>
+<h3 id="2-java的内存区域">2 Java的内存区域</h3>
+<h3 id="3-java的内存模型">3 Java的内存模型</h3>
+<h3 id="4-java的垃圾回收">4 Java的垃圾回收</h3>
+<h3 id="5-java的class文件">5 Java的class文件</h3>
+<p>class文件的详细结构见<a href="https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html">Oracle的这篇文档</a>，这里重点说一下常量池。<br>
+其实常量池非常类似于其他语言中的<a href="https://www.wikiwand.com/zh-hans/%E7%AC%A6%E5%8F%B7%E8%A1%A8">符号表</a>，它的作用在于：存储编译期间生成的字面量和符号引用，并在类加载后存放到方法区中的运行时常量池中。</p>
 <h3 id="序号待定-java的热点代码探测">序号待定 Java的热点代码探测</h3>
 <figure data-type="image" tabindex="1"><img src="https://boatrainlsz.github.io/post-images/1593676010125.jpg" alt="" loading="lazy"></figure>
 
@@ -130,6 +136,10 @@ JDK1.1：jar文..." />
 <li>
 <ul>
 <li><a href="#1-java%E7%9A%84%E5%8E%86%E5%8F%B2">1 Java的历史</a></li>
+<li><a href="#2-java%E7%9A%84%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F">2 Java的内存区域</a></li>
+<li><a href="#3-java%E7%9A%84%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B">3 Java的内存模型</a></li>
+<li><a href="#4-java%E7%9A%84%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6">4 Java的垃圾回收</a></li>
+<li><a href="#5-java%E7%9A%84class%E6%96%87%E4%BB%B6">5 Java的class文件</a></li>
 <li><a href="#%E5%BA%8F%E5%8F%B7%E5%BE%85%E5%AE%9A-java%E7%9A%84%E7%83%AD%E7%82%B9%E4%BB%A3%E7%A0%81%E6%8E%A2%E6%B5%8B">序号待定 Java的热点代码探测</a></li>
 </ul>
 </li>
