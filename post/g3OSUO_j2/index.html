@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Java系列 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1594044421193">
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1594045244013">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="Java系列 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
@@ -27,7 +27,7 @@ JDK1.1：jar文..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1594044421193" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1594045244013" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -120,8 +120,9 @@ JDK1.1：jar文..." />
 <strong>JDK11</strong>：革命性的ZGC垃圾收集器。<br>
 <strong>JDK12</strong>：引入Redhat开发的Shenandoah收集器，作为ZGC的竞争对手，且Shenandoah不是Oracle的亲儿子，Oracle随即就在OracleJDK中通过条件编译的方式剔除了Shenandoah。Shenandoah也成为目前为止唯一一个OpenJDK能用但OracleJDK不能用的功能。</p>
 <h3 id="2-jvm整体架构">2 JVM整体架构</h3>
-<p><img src="https://boatrainlsz.github.io/post-images/1594044264659.png" alt="" loading="lazy"><br>
-基本上把这张图弄懂了，JVM架构就差不多掌握了。</p>
+<p>下图来自https://dzone.com/articles/jvm-architecture-explained<br>
+<img src="https://boatrainlsz.github.io/post-images/1594044264659.png" alt="" loading="lazy"><br>
+基本上把这张图弄懂了，JVM架构就差不多掌握了。大体的流程是：Java源文件编译得到class文件(编译过程后续再讲)，class文件被类加载子系统加载进内存，执行引擎执行字节码，执行过程中创建的对象大部分存放在堆中，每个线程拥有独立的栈和PC寄存器，GC子系统会及时回收内存。</p>
 <h3 id="3-java的内存模型">3 Java的内存模型</h3>
 <p>本来这一节应该放在后面的线程安全一节的，但是为了不与第二节的内存区域混淆，还是提到前面来了。</p>
 <h3 id="4-java的垃圾回收">4 Java的垃圾回收</h3>

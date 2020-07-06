@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-07-06T14:07:05.119Z</updated>
+    <updated>2020-07-06T14:20:47.764Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -485,8 +485,9 @@ SQL:1992定义了三种现象和为了避免这三种现象而引出的四种隔
 <strong>JDK11</strong>：革命性的ZGC垃圾收集器。<br>
 <strong>JDK12</strong>：引入Redhat开发的Shenandoah收集器，作为ZGC的竞争对手，且Shenandoah不是Oracle的亲儿子，Oracle随即就在OracleJDK中通过条件编译的方式剔除了Shenandoah。Shenandoah也成为目前为止唯一一个OpenJDK能用但OracleJDK不能用的功能。</p>
 <h3 id="2-jvm整体架构">2 JVM整体架构</h3>
-<p><img src="https://boatrainlsz.github.io/post-images/1594044264659.png" alt="" loading="lazy"><br>
-基本上把这张图弄懂了，JVM架构就差不多掌握了。</p>
+<p>下图来自https://dzone.com/articles/jvm-architecture-explained<br>
+<img src="https://boatrainlsz.github.io/post-images/1594044264659.png" alt="" loading="lazy"><br>
+基本上把这张图弄懂了，JVM架构就差不多掌握了。大体的流程是：Java源文件编译得到class文件(编译过程后续再讲)，class文件被类加载子系统加载进内存，执行引擎执行字节码，执行过程中创建的对象大部分存放在堆中，每个线程拥有独立的栈和PC寄存器，GC子系统会及时回收内存。</p>
 <h3 id="3-java的内存模型">3 Java的内存模型</h3>
 <p>本来这一节应该放在后面的线程安全一节的，但是为了不与第二节的内存区域混淆，还是提到前面来了。</p>
 <h3 id="4-java的垃圾回收">4 Java的垃圾回收</h3>
