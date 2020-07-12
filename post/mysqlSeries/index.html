@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Mysql系列 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1594213830552">
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1594542810661">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="Mysql系列 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
@@ -25,7 +25,7 @@ InnoDB的redo log大小是固定的，4个文件每个文件1G。逻辑上可以
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1594213830552" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1594542810661" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -154,6 +154,7 @@ SQL:1992定义了三种现象和为了避免这三种现象而引出的四种隔
 <h5 id="22-change-buffer详解">2.2 <a href="https://mp.weixin.qq.com/s/PF21mUtpM8-pcEhDN4dOIw">Change Buffer详解</a></h5>
 <h5 id="23-adaptive-hash-index详解">2.3 <a href="https://mp.weixin.qq.com/s/vQsilZmyMaaVkYGkn-WXew">Adaptive Hash Index详解</a></h5>
 <h5 id="24-log-buffer详解">2.4 <a href="https://mp.weixin.qq.com/s/-Hx2KKYMEQCcTC-ADEuwVA">Log Buffer详解</a></h5>
+<h5 id="25-doublewrite-buffer详解">2.5 <a href="https://mp.weixin.qq.com/s?src=11&amp;timestamp=1594542563&amp;ver=2455&amp;signature=4SG54f7m*pli5Py3cvq53XHLj0ophe8ZEolV8ykk14U5DFGkw8rc8IP3MpMsnegLy-an67e0m4Iu3aa*ML6J2jVIka03Vh7sGps9widPHZQXe6rgxl*sEJp1FYaRclCe&amp;new=1">doublewrite Buffer详解</a></h5>
 <h4 id="4-锁事">4. 锁事</h4>
 <p>行锁防止别的事务修改或删除，GAP锁防止别的事务新增，行锁和GAP锁结合形成的的Next-Key锁共同解决了RR级别在写数据时的幻读问题。</p>
 
@@ -188,6 +189,7 @@ SQL:1992定义了三种现象和为了避免这三种现象而引出的四种隔
 <li><a href="#22-change-buffer%E8%AF%A6%E8%A7%A3">2.2 Change Buffer详解</a></li>
 <li><a href="#23-adaptive-hash-index%E8%AF%A6%E8%A7%A3">2.3 Adaptive Hash Index详解</a></li>
 <li><a href="#24-log-buffer%E8%AF%A6%E8%A7%A3">2.4 Log Buffer详解</a></li>
+<li><a href="#25-doublewrite-buffer%E8%AF%A6%E8%A7%A3">2.5 doublewrite Buffer详解</a></li>
 </ul>
 </li>
 <li><a href="#4-%E9%94%81%E4%BA%8B">4. 锁事</a></li>

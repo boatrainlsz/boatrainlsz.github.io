@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-07-08T13:10:35.079Z</updated>
+    <updated>2020-07-12T08:33:34.712Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -495,6 +495,7 @@ SQL:1992定义了三种现象和为了避免这三种现象而引出的四种隔
 <h5 id="22-change-buffer详解">2.2 <a href="https://mp.weixin.qq.com/s/PF21mUtpM8-pcEhDN4dOIw">Change Buffer详解</a></h5>
 <h5 id="23-adaptive-hash-index详解">2.3 <a href="https://mp.weixin.qq.com/s/vQsilZmyMaaVkYGkn-WXew">Adaptive Hash Index详解</a></h5>
 <h5 id="24-log-buffer详解">2.4 <a href="https://mp.weixin.qq.com/s/-Hx2KKYMEQCcTC-ADEuwVA">Log Buffer详解</a></h5>
+<h5 id="25-doublewrite-buffer详解">2.5 <a href="https://mp.weixin.qq.com/s?src=11&amp;timestamp=1594542563&amp;ver=2455&amp;signature=4SG54f7m*pli5Py3cvq53XHLj0ophe8ZEolV8ykk14U5DFGkw8rc8IP3MpMsnegLy-an67e0m4Iu3aa*ML6J2jVIka03Vh7sGps9widPHZQXe6rgxl*sEJp1FYaRclCe&amp;new=1">doublewrite Buffer详解</a></h5>
 <h4 id="4-锁事">4. 锁事</h4>
 <p>行锁防止别的事务修改或删除，GAP锁防止别的事务新增，行锁和GAP锁结合形成的的Next-Key锁共同解决了RR级别在写数据时的幻读问题。</p>
 ]]></content>
