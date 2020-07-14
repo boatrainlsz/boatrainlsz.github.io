@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>由一次SunCertPathBuilderException说起 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1594730840575">
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1594730929813">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="由一次SunCertPathBuilderException说起 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
@@ -23,7 +23,7 @@ Exception in thread &quot;main&quot; javax.net.ssl.SSLHandshakeException: su..."
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1594730840575" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1594730929813" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -97,7 +97,7 @@ Exception in thread &quot;main&quot; javax.net.ssl.SSLHandshakeException: su..."
 <p>随即Google之，发现是https证书的问题。<br>
 在浏览器中打开接口地址，可以看到这个证书的根证书是CFCA EV颁发的：<br>
 <img src="https://boatrainlsz.github.io/post-images/1594715055840.jpg" alt="" loading="lazy"><br>
-浏览器的证书列表和Java的证书列表里没有这个根证书，所以这个根证书和由这个根证书签发的子证书都是不可信的。</p>
+浏览器的证书列表和Java的证书列表里没有这个根证书，所以这个根证书和由这个根证书签发的子证书都是不可信的。关于CFCA的风评，可以参考V2EX的<a href="https://v2ex.com/t/651187">这个帖子</a>。</p>
 <h4 id="1-解决办法">1 解决办法</h4>
 <p>解决办法也很简单，一是代码里面设置信任所有证书，二是把这个CFCA EV根证书植入根证书列表去。</p>
 <h5 id="11-信任所有证书">1.1 信任所有证书</h5>

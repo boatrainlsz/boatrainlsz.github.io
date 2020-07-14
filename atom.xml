@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-07-14T12:47:23.876Z</updated>
+    <updated>2020-07-14T12:48:57.615Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -23,7 +23,7 @@
 <p>随即Google之，发现是https证书的问题。<br>
 在浏览器中打开接口地址，可以看到这个证书的根证书是CFCA EV颁发的：<br>
 <img src="https://boatrainlsz.github.io/post-images/1594715055840.jpg" alt="" loading="lazy"><br>
-浏览器的证书列表和Java的证书列表里没有这个根证书，所以这个根证书和由这个根证书签发的子证书都是不可信的。</p>
+浏览器的证书列表和Java的证书列表里没有这个根证书，所以这个根证书和由这个根证书签发的子证书都是不可信的。关于CFCA的风评，可以参考V2EX的<a href="https://v2ex.com/t/651187">这个帖子</a>。</p>
 <h4 id="1-解决办法">1 解决办法</h4>
 <p>解决办法也很简单，一是代码里面设置信任所有证书，二是把这个CFCA EV根证书植入根证书列表去。</p>
 <h5 id="11-信任所有证书">1.1 信任所有证书</h5>
