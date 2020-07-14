@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-07-14T14:20:38.565Z</updated>
+    <updated>2020-07-14T14:40:51.133Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -10,6 +10,15 @@
     <logo>https://boatrainlsz.github.io/images/avatar.png</logo>
     <icon>https://boatrainlsz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 画船听雨眠</rights>
+    <entry>
+        <title type="html"><![CDATA[SSL的工作原理]]></title>
+        <id>https://boatrainlsz.github.io/post/ssl-de-gong-zuo-yuan-li/</id>
+        <link href="https://boatrainlsz.github.io/post/ssl-de-gong-zuo-yuan-li/">
+        </link>
+        <updated>2020-07-14T14:40:29.000Z</updated>
+        <content type="html"><![CDATA[<p>http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[由一次SunCertPathBuilderException说起]]></title>
         <id>https://boatrainlsz.github.io/post/you-yi-ci-suncertpathbuilderexception-yin-fa-de-si-kao/</id>
@@ -701,15 +710,6 @@ SQL:1992定义了三种现象和为了避免这三种现象而引出的四种隔
 其实常量池非常类似于其他语言中的<a href="https://www.wikiwand.com/zh-hans/%E7%AC%A6%E5%8F%B7%E8%A1%A8">符号表</a>，它的作用在于：存储编译期间生成的字面量和符号引用，并在类加载后存放到方法区中的运行时常量池中。字面量是在<strong>编译期间</strong>就确定了的，而符号引用只能在<strong>运行时</strong>才能经过虚拟机的转换得到真正的内存地址。可以把常量池理解为菜谱，它记录了一道菜需要盐、酱油、味精等材料，真正做菜时，照着菜谱找到这些材料的真正存放地址，并拿来用。这里的盐、酱油、味精就是符号引用，它们在厨房里的存放地点就是真正的内存地址，厨师就是虚拟机。class文件的查看推荐使用IDEA的<a href="https://plugins.jetbrains.com/plugin/9248-jclasslib-bytecode-viewer">jclasslib Bytecode viewer插件</a>。</p>
 <h3 id="序号待定-java的热点代码探测">序号待定 Java的热点代码探测</h3>
 <figure data-type="image" tabindex="1"><img src="https://boatrainlsz.github.io/post-images/1593676010125.jpg" alt="" loading="lazy"></figure>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[柳宗元的《江雪》]]></title>
-        <id>https://boatrainlsz.github.io/post/EwTf-Crho/</id>
-        <link href="https://boatrainlsz.github.io/post/EwTf-Crho/">
-        </link>
-        <updated>2020-06-23T01:05:02.000Z</updated>
-        <content type="html"><![CDATA[<p>初读这首诗，不会感到有什么特别之处，无非就是描绘雪景。但经历过2008年南方冰雪灾害的我，对这首诗只能说两个字：写的真他妈的好！那年我还在读小学，小孩子对于什么冰雪灾害没有什么概念，只觉得那段时间冰很厚，雪很大。有一天早上我起来尿尿，大冬天的早晨，冷风扑面而来，被窝里带出来的热气瞬间被吹没了。外面白雪皑皑，竹子都被雪压成了90度，时不时传来树枝压断的声音。这时我突然就想起了“千山鸟飞绝，万径人踪灭”这句诗。当时还不懂什么是文学，脑海里闪现过这句诗就赶紧抖擞精神提起裤子滚回被窝了。</p>
 ]]></content>
     </entry>
 </feed>
