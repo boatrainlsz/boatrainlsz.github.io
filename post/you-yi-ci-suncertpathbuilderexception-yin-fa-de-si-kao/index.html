@@ -2,17 +2,18 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>由一次SunCertPathBuilderException引发的思考 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1594689531467">
+<title>由一次SunCertPathBuilderException说起 | 画船听雨眠</title>
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1594715253402">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="由一次SunCertPathBuilderException引发的思考 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="由一次SunCertPathBuilderException说起 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="前置知识
-" />
+    <meta name="description" content="问题描述
+最近和甲方爸爸调试接口，接口地址给的是https的，调用接口报如下错误：
+Exception in thread &quot;main&quot; javax.net.ssl.SSLHandshakeException: sun...." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -22,7 +23,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1594689531467" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1594715253402" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -75,7 +76,7 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              由一次SunCertPathBuilderException引发的思考
+              由一次SunCertPathBuilderException说起
             </h2>
             <div class="post-info">
               <span>
@@ -89,7 +90,18 @@
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h4 id="前置知识">前置知识</h4>
+                <h4 id="问题描述">问题描述</h4>
+<p>最近和甲方爸爸调试接口，接口地址给的是https的，调用接口报如下错误：</p>
+<pre><code class="language-java">Exception in thread &quot;main&quot; javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+</code></pre>
+<p>随即Google之，发现是证书的问题。<br>
+在浏览器中打开地址，可以看到这个证书的根证书是CFCA EV颁发的：<br>
+<img src="https://boatrainlsz.github.io/post-images/1594715055840.jpg" alt="" loading="lazy"><br>
+浏览器的根证书列表和Java的根证书列表里没有这个根证书，所以这个根证书和由这个根证书签发的子证书都是不可信的。</p>
+<h4 id="解决办法">解决办法</h4>
+<p>解决办法也很简单，一是代码里面设置信任所有证书，二是把这个CFCA EV根证书植入根证书列表去。</p>
+<h4 id="信任链">信任链</h4>
+<p>遗憾的是，JDK10之前，Java都是没有内置根证书的，</p>
 
               </div>
               <div class="toc-container">
@@ -100,7 +112,9 @@
 <ul>
 <li>
 <ul>
-<li><a href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86">前置知识</a></li>
+<li><a href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0">问题描述</a></li>
+<li><a href="#%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95">解决办法</a></li>
+<li><a href="#%E4%BF%A1%E4%BB%BB%E9%93%BE">信任链</a></li>
 </ul>
 </li>
 </ul>

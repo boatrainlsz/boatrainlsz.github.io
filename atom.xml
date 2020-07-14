@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-07-14T01:18:57.003Z</updated>
+    <updated>2020-07-14T08:27:38.286Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -11,12 +11,23 @@
     <icon>https://boatrainlsz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 画船听雨眠</rights>
     <entry>
-        <title type="html"><![CDATA[由一次SunCertPathBuilderException引发的思考]]></title>
+        <title type="html"><![CDATA[由一次SunCertPathBuilderException说起]]></title>
         <id>https://boatrainlsz.github.io/post/you-yi-ci-suncertpathbuilderexception-yin-fa-de-si-kao/</id>
         <link href="https://boatrainlsz.github.io/post/you-yi-ci-suncertpathbuilderexception-yin-fa-de-si-kao/">
         </link>
         <updated>2020-07-14T01:18:10.000Z</updated>
-        <content type="html"><![CDATA[<h4 id="前置知识">前置知识</h4>
+        <content type="html"><![CDATA[<h4 id="问题描述">问题描述</h4>
+<p>最近和甲方爸爸调试接口，接口地址给的是https的，调用接口报如下错误：</p>
+<pre><code class="language-java">Exception in thread &quot;main&quot; javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+</code></pre>
+<p>随即Google之，发现是证书的问题。<br>
+在浏览器中打开地址，可以看到这个证书的根证书是CFCA EV颁发的：<br>
+<img src="https://boatrainlsz.github.io/post-images/1594715055840.jpg" alt="" loading="lazy"><br>
+浏览器的根证书列表和Java的根证书列表里没有这个根证书，所以这个根证书和由这个根证书签发的子证书都是不可信的。</p>
+<h4 id="解决办法">解决办法</h4>
+<p>解决办法也很简单，一是代码里面设置信任所有证书，二是把这个CFCA EV根证书植入根证书列表去。</p>
+<h4 id="信任链">信任链</h4>
+<p>遗憾的是，JDK10之前，Java都是没有内置根证书的，</p>
 ]]></content>
     </entry>
     <entry>
