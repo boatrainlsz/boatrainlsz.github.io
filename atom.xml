@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-07-14T12:50:55.372Z</updated>
+    <updated>2020-07-14T12:55:28.086Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -25,7 +25,7 @@
 <img src="https://boatrainlsz.github.io/post-images/1594715055840.jpg" alt="" loading="lazy"><br>
 浏览器的证书列表和Java的证书列表里没有这个根证书，所以这个根证书和由这个根证书签发的子证书都是不可信的。关于CFCA的风评，可以参考V2EX的<a href="https://v2ex.com/t/651187">这个帖子</a>。</p>
 <h4 id="1-解决办法">1 解决办法</h4>
-<p>解决办法也很简单，一是代码里面设置信任所有证书，二是把这个CFCA EV根证书植入根证书列表去。</p>
+<p>解决办法也很简单，一是代码里面设置信任所有证书，二是把这个CFCA EV根证书植入信任的证书列表去。</p>
 <h5 id="11-信任所有证书">1.1 信任所有证书</h5>
 <p>这种方式是最危险的，完全舍弃了SSL带来的安全性，生产环境千万不要使用。代码如下：</p>
 <pre><code class="language-java">final TrustManager[] trustAllCerts = new TrustManager[]{
@@ -60,7 +60,7 @@
         OkHttpClient okHttpClient = builder.connectTimeout((long) connectTimeout, TimeUnit.MILLISECONDS)
                 .readTimeout((long) readTimeout, TimeUnit.MILLISECONDS).build();
 </code></pre>
-<h5 id="12-将证书导入">1.2 将证书导入</h5>
+<h5 id="12-将证书植入信任列表">1.2 将证书植入信任列表</h5>
 <h6 id="121-首先使用openssl的命令下载证书">1.2.1 首先使用openssl的命令下载证书：</h6>
 <pre><code class="language-shell">openssl s_client -connect ip:port -showcerts &gt; mycerfile.cer
 </code></pre>
@@ -142,6 +142,8 @@
 </code></pre>
 <p>也可以使用<a href="https://keystore-explorer.org/">KeyStore Explorer</a>软件查看：<br>
 <img src="https://boatrainlsz.github.io/post-images/1594730493108.jpg" alt="" loading="lazy"></p>
+<h4 id="4-关于证书的格式">4 关于证书的格式</h4>
+<p><a href="https://blog.freessl.cn/ssl-cert-format-introduce/">这篇文章</a>解释的很详细。</p>
 <h4 id="4-结语">4 结语</h4>
 <p>这个问题的解决让我对证书存在的意义，证书之间的关系有了更加清晰的认识，感觉SSL这一块还不是很熟，得好好补补课。</p>
 ]]></content>
