@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-07-14T12:48:57.615Z</updated>
+    <updated>2020-07-14T12:50:55.372Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -142,6 +142,8 @@
 </code></pre>
 <p>也可以使用<a href="https://keystore-explorer.org/">KeyStore Explorer</a>软件查看：<br>
 <img src="https://boatrainlsz.github.io/post-images/1594730493108.jpg" alt="" loading="lazy"></p>
+<h4 id="4-结语">4 结语</h4>
+<p>这个问题的解决让我对证书存在的意义，证书之间的关系有了更加清晰的认识，感觉SSL这一块还不是很熟，得好好补补课。</p>
 ]]></content>
     </entry>
     <entry>
