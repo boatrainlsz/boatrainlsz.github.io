@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-07-14T09:01:48.986Z</updated>
+    <updated>2020-07-14T10:05:33.604Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -21,7 +21,7 @@
 <pre><code class="language-java">Exception in thread &quot;main&quot; javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
 </code></pre>
 <p>随即Google之，发现是证书的问题。<br>
-在浏览器中打开地址，可以看到这个证书的根证书是CFCA EV颁发的：<br>
+在浏览器中打开接口地址，可以看到这个证书的根证书是CFCA EV颁发的：<br>
 <img src="https://boatrainlsz.github.io/post-images/1594715055840.jpg" alt="" loading="lazy"><br>
 浏览器的根证书列表和Java的根证书列表里没有这个根证书，所以这个根证书和由这个根证书签发的子证书都是不可信的。</p>
 <h4 id="解决办法">解决办法</h4>
@@ -37,8 +37,65 @@
 </code></pre>
 <p>再导入到Java的证书列表中去，可以用代码，也可以借助<a href="https://keystore-explorer.org/">KeyStore Explorer</a>这个软件<br>
 我使用的是okhttp框架，代码如下：</p>
-<pre><code class="language-java">
+<pre><code class="language-java">public class HttpTest {
+    public static void main(String[] args) throws Exception {
+        //获取keyStore
+        KeyStore keyStore = readKeyStore();
+        SSLContext sslContext = SSLContext.getInstance(&quot;SSL&quot;);
+        TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+        trustManagerFactory.init(keyStore);
+        KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+        keyManagerFactory.init(keyStore, &quot;whatever&quot;.toCharArray());
+        sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), new SecureRandom());
+        HostnameVerifier hostnameVerifier = new HostnameVerifier() {
+            @Override
+            public boolean verify(String hostname, SSLSession session) {
+                return true;
+            }
+        };
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .hostnameVerifier(hostnameVerifier)
+                .sslSocketFactory(sslContext.getSocketFactory())
+                .build();
+        Request request = (new Request.Builder()).url(&quot;https://10.139.103.59:7685/test/&quot;).get().build();
+        Call call = okHttpClient.newCall(request);
+        Response execute = call.execute();
+        System.out.println(execute.body().string());
+
+    }
+
+    public static KeyStore readKeyStore() throws Exception {
+        KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
+
+        //填写keystore的密码，默认是changeit
+        char[] password = &quot;password&quot;.toCharArray();
+
+        java.io.FileInputStream fis = null;
+        try {
+            fis = new java.io.FileInputStream(&quot;C:\\Users\\Luo\\Desktop\\myjksfile.jks&quot;);
+            ks.load(fis, password);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (fis != null) {
+                fis.close();
+            }
+        }
+        return ks;
+    }
+}
 </code></pre>
+<p>代码中值得注意一点的是，创建了一个HostnameVerifier：</p>
+<pre><code class="language-java">HostnameVerifier hostnameVerifier = new HostnameVerifier() {
+            @Override
+            public boolean verify(String hostname, SSLSession session) {
+                return true;
+            }
+        };
+</code></pre>
+<p>这是因为okhttp会校验证书中的CN和url中的ip地址，不匹配的话会抛出SSLPeerUnverifiedException：<br>
+<img src="https://boatrainlsz.github.io/post-images/1594721075978.jpg" alt="" loading="lazy"><br>
+由于我使用的是10.139.103.59这个代理地址，肯定是不匹配的，所以定义了一个HostnameVerifier，无条件返回true。</p>
 <h4 id="信任链">信任链</h4>
 <p>遗憾的是，JDK10之前，Java都是没有内置根证书的，</p>
 ]]></content>
