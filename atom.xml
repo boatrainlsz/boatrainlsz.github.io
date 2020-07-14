@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-07-14T13:13:38.349Z</updated>
+    <updated>2020-07-14T13:41:31.859Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -199,7 +199,8 @@
         <updated>2020-06-28T12:05:27.000Z</updated>
         <content type="html"><![CDATA[<p>为什么要写这个系列？说实话，排序算法已经被很多人写过了，可视化的排序算法网上更是比比皆是。写这个目的有二：<br>
 一是强迫自己思考，脑子毕竟是越用越灵活。<br>
-二是好记性不如烂笔头，看了别人的文章，当时懂了，过段时间又忘了，还不如自己一笔一划的写出来。</p>
+二是好记性不如烂笔头，看了别人的文章，当时懂了，过段时间又忘了，还不如自己一笔一划的写出来。<br>
+为了便于理解，图示采用10,9,8,7,6,5,4,3,2,1的倒序排列。</p>
 <h4 id="0排序模板">0.排序模板</h4>
 <pre><code class="language-java">package com.lsz.数据结构与算法.sort;
 import java.util.Arrays;
@@ -252,7 +253,8 @@ public class Sort {
 }
 </code></pre>
 <h4 id="1-选择排序">1. 选择排序</h4>
-<p>遍历数组，把<strong>当前元素</strong>和<strong>后面未排序元素中最小的元素</strong>交换。</p>
+<p>遍历数组，把<strong>当前元素</strong>和<strong>后面未排序元素中最小的元素</strong>交换。<br>
+<img src="https://boatrainlsz.github.io/post-images/1594734082604.png" alt="" loading="lazy"></p>
 <pre><code class="language-java">private int[] selectionSort(int[] array) {
         for (int i = 0; i &lt; array.length; i++) {
             //找出[i,n]中最小的
