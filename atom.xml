@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-07-14T14:19:03.109Z</updated>
+    <updated>2020-07-14T14:20:17.393Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -256,10 +256,11 @@ public class Sort {
 <p>遍历数组，把<strong>当前元素</strong>和<strong>后面未排序元素中最小的元素</strong>交换。<br>
 <img src="https://boatrainlsz.github.io/post-images/1594736316994.png" alt="" loading="lazy"></p>
 <pre><code class="language-java">private int[] selectionSort(int[] array) {
-        for (int i = 0; i &lt; array.length; i++) {
-            //找出[i,n]中最小的
+        int n = array.length;
+        for (int i = 0; i &lt; n; i++) {
+            //找出[i,n-1]中最小的
             int minIndex = i;
-            for (int j = i + 1; j &lt; array.length; j++)
+            for (int j = i + 1; j &lt; n; j++)
                 if (array[minIndex] &gt; array[j])
                     minIndex = j;
             //找到了最小的，进行交换
