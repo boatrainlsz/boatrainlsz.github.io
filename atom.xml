@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-07-14T08:27:38.286Z</updated>
+    <updated>2020-07-14T09:01:48.986Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -26,6 +26,19 @@
 浏览器的根证书列表和Java的根证书列表里没有这个根证书，所以这个根证书和由这个根证书签发的子证书都是不可信的。</p>
 <h4 id="解决办法">解决办法</h4>
 <p>解决办法也很简单，一是代码里面设置信任所有证书，二是把这个CFCA EV根证书植入根证书列表去。</p>
+<h5 id="信任所有证书">信任所有证书</h5>
+<p>这种方式是最危险的，完全舍弃了SSL带来的安全性，生产环境千万不要使用。</p>
+<h5 id="将证书导入">将证书导入</h5>
+<p>首先使用openssl的命令下载证书：</p>
+<pre><code class="language-shell">openssl s_client -connect ip:port -showcerts &gt; mycerfile.cer
+</code></pre>
+<p>然后使用Java的keytool将cer文件转换为jks文件：</p>
+<pre><code class="language-shell">keytool -importcert -file &quot;mycerfile.cer&quot; -keystore myjksfile.jks -alias &quot;&lt;anything&gt;&quot;
+</code></pre>
+<p>再导入到Java的证书列表中去，可以用代码，也可以借助<a href="https://keystore-explorer.org/">KeyStore Explorer</a>这个软件<br>
+我使用的是okhttp框架，代码如下：</p>
+<pre><code class="language-java">
+</code></pre>
 <h4 id="信任链">信任链</h4>
 <p>遗憾的是，JDK10之前，Java都是没有内置根证书的，</p>
 ]]></content>
