@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-07-14T12:57:00.899Z</updated>
+    <updated>2020-07-14T13:07:05.071Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -273,6 +273,19 @@ public class Sort {
             }
         }
     }
+</code></pre>
+<h4 id="3-对插入排序的改进">3. 对插入排序的改进</h4>
+<p>在上面的插入排序中，第二层循环每次都要交换满足条件的两个元素，交换是比较耗时的，可以采用赋值的办法，如下动图所示：<br>
+写成代码就是这样的：</p>
+<pre><code class="language-java">for (int i = 1; i &lt; nums.length; i++) {
+            int cur = nums[i];
+            //j最终存放了cur应该放的位置
+            int j;
+            for (j = i; j &gt; 0 &amp;&amp; nums[j - 1] &gt; cur; j--) {
+                nums[j] = nums[j - 1];
+            }
+            nums[j] = cur;
+        }
 </code></pre>
 ]]></content>
     </entry>

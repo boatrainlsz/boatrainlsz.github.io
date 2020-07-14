@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>排序算法 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1594731417175">
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1594732021520">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="排序算法 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
@@ -28,7 +28,7 @@ import java.util.concurrent.ThreadLocalRandom;
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1594731417175" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1594732021520" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -88,7 +88,7 @@ import java.util.concurrent.ThreadLocalRandom;
                 2020-06-28
               </span>
               <span>
-                2 min read
+                3 min read
               </span>
               
             </div>
@@ -172,6 +172,19 @@ public class Sort {
         }
     }
 </code></pre>
+<h4 id="3-对插入排序的改进">3. 对插入排序的改进</h4>
+<p>在上面的插入排序中，第二层循环每次都要交换满足条件的两个元素，交换是比较耗时的，可以采用赋值的办法，如下动图所示：<br>
+写成代码就是这样的：</p>
+<pre><code class="language-java">for (int i = 1; i &lt; nums.length; i++) {
+            int cur = nums[i];
+            //j最终存放了cur应该放的位置
+            int j;
+            for (j = i; j &gt; 0 &amp;&amp; nums[j - 1] &gt; cur; j--) {
+                nums[j] = nums[j - 1];
+            }
+            nums[j] = cur;
+        }
+</code></pre>
 
               </div>
               <div class="toc-container">
@@ -185,6 +198,7 @@ public class Sort {
 <li><a href="#0%E6%8E%92%E5%BA%8F%E6%A8%A1%E6%9D%BF">0.排序模板</a></li>
 <li><a href="#1-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F">1. 选择排序</a></li>
 <li><a href="#2-%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F">2. 插入排序</a></li>
+<li><a href="#3-%E5%AF%B9%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F%E7%9A%84%E6%94%B9%E8%BF%9B">3. 对插入排序的改进</a></li>
 </ul>
 </li>
 </ul>
