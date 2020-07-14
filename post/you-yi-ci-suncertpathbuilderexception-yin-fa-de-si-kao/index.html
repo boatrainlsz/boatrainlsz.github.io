@@ -2,20 +2,17 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>《计算机系统要素》实验和笔记 | 画船听雨眠</title>
+<title>由一次SunCertPathBuilderException引发的思考 | 画船听雨眠</title>
 <link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1594689531467">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="《计算机系统要素》实验和笔记 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="由一次SunCertPathBuilderException引发的思考 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="从零开始构建计算机，豆瓣链接
-前5章属于硬件知识，大概过了一下，重点放在后面的汇编器、虚拟机、编译器、操作系统章节。因为平时的工作还没深入到硬件底层，暂时就不看了。
-第6章 汇编编译器
-1.语言规范
-二进制代码文件名后缀为.hack，汇编代..." />
+    <meta name="description" content="前置知识
+" />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -78,11 +75,11 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              《计算机系统要素》实验和笔记
+              由一次SunCertPathBuilderException引发的思考
             </h2>
             <div class="post-info">
               <span>
-                2020-06-18
+                2020-07-14
               </span>
               <span>
                 1 min read
@@ -92,12 +89,7 @@
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>从零开始构建计算机，<a href="https://book.douban.com/subject/1998341/?from=tag_all">豆瓣链接</a><br>
-前5章属于硬件知识，大概过了一下，重点放在后面的汇编器、虚拟机、编译器、操作系统章节。因为平时的工作还没深入到硬件底层，暂时就不看了。</p>
-<h3 id="第6章-汇编编译器">第6章 汇编编译器</h3>
-<h4 id="1语言规范">1.语言规范</h4>
-<p>二进制代码文件名后缀为.hack，汇编代码文件名后缀为.asm。那么汇编器的功能就是将hack文件翻译成asm文件。其中：<br>
- asm文件由文本行组成，每一行由16和0/1的ASCII码组成。当被加载进内存执行时，第n行将被存储到地址为n的指令内存。</p>
+                <h4 id="前置知识">前置知识</h4>
 
               </div>
               <div class="toc-container">
@@ -106,9 +98,9 @@
 <ul>
 <li>
 <ul>
-<li><a href="#%E7%AC%AC6%E7%AB%A0-%E6%B1%87%E7%BC%96%E7%BC%96%E8%AF%91%E5%99%A8">第6章 汇编编译器</a>
+<li>
 <ul>
-<li><a href="#1%E8%AF%AD%E8%A8%80%E8%A7%84%E8%8C%83">1.语言规范</a></li>
+<li><a href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86">前置知识</a></li>
 </ul>
 </li>
 </ul>
@@ -125,9 +117,9 @@
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://boatrainlsz.github.io/post/ce-shi-cha-ru-dai-ma/">
+            <a href="https://boatrainlsz.github.io/post/suan-fa-dai-ma-zhong-de-bian-jie-tiao-jian/">
               <h3 class="post-title">
-                测试插入代码
+                算法代码中的边界条件
               </h3>
             </a>
           </div>
