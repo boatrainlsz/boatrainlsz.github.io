@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-07-14T12:21:28.033Z</updated>
+    <updated>2020-07-14T12:47:23.876Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -23,7 +23,7 @@
 <p>随即Google之，发现是https证书的问题。<br>
 在浏览器中打开接口地址，可以看到这个证书的根证书是CFCA EV颁发的：<br>
 <img src="https://boatrainlsz.github.io/post-images/1594715055840.jpg" alt="" loading="lazy"><br>
-浏览器的根证书列表和Java的根证书列表里没有这个根证书，所以这个根证书和由这个根证书签发的子证书都是不可信的。</p>
+浏览器的证书列表和Java的证书列表里没有这个根证书，所以这个根证书和由这个根证书签发的子证书都是不可信的。</p>
 <h4 id="1-解决办法">1 解决办法</h4>
 <p>解决办法也很简单，一是代码里面设置信任所有证书，二是把这个CFCA EV根证书植入根证书列表去。</p>
 <h5 id="11-信任所有证书">1.1 信任所有证书</h5>
@@ -129,8 +129,19 @@
 <img src="https://boatrainlsz.github.io/post-images/1594721075978.jpg" alt="" loading="lazy"><br>
 由于我使用的是10.139.103.59这个代理地址，肯定是不匹配的，所以定义了一个HostnameVerifier，无条件返回true。</p>
 <h6 id="124-也可以借助keystore-explorer这个软件导入">1.2.4 也可以借助<a href="https://keystore-explorer.org/">KeyStore Explorer</a>这个软件导入</h6>
-<h4 id="信任链">信任链</h4>
-<p>遗憾的是，JDK10之前，Java都是没有内置根证书的，</p>
+<h4 id="2-信任链">2 信任链</h4>
+<p>关于https的信任链，<a href="https://www.wikiwand.com/zh-hans/%E4%BF%A1%E4%BB%BB%E9%8F%88">维基百科</a>解释得很清楚。</p>
+<h4 id="3-查看证书">3 查看证书</h4>
+<h5 id="31-查看浏览器信任的证书列表">3.1 查看浏览器信任的证书列表</h5>
+<p>以Chrome为例，在设置中搜索证书，即可查看,如下图：<br>
+<img src="https://boatrainlsz.github.io/post-images/1594730027685.jpg" alt="" loading="lazy"><br>
+<img src="https://boatrainlsz.github.io/post-images/1594730038484.jpg" alt="" loading="lazy"></p>
+<h5 id="32-查看java信任的证书列表">3.2 查看Java信任的证书列表</h5>
+<p>Java的证书都存在jre/lib/security/cacerts文件中，这是Java定义的keystore文件，可以使用Java的keytool工具查看：</p>
+<pre><code class="language-shell">keytool -keystore &quot;C:\Program Files\Java\jre1.8.0_241\lib\security\cacerts&quot;-storepass changeit -list
+</code></pre>
+<p>也可以使用<a href="https://keystore-explorer.org/">KeyStore Explorer</a>软件查看：<br>
+<img src="https://boatrainlsz.github.io/post-images/1594730493108.jpg" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
     <entry>
