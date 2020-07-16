@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-07-16T13:56:22.743Z</updated>
+    <updated>2020-07-16T14:01:52.316Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -10,6 +10,15 @@
     <logo>https://boatrainlsz.github.io/images/avatar.png</logo>
     <icon>https://boatrainlsz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 画船听雨眠</rights>
+    <entry>
+        <title type="html"><![CDATA[HSDB学习资料]]></title>
+        <id>https://boatrainlsz.github.io/post/hsdb-xue-xi-zi-liao/</id>
+        <link href="https://boatrainlsz.github.io/post/hsdb-xue-xi-zi-liao/">
+        </link>
+        <updated>2020-07-16T14:00:21.000Z</updated>
+        <content type="html"><![CDATA[<p>偶然发现<a href="https://www.iteye.com/blog/rednaxelafx-1847971">R大的文章</a>和<a href="http://lovestblog.cn/blog/2014/06/28/hsdb-string/">笨神的文章</a>，先收藏，以后再啃。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[latex formula test]]></title>
         <id>https://boatrainlsz.github.io/post/latex-formula-test/</id>
@@ -612,81 +621,6 @@ Redis Cluster入门和进阶可以看官方的这两篇博客：<a href="http://
 总结：** volatile-xxx <strong>策略只会针对</strong>带过期时间的 key **进行淘汰，<strong>allkeys-xxx <strong>策略会对</strong>所有的key</strong>进行淘汰。如果你只是拿 Redis 做缓存，那应该使用 allkeys-xxx，客户端写缓存时<br>
 不必携带过期时间。如果你还想同时使用 Redis 的持久化功能，那就使用 volatile-xxx策略，这样可以保留没有设置过期时间的 key，它们是永久的 key 不会被 LRU 算法淘汰。</li>
 </ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Mysql系列]]></title>
-        <id>https://boatrainlsz.github.io/post/mysqlSeries/</id>
-        <link href="https://boatrainlsz.github.io/post/mysqlSeries/">
-        </link>
-        <updated>2020-06-23T07:44:44.000Z</updated>
-        <content type="html"><![CDATA[<p>来源：<a href="https://dev.mysql.com/doc/">Mysql官网</a>和<a href="https://mp.weixin.qq.com/s/syli7vs7Jw_VOTl5B2YUqg">微信公众号</a></p>
-<h4 id="1redo-log-和bin-log">1.redo log 和bin log</h4>
-<h5 id="11-redo-log的结构">1.1 redo log的结构：</h5>
-<p><img src="https://boatrainlsz.github.io/post-images/1593314027202.png" alt="" loading="lazy"><br>
-InnoDB的redo log大小是固定的，4个文件每个文件1G。逻辑上可以认为是一个环。write pos是当前日志写到的位置，checkpoint则是已经写入磁盘的位置，写入磁盘后checkpoint会将日志上的相关记录擦除掉。即：<br>
-write pos-&gt;checkpoint之间的部分是redo log空着的部分，用于记录新的记录。<br>
-checkpoint-&gt;write pos之间是redo log待写入磁盘的数据修改记录。<br>
-当以下两种情况发生了，才会写入磁盘(也就是将checkpoint推进一点)：</p>
-<ol>
-<li>系统闲的时候</li>
-<li>redo log写满的时候，也就是write posz追上了checkpoint。</li>
-</ol>
-<h5 id="12-bin-log是server层的日志是逻辑日志-它与redo-log的区别">1.2 bin log是Server层的日志，是逻辑日志。它与redo log的区别：</h5>
-<ol>
-<li><strong>所在的层次不同</strong>：<br>
-redo log是<strong>InnoDB引擎特有</strong>的；binlog是MySQL的Server层实现的，所有引擎都可以使用。</li>
-<li><strong>日志类型不同</strong>：<br>
-redo log是<strong>物理日志</strong>，记录的是“在某个数据页上做了什么修改”；binlog是<strong>逻辑日志</strong>，记录的是这个语句的原始逻辑，比如“给ID=2这一行的c字段加1 ”。</li>
-<li><strong>文件写入方式不同</strong>：<br>
-redo log是<strong>循环写的，空间固定会用完</strong>；binlog<strong>是可以追加写入的</strong>。“追加写”是指binlog文件写到一定大小后会切换到下一个，并不会覆盖以前的日志。</li>
-<li><strong>作用不同</strong>：<br>
-redo log用来<strong>确保事务的持久性</strong>，当我们修改数据的时候，写完内存了，但数据还没真正写到磁盘的时候。此时我们的数据库挂了，数据没有持久化，但是redo log已经持久化。系统可以根据redo log的内容，将所有数据恢复到最新的状态。<br>
-而bin log主要用来主从复制和恢复数据用。</li>
-</ol>
-<h5 id="13-为什么会有两套日志系统">1.3 为什么会有两套日志系统？</h5>
-<p>因为最开始MySQL里并没有InnoDB引擎。MySQL自带的引擎是MyISAM，但是MyISAM没有crash-safe的能力，binlog日志只能用于归档。而InnoDB是另一个公司以插件形式引入MySQL的，既然只依靠binlog是没有crash-safe能力的，所以InnoDB使用另外一套日志系统——也就是redo log来实现crash-safe能力。</p>
-<h5 id="14-两套日志怎么保证一致">1.4 两套日志怎么保证一致？</h5>
-<p>既然引入了两套日志，一致性就很重要了，MySQL用了<strong>两阶段提交</strong>来保证这一点。</p>
-<h4 id="2数据库的隔离级别">2.数据库的隔离级别</h4>
-<p>图片来源：1995年的那篇<a href="https://arxiv.org/ftp/cs/papers/0701/0701157.pdf">经典论文</a>，这篇文章对<a href="https://www.contrib.andrew.cmu.edu/~shadow/sql/sql1992.txt">SQL:1992标准</a>提出了改进方案，不过<a href="https://www.wikiwand.com/en/SQL-92">MySQL官方</a>现在还是支持<a href="https://www.wikiwand.com/en/SQL-92">SQL:1992标准</a>。以下讨论均基于SQL:1992。<br>
-SQL:1992定义了三种现象和为了避免这三种现象而引出的四种隔离级别：</p>
-<h5 id="21-三种现象">2.1 三种现象</h5>
-<ol>
-<li>P1 (Dirty Read)：即脏读，事务T1更改了数据，但是还未提交，此时事务T2读到了更改的数据，紧接着T1进行了回滚操作，那T2读到的这个数据就是从未存在过的数据。</li>
-<li>P2 (Non-repeatable or Fuzzy Read)：非可重复读，或称模糊读，T1读取了数据，T2改了并提交了，那T1再读取数据时，得到的就是被改过了的数据。这样，T1事务开始时读的数据和第二次读的数据不一致，<strong>非可重复读</strong>因此得名。</li>
-<li>P3 (Phantom)：幻读，T1按照一定的<strong>搜索条件</strong>读取了N行数据，然后T2按照这个条件生成了一行或多行满足这个搜索条件的数据，此时T1再按同样的搜索条件读取时，就会得到不同的数据了。看起来和非可重复读差不多，它们的区别在于：非可重复读针对的是同一个记录的数据内容被修改了，幻读是数据行记录变多了或者少了。</li>
-</ol>
-<h5 id="22-四种隔离级别">2.2 四种隔离级别</h5>
-<ol>
-<li>READ UNCOMMITTED：即T2可读取T1未提交的数据</li>
-<li>READ COMMITTED：即T2只能读取T1提交的数据</li>
-<li>REPEATABLE READ：可重复读，保证<strong>非可重复读</strong>现象不会发生。</li>
-<li>SERIALIZABLE：串行执行，隔离级别最高，T1读写先加锁，T2只能等着。<br>
-这四种隔离级别从上至下并发性依次降低，安全性依次增加。InnoDB的默认级别是REPEATABLE READ。</li>
-</ol>
-<h5 id="23-三种现象与四种隔离级别的关系">2.3 三种现象与四种隔离级别的关系</h5>
-<figure data-type="image" tabindex="1"><img src="https://boatrainlsz.github.io/post-images/1593331088109.jpg" alt="" loading="lazy"></figure>
-<h5 id="24-mysql对隔离级别的实现">2.4 MySQL对隔离级别的实现</h5>
-<p>SQL:1992只是规定了这四种隔离级别，不同的数据库对隔离级别的实现方式是不一样的，MySQL的<a href="https://dev.mysql.com/doc/refman/5.6/en/innodb-transaction-isolation-levels.html#isolevel_read-uncommitted">实现</a>如下：</p>
-<ol>
-<li>READ UNCOMMITTED：这个最简单，无锁就行。</li>
-<li>READ COMMITTED、REPEATABLE READ：快照。</li>
-<li>SERIALIZABLE：加锁。</li>
-</ol>
-<h4 id="3-innodb架构与细节">3. InnoDB架构与细节</h4>
-<p>InnoDB的整体架构如下(图片来自<a href="https://dev.mysql.com/doc/refman/5.6/en/innodb-architecture.html">MySQL官网</a>)：<br>
-<img src="https://boatrainlsz.github.io/post-images/1593413722395.png" alt="" loading="lazy"><br>
-更详细的可以看这张姜承尧整理的图片：<br>
-<img src="https://boatrainlsz.github.io/post-images/1594563092896.png" alt="" loading="lazy"><br>
-<a href="https://mp.weixin.qq.com/s/zKHNaWY5AS0OMmag1mQTKQ">整体架构解读</a></p>
-<h5 id="21-buffer-pool详解">2.1 <a href="https://mp.weixin.qq.com/s/nA6UHBh87U774vu4VvGhyw">Buffer Pool详解</a></h5>
-<h5 id="22-change-buffer详解">2.2 <a href="https://mp.weixin.qq.com/s/PF21mUtpM8-pcEhDN4dOIw">Change Buffer详解</a></h5>
-<h5 id="23-adaptive-hash-index详解">2.3 <a href="https://mp.weixin.qq.com/s/vQsilZmyMaaVkYGkn-WXew">Adaptive Hash Index详解</a></h5>
-<h5 id="24-log-buffer详解">2.4 <a href="https://mp.weixin.qq.com/s/-Hx2KKYMEQCcTC-ADEuwVA">Log Buffer详解</a></h5>
-<h5 id="25-doublewrite-buffer详解">2.5 <a href="https://mp.weixin.qq.com/s?src=11&amp;timestamp=1594542563&amp;ver=2455&amp;signature=4SG54f7m*pli5Py3cvq53XHLj0ophe8ZEolV8ykk14U5DFGkw8rc8IP3MpMsnegLy-an67e0m4Iu3aa*ML6J2jVIka03Vh7sGps9widPHZQXe6rgxl*sEJp1FYaRclCe&amp;new=1">doublewrite Buffer详解</a></h5>
-<h4 id="4-锁事">4. 锁事</h4>
-<p>行锁防止别的事务修改或删除，GAP锁防止别的事务新增，行锁和GAP锁结合形成的的Next-Key锁共同解决了RR级别在写数据时的幻读问题。</p>
 ]]></content>
     </entry>
 </feed>
