@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-07-14T14:40:51.133Z</updated>
+    <updated>2020-07-16T01:31:17.729Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -10,6 +10,16 @@
     <logo>https://boatrainlsz.github.io/images/avatar.png</logo>
     <icon>https://boatrainlsz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 画船听雨眠</rights>
+    <entry>
+        <title type="html"><![CDATA[latex formula test]]></title>
+        <id>https://boatrainlsz.github.io/post/latex-formula-test/</id>
+        <link href="https://boatrainlsz.github.io/post/latex-formula-test/">
+        </link>
+        <updated>2020-07-16T01:30:30.000Z</updated>
+        <content type="html"><![CDATA[<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>=</mo><mn>100</mn><mo>∗</mo><mi>y</mi><mo>+</mo><mi>z</mi><mo>−</mo><mn>10</mn><mi mathvariant="normal">/</mi><mn>33</mn><mo>+</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">x = 100 * y + z - 10 / 33 + 10 % 3
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.7777700000000001em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">/</span><span class="mord">3</span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span></span></span></span></span></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[SSL的工作原理]]></title>
         <id>https://boatrainlsz.github.io/post/ssl-de-gong-zuo-yuan-li/</id>
@@ -665,51 +675,6 @@ SQL:1992定义了三种现象和为了避免这三种现象而引出的四种隔
 <h5 id="25-doublewrite-buffer详解">2.5 <a href="https://mp.weixin.qq.com/s?src=11&amp;timestamp=1594542563&amp;ver=2455&amp;signature=4SG54f7m*pli5Py3cvq53XHLj0ophe8ZEolV8ykk14U5DFGkw8rc8IP3MpMsnegLy-an67e0m4Iu3aa*ML6J2jVIka03Vh7sGps9widPHZQXe6rgxl*sEJp1FYaRclCe&amp;new=1">doublewrite Buffer详解</a></h5>
 <h4 id="4-锁事">4. 锁事</h4>
 <p>行锁防止别的事务修改或删除，GAP锁防止别的事务新增，行锁和GAP锁结合形成的的Next-Key锁共同解决了RR级别在写数据时的幻读问题。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Java系列]]></title>
-        <id>https://boatrainlsz.github.io/post/g3OSUO_j2/</id>
-        <link href="https://boatrainlsz.github.io/post/g3OSUO_j2/">
-        </link>
-        <updated>2020-06-23T07:42:39.000Z</updated>
-        <content type="html"><![CDATA[<p>来源：Google和<a href="https://book.douban.com/subject/34907497/">《深入理解Java虚拟机》</a><br>
-之前零零碎碎整理过一些思维导图：<a href="https://www.processon.com/view/link/5ef1f83e6376891e81e24cd9">Java的垃圾回收</a>、<a href="https://www.processon.com/view/link/5ef1f7f66376891e81e24bf8">虚拟机类加载机制</a>等。没有形成系列，这次统一整理一下。</p>
-<h3 id="1-java的历史">1 Java的历史</h3>
-<p>见图：<br>
-<img src="https://boatrainlsz.github.io/post-images/1592916495501.jpg" alt="" loading="lazy"><br>
-一些重大变更的版本和新增的内容：<br>
-<strong>JDK1.1</strong>：jar文件格式、JDBC、内部类、反射。<br>
-<strong>JDK1.2</strong>：开始区分J2SE、J2EE、J2ME，分别面向桌面、企业级、移动端。<br>
-<strong>JDK1.3</strong>：HotSpot虚拟机开始成为默认虚拟机。<br>
-<strong>JDK1.4</strong>：正则表达式、NIO等技术。<br>
-<strong>JDK5</strong>：自动装箱、<strong>泛型</strong>、动态注解、枚举、可变长参数、foreach循环、<strong>java.util.concurrent包</strong>，从这个版本开始，放弃JDK 1.x的命名(估计是觉得不够霸气)，改为JDK x。<br>
-<strong>JDK6</strong>：改变从JDK1.2开始的J2SE、J2EE、J2ME命名，转为Java SE 6、Java EE 6、Java ME 6，同时对锁与同步、垃圾回收、类加载等方面大幅改进。<br>
-<strong>JDK7</strong>：开始开源，开源的称之为OpenJDK7，原来的称之为SunJDK7。本来JDK7被寄予厚望，包括但不限于：<br>
-·Lambda项目：支持Lambda表达式，支持函数式编程。<br>
-·Jigsaw项目：虚拟机层面的模块化支持。<br>
-·动态语言支持：Java是静态语言，为其他运行在Java虚拟机上的动态语言提供支持。<br>
-·Garbage-First收集器。<br>
-·Coin项目：Java语法细节进化。<br>
-怎奈Sun公司此时深陷商业竞争和技术竞争的泥潭，眼看JDK7的目标就要泡汤了。Oracle收购Sun之后，大手一挥，砍掉了Lambda项目和Jigsaw项目和部分Coin项目,将其移到了JDK8中，这样保证了JDK7的如期发布。<br>
-从JDK JDK 7 Update 4开始，Java SE终于可以在Mac OS X上运行。<br>
-<strong>JDK8</strong>：Lambda表达式、新的日期API(JDK7以前的日期API有多被嫌弃，Google一下&quot;Java7 date sucks&quot;就知道了)、彻底移除HotSpot的永久代。不过说好的Jigsaw项目则继续跳票。<br>
-<strong>JDK9</strong>：经过一番巨头们(Oracle、IBM、Redhat)的撕逼，Jigsaw终于在JDK9中发布。<br>
-<strong>JDK10</strong>：内部重构，对程序员来说，感知不强。<br>
-<strong>JDK11</strong>：革命性的ZGC垃圾收集器。<br>
-<strong>JDK12</strong>：引入Redhat开发的Shenandoah收集器，作为ZGC的竞争对手，且Shenandoah不是Oracle的亲儿子，Oracle随即就在OracleJDK中通过条件编译的方式剔除了Shenandoah。Shenandoah也成为目前为止唯一一个OpenJDK能用但OracleJDK不能用的功能。</p>
-<h3 id="2-jvm整体架构">2 JVM整体架构</h3>
-<p>下图来自https://dzone.com/articles/jvm-architecture-explained<br>
-<img src="https://boatrainlsz.github.io/post-images/1594044264659.png" alt="" loading="lazy"><br>
-基本上把这张图弄懂了，JVM架构就差不多掌握了。大体的流程是：Java源文件编译得到class文件(编译过程后续再讲)，class文件被类加载子系统加载进内存，执行引擎执行字节码，执行过程中创建的对象大部分存放在堆中，每个线程拥有独立的栈和PC寄存器，GC子系统会及时回收内存。</p>
-<h3 id="3-java的内存模型">3 Java的内存模型</h3>
-<p>本来这一节应该放在后面的线程安全一节的，但是为了不与第二节的内存区域混淆，还是提到前面来了。</p>
-<h3 id="4-java的垃圾回收">4 Java的垃圾回收</h3>
-<h3 id="5-java的class文件">5 Java的class文件</h3>
-<p>class文件的详细结构见<a href="https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html">Oracle的这篇文档</a>，这里重点说一下常量池。<br>
-其实常量池非常类似于其他语言中的<a href="https://www.wikiwand.com/zh-hans/%E7%AC%A6%E5%8F%B7%E8%A1%A8">符号表</a>，它的作用在于：存储编译期间生成的字面量和符号引用，并在类加载后存放到方法区中的运行时常量池中。字面量是在<strong>编译期间</strong>就确定了的，而符号引用只能在<strong>运行时</strong>才能经过虚拟机的转换得到真正的内存地址。可以把常量池理解为菜谱，它记录了一道菜需要盐、酱油、味精等材料，真正做菜时，照着菜谱找到这些材料的真正存放地址，并拿来用。这里的盐、酱油、味精就是符号引用，它们在厨房里的存放地点就是真正的内存地址，厨师就是虚拟机。class文件的查看推荐使用IDEA的<a href="https://plugins.jetbrains.com/plugin/9248-jclasslib-bytecode-viewer">jclasslib Bytecode viewer插件</a>。</p>
-<h3 id="序号待定-java的热点代码探测">序号待定 Java的热点代码探测</h3>
-<figure data-type="image" tabindex="1"><img src="https://boatrainlsz.github.io/post-images/1593676010125.jpg" alt="" loading="lazy"></figure>
 ]]></content>
     </entry>
 </feed>
