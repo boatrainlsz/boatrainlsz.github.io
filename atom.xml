@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-07-16T01:33:39.818Z</updated>
+    <updated>2020-07-16T13:56:22.743Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -321,6 +321,8 @@ public class Sort {
             nums[j] = cur;
         }
 </code></pre>
+<h4 id="5-归并排序">5 归并排序</h4>
+<p>把数组一分为二，i是左边数组当前考察的元素，j是右边数组当前考察的元素，k是i,j所在元素比较后应该放的位置，[l,r]代表数组的起点和终点。</p>
 ]]></content>
     </entry>
     <entry>
