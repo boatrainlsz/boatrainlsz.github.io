@@ -2,18 +2,24 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Java HashMap Infinite Loop | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1594908133544">
+<title>Java HashMap相关知识点 | 画船听雨眠</title>
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1595081565568">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Java HashMap Infinite Loop | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Java HashMap相关知识点 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="这是一篇讲述Java7中的HashMap死循环的文章，十分细致。
-https://javabypatel.blogspot.com/2016/01/infinite-loop-in-hashmap.html
-这篇文章介绍了HashMap和C..." />
+    <meta name="description" content="1 HashMap的几个方法
+1.1 实例化
+1.2 添加元素
+1.3 删除元素
+1.4 扩容
+1.5 链表转化为红黑树
+2 HashMap的死循环问题
+这是一篇讲述Java7中的HashMap死循环的文章，十分细致。
+https://ja..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -23,7 +29,7 @@ https://javabypatel.blogspot.com/2016/01/infinite-loop-in-hashmap.html
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1594908133544" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1595081565568" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -76,7 +82,7 @@ https://javabypatel.blogspot.com/2016/01/infinite-loop-in-hashmap.html
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Java HashMap Infinite Loop
+              Java HashMap相关知识点
             </h2>
             <div class="post-info">
               <span>
@@ -90,13 +96,44 @@ https://javabypatel.blogspot.com/2016/01/infinite-loop-in-hashmap.html
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>这是一篇讲述Java7中的HashMap死循环的文章，十分细致。<br>
+                <h4 id="1-hashmap的几个方法">1 HashMap的几个方法</h4>
+<h5 id="11-实例化">1.1 实例化</h5>
+<h5 id="12-添加元素">1.2 添加元素</h5>
+<h5 id="13-删除元素">1.3 删除元素</h5>
+<h5 id="14-扩容">1.4 扩容</h5>
+<h5 id="15-链表转化为红黑树">1.5 链表转化为红黑树</h5>
+<h4 id="2-hashmap的死循环问题">2 HashMap的死循环问题</h4>
+<p>这是一篇讲述Java7中的HashMap死循环的文章，十分细致。<br>
 https://javabypatel.blogspot.com/2016/01/infinite-loop-in-hashmap.html</p>
 <p>这篇文章介绍了HashMap和ConcurrentHashMap：http://www.jasongj.com/java/concurrenthashmap/</p>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#1-hashmap%E7%9A%84%E5%87%A0%E4%B8%AA%E6%96%B9%E6%B3%95">1 HashMap的几个方法</a>
+<ul>
+<li><a href="#11-%E5%AE%9E%E4%BE%8B%E5%8C%96">1.1 实例化</a></li>
+<li><a href="#12-%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0">1.2 添加元素</a></li>
+<li><a href="#13-%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0">1.3 删除元素</a></li>
+<li><a href="#14-%E6%89%A9%E5%AE%B9">1.4 扩容</a></li>
+<li><a href="#15-%E9%93%BE%E8%A1%A8%E8%BD%AC%E5%8C%96%E4%B8%BA%E7%BA%A2%E9%BB%91%E6%A0%91">1.5 链表转化为红黑树</a></li>
+</ul>
+</li>
+<li><a href="#2-hashmap%E7%9A%84%E6%AD%BB%E5%BE%AA%E7%8E%AF%E9%97%AE%E9%A2%98">2 HashMap的死循环问题</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
               </div>
             </div>
           </article>
