@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>计算机网络系列 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1595083023018">
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1595085407539">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="计算机网络系列 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
@@ -26,7 +26,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1595083023018" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1595085407539" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -104,9 +104,9 @@
 <li>A----&gt;B：你好，我要和你建立连接，这是我的ISN。</li>
 <li>B----&gt;A：好的，ISN已收到。</li>
 <li>B----&gt;A：你好，我也要和你建立连接，这是我的ISN。</li>
-<li>A----&gt;B：好的，ISN已收到。<br>
-到此，一个全双工的连接就建立完成。这就是<strong>四次握手</strong>，但是很明显，第2，3步是可以合并的。</li>
+<li>A----&gt;B：好的，ISN已收到。</li>
 </ol>
+<p>到此，一个全双工的连接就建立完成。这就是<strong>四次握手</strong>，但是很明显，第2，3步是可以合并的。</p>
 <h4 id="12-三次握手">1.2 三次握手</h4>
 <p>将四次握手中的第2，3步合并后，得到三次握手：</p>
 <ol>
@@ -120,9 +120,9 @@
 <li>A----&gt;B：我想要断开连接了。</li>
 <li>B----&gt;A：好的，我知道你想要断开连接了。</li>
 <li>B----&gt;A：我也想要断开连接了。</li>
-<li>A----&gt;B：好的，我知道你想要断开连接了。<br>
-4步完成后，双方就<strong>断开连接</strong>一事达成了共识，连接断开。那为什么2，3步不可以合并？因为TCP是<strong>为上层，也就是应用层服务的</strong>，比如HTTP。第1步完成后，TCP自己做不了主，得去问上层的应用层：<strong>对方要断开连接，请问您还有数据要发送吗？</strong>，然后等待应用层的回答。既然空等也是等，何不先回复一下A呢？也就是第二步。</li>
+<li>A----&gt;B：好的，我知道你想要断开连接了。</li>
 </ol>
+<p>4步完成后，双方就<strong>断开连接</strong>一事达成了共识，连接断开。那为什么2，3步不可以合并？因为TCP是<strong>为上层，也就是应用层服务的</strong>，比如HTTP。第1步完成后，TCP自己做不了主，得去问上层的应用层：<strong>对方要断开连接，请问您还有数据要发送吗？</strong>，然后等待应用层的回答。既然空等也是等，何不先回复一下A呢？也就是第二步。</p>
 <h4 id="14-最后的总结">1.4 最后的总结：</h4>
 <p><strong>握手没有应用层参与</strong>，所以2，3步可以合并。但<strong>挥手因为应用层处理</strong>需要时间不能直接合并。<br>
 TCP不是通信的全部，其实TCP只是一个跑腿的、是为应用层服务的，需要和应用层互动，把对端的数据、命令反馈给应用层，并随时接收应用层的数据、以及关闭连接命令。所以<strong>关闭连接一定要听从应用层的话</strong>，所以不能简单FIN + ACK 合二为一。</p>
