@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>排序算法 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1595426701602">
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1595427153182">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="排序算法 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
@@ -23,7 +23,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1595426701602" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1595427153182" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -193,7 +193,10 @@ public class Sort {
 对于两个分别有序的子数组，如何合并成一个有序的大数组？如下图所示：<br>
 <img src="https://boatrainlsz.github.io/post-images/1595426043718.jpg" alt="" loading="lazy"><br>
 <img src="https://boatrainlsz.github.io/post-images/1595426068198.jpg" alt="" loading="lazy"><br>
-思路就是，开辟一个辅助的数组aux[]，挨个比较两个子数组中的值aux[i]，aux[j]，把较小的那个放到原数组的k位置。代码如下：</p>
+思路就是，开辟一个辅助的数组aux[]，挨个比较两个子数组中的值aux[i]，aux[j]，把较小的那个放到原数组的k位置。如下图所示：<br>
+<img src="https://boatrainlsz.github.io/post-images/1595426969939.jpg" alt="" loading="lazy"><br>
+上图中，i位置上的O要大于j位置上的M，所以k位置上应该放置M，然后j++，j指向S，继续上述比较。<br>
+代码如下：</p>
 <pre><code class="language-java">private void mergeSort(int[] nums) {
         //递归地将数组分为两个子数组,分别为其排序,再合并
         int[] aux = new int[nums.length];

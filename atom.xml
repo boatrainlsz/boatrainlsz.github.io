@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-07-22T14:05:04.748Z</updated>
+    <updated>2020-07-22T14:12:38.278Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -400,7 +400,10 @@ public class Sort {
 对于两个分别有序的子数组，如何合并成一个有序的大数组？如下图所示：<br>
 <img src="https://boatrainlsz.github.io/post-images/1595426043718.jpg" alt="" loading="lazy"><br>
 <img src="https://boatrainlsz.github.io/post-images/1595426068198.jpg" alt="" loading="lazy"><br>
-思路就是，开辟一个辅助的数组aux[]，挨个比较两个子数组中的值aux[i]，aux[j]，把较小的那个放到原数组的k位置。代码如下：</p>
+思路就是，开辟一个辅助的数组aux[]，挨个比较两个子数组中的值aux[i]，aux[j]，把较小的那个放到原数组的k位置。如下图所示：<br>
+<img src="https://boatrainlsz.github.io/post-images/1595426969939.jpg" alt="" loading="lazy"><br>
+上图中，i位置上的O要大于j位置上的M，所以k位置上应该放置M，然后j++，j指向S，继续上述比较。<br>
+代码如下：</p>
 <pre><code class="language-java">private void mergeSort(int[] nums) {
         //递归地将数组分为两个子数组,分别为其排序,再合并
         int[] aux = new int[nums.length];
