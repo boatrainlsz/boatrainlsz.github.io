@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>排序算法 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1595302364866">
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1595426701602">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="排序算法 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
@@ -23,7 +23,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1595302364866" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1595426701602" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -83,7 +83,7 @@
                 2020-06-28
               </span>
               <span>
-                3 min read
+                6 min read
               </span>
               
             </div>
@@ -92,7 +92,8 @@
               <div class="post-content">
                 <p>为什么要写这个系列？说实话，排序算法已经被很多人写过了，可视化的排序算法网上更是比比皆是。写这个目的有二：<br>
 一是强迫自己思考，脑子毕竟是越用越灵活。<br>
-二是好记性不如烂笔头，看了别人的文章，当时懂了，过段时间又忘了，还不如自己一笔一划的写出来。</p>
+二是好记性不如烂笔头，看了别人的文章，当时懂了，过段时间又忘了，还不如自己一笔一划的写出来。<br>
+来源：<a href="https://book.douban.com/subject/19952400/">《算法》</a>一书的<a href="https://www.coursera.org/learn/algorithms-part1/home/welcome">在线教程</a></p>
 <h4 id="0排序模板">0.排序模板</h4>
 <pre><code class="language-java">package com.lsz.数据结构与算法.sort;
 import java.util.Arrays;
@@ -185,8 +186,68 @@ public class Sort {
             nums[j] = cur;
         }
 </code></pre>
-<h4 id="5-归并排序">5 归并排序</h4>
-<p>把数组一分为二，i是左边数组当前考察的元素，j是右边数组当前考察的元素，k是i,j所在元素比较后应该放的位置，[l,r]代表数组的起点和终点。</p>
+<h4 id="4-快速排序">4. 快速排序</h4>
+<h4 id="5-归并排序">5. 归并排序</h4>
+<p>基本思想：把数组一分为二，递归地为这两个数组排序，再合并。<br>
+<img src="https://boatrainlsz.github.io/post-images/1595425340452.jpg" alt="" loading="lazy"><br>
+对于两个分别有序的子数组，如何合并成一个有序的大数组？如下图所示：<br>
+<img src="https://boatrainlsz.github.io/post-images/1595426043718.jpg" alt="" loading="lazy"><br>
+<img src="https://boatrainlsz.github.io/post-images/1595426068198.jpg" alt="" loading="lazy"><br>
+思路就是，开辟一个辅助的数组aux[]，挨个比较两个子数组中的值aux[i]，aux[j]，把较小的那个放到原数组的k位置。代码如下：</p>
+<pre><code class="language-java">private void mergeSort(int[] nums) {
+        //递归地将数组分为两个子数组,分别为其排序,再合并
+        int[] aux = new int[nums.length];
+        _mergeSort(nums, aux, 0, nums.length - 1);
+    }
+</code></pre>
+<pre><code class="language-java">private void _mergeSort(int[] nums, int[] aux, int lo, int hi) {
+        if (hi &lt;= lo) return;
+        //为什么不用mid = (hi+lo)/2，因为hi，lo特别大的时候有可能相加会溢出
+        int mid = lo + (hi - lo) / 2;
+        //分为两个数组，分别为其排序，排序完成后，[lo,mid]是有序的，[mid+1,hi]是有序的
+        _mergeSort(nums, aux, lo, mid);
+        _mergeSort(nums, aux, mid + 1, hi);
+        /**
+         * 优化1，如果nums[mid]&lt;nums[mid+1]了，就不需要merge了。
+         * 因为nums[mid]是[lo,mid]中最大的，nums[mid+1]是[mid+1,hi]中最小的
+         * 前面最大的都小于后面最小的了，那肯定是有序的了。
+         * 这对于近乎有序的数组，排序效率会提高很多
+         *if (nums[mid] &gt; nums[mid + 1]) {
+         *             merge(nums, aux, lo, mid, hi);
+         *         }
+         */
+        //合并
+        merge(nums, aux, lo, mid, hi);
+
+    }
+</code></pre>
+<pre><code class="language-java">   /**
+     * 把[lo,mid],[mid+1,hi]这两个分别有序的数组合并成大的有序数组
+     * @param nums 原数组
+     * @param aux 辅助数组
+     * @param lo 
+     * @param mid
+     * @param hi
+     */
+    private void merge(int[] nums, int[] aux, int lo, int mid, int hi) {
+        //将nums的[lo,hi]复制到aux数组
+        for (int i = lo; i &lt;= hi; i++) {
+            aux[i] = nums[i];
+        }
+        int i = lo;
+        int j = mid + 1;
+        for (int k = lo; k &lt;= hi; k++) {
+            //i用完了
+            if (i &gt; mid) nums[k] = aux[j++];
+                //j用完了
+            else if (j &gt; hi) nums[k] = aux[i++];
+                //比较i,j元素的大小
+            else if (aux[i] &lt; aux[j])
+                nums[k] = aux[i++];
+            else nums[k] = aux[j++];
+        }
+    }
+</code></pre>
 
               </div>
               <div class="toc-container">
@@ -201,7 +262,8 @@ public class Sort {
 <li><a href="#1-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F">1. 选择排序</a></li>
 <li><a href="#2-%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F">2. 插入排序</a></li>
 <li><a href="#3-%E5%AF%B9%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F%E7%9A%84%E6%94%B9%E8%BF%9B">3. 对插入排序的改进</a></li>
-<li><a href="#5-%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F">5 归并排序</a></li>
+<li><a href="#4-%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F">4. 快速排序</a></li>
+<li><a href="#5-%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F">5. 归并排序</a></li>
 </ul>
 </li>
 </ul>
