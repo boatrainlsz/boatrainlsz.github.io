@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-07-29T08:22:19.472Z</updated>
+    <updated>2020-07-29T08:24:23.058Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -202,7 +202,7 @@
     }
 }
 </code></pre>
-<p>DynamicDataSourceRegister类的作用就是读取配置文件(包括本地配置文件和配置中心文件)，并向Spring上下文环境注册，即上面的setEnvironment方法。</p>
+<p>DynamicDataSourceRegister类的作用就是读取配置文件(包括本地配置文件和配置中心文件)，并向Spring上下文环境注册数据源(包括默认数据源和自定义的数据源)，即上面的setEnvironment方法。</p>
 <h3 id="2-使用threadlocal保存数据源名字">2 使用ThreadLocal保存数据源名字</h3>
 <pre><code class="language-java">public class DynamicDataSourceContextHolder {
 
