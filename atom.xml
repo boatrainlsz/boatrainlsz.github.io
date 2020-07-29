@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-07-28T14:29:37.677Z</updated>
+    <updated>2020-07-29T07:03:02.057Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -10,6 +10,15 @@
     <logo>https://boatrainlsz.github.io/images/avatar.png</logo>
     <icon>https://boatrainlsz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 画船听雨眠</rights>
+    <entry>
+        <title type="html"><![CDATA[Spring的多数据源处理]]></title>
+        <id>https://boatrainlsz.github.io/post/spring-de-duo-shu-ju-yuan-chu-li/</id>
+        <link href="https://boatrainlsz.github.io/post/spring-de-duo-shu-ju-yuan-chu-li/">
+        </link>
+        <updated>2020-07-29T07:01:41.000Z</updated>
+        <content type="html"><![CDATA[<p>最近开发过程中，看到了大佬们封装的基础组件，其中就包括多数据源的切换，觉得可以学习一下，特此记录。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[IDA Pro入门学习笔记]]></title>
         <id>https://boatrainlsz.github.io/post/ida-pro-ru-men-xue-xi-bi-ji/</id>
@@ -298,175 +307,6 @@ c100.7 8.3 195.3 44 280 108 55.3 42 101.7 93 139 153l9 14c2.7-4 5.7-8.7 9-14
 }
 </code></pre>
 <p>从始至终，[l,r]区间的意义就是：在[l,r]区间内寻找target。在后续的左边界移动、右边界移动操作中，都是在维护这个意义。这里的[l,r]其实就是个<a href="https://www.wikiwand.com/zh-hans/%E5%BE%AA%E7%8E%AF%E4%B8%8D%E5%8F%98%E9%87%8F">循环不变量</a></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[排序算法]]></title>
-        <id>https://boatrainlsz.github.io/post/aoDfrREmP/</id>
-        <link href="https://boatrainlsz.github.io/post/aoDfrREmP/">
-        </link>
-        <updated>2020-06-28T12:05:27.000Z</updated>
-        <content type="html"><![CDATA[<p>为什么要写这个系列？说实话，排序算法已经被很多人写过了，可视化的排序算法网上更是比比皆是。写这个目的有二：<br>
-一是强迫自己思考，脑子毕竟是越用越灵活。<br>
-二是好记性不如烂笔头，看了别人的文章，当时懂了，过段时间又忘了，还不如自己一笔一划的写出来。<br>
-来源：<a href="https://book.douban.com/subject/19952400/">《算法》</a>一书的<a href="https://www.coursera.org/learn/algorithms-part1/home/welcome">在线教程</a></p>
-<h4 id="0排序模板">0.排序模板</h4>
-<pre><code class="language-java">package com.lsz.数据结构与算法.sort;
-import java.util.Arrays;
-import java.util.concurrent.ThreadLocalRandom;
-
-/**
- * 排序
- */
-public class Sort {
-    public static void main(String[] args) {
-        Sort sort = new Sort();
-        int[] array = sort.generateRandomArray(10, 30, 65);
-        System.out.println(&quot;排序前:&quot; + Arrays.toString(array));
-        sort.selectionSort(array);
-        System.out.println(&quot;排序后:&quot; + Arrays.toString(array));
-    }
-
-    /**
-     * 交换array中的下标为i,j的元素
-     *
-     * @param array
-     * @param i
-     * @param j
-     */
-    private  void swap(int[] array, int i, int j) {
-        //这种交换不好，i=j时会犯错
-//        array[i] = array[i] + array[j];
-//        array[j] = array[i] - array[j];
-//        array[i] = array[i] - array[j];
-        int temp  =array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-
-    /**
-     * 生成随机数组
-     *
-     * @param n
-     * @param min
-     * @param max
-     * @return
-     */
-    public int[] generateRandomArray(int n, int min, int max) {
-        int[] array = new int[n];
-        for (int i = 0; i &lt; n; i++) {
-            array[i] = ThreadLocalRandom.current().nextInt(min, max + 1);
-        }
-        return array;
-    }
-}
-</code></pre>
-<h4 id="1-选择排序">1. 选择排序</h4>
-<p>遍历数组，把<strong>当前元素</strong>和<strong>后面未排序元素中最小的元素</strong>交换。<br>
-<img src="https://boatrainlsz.github.io/post-images/1594736316994.png" alt="" loading="lazy"></p>
-<pre><code class="language-java">private int[] selectionSort(int[] array) {
-        int n = array.length;
-        for (int i = 0; i &lt; n; i++) {
-            //找出[i,n-1]中最小的
-            int minIndex = i;
-            for (int j = i + 1; j &lt; n; j++)
-                if (array[minIndex] &gt; array[j])
-                    minIndex = j;
-            //找到了最小的，进行交换
-            swap(array, minIndex, i);
-        }
-        return array;
-    }
-</code></pre>
-<h4 id="2-插入排序">2. 插入排序</h4>
-<p>打牌时，整理牌的算法。让<strong>未排序元素</strong>在<strong>已排序元素</strong>中找到合适位置并插入。</p>
-<pre><code class="language-java">private void insertSort(int[] array) {
-        //从第二个元素开始，因为第一个元素已经是有序的
-        for (int i = 1; i &lt; array.length; i++) {
-            for (int j = i; j &gt; 0 &amp;&amp; array[j] &lt; array[j - 1]; j--) {
-                swap(array, j, j - 1);
-            }
-        }
-    }
-</code></pre>
-<h4 id="3-对插入排序的改进">3. 对插入排序的改进</h4>
-<p>在上面的插入排序中，第二层循环每次都要交换满足条件的两个元素，交换是比较耗时的，可以采用赋值的办法，如下动图所示：<br>
-写成代码就是这样的：</p>
-<pre><code class="language-java">for (int i = 1; i &lt; nums.length; i++) {
-            int cur = nums[i];
-            //j最终存放了cur应该放的位置
-            int j;
-            for (j = i; j &gt; 0 &amp;&amp; nums[j - 1] &gt; cur; j--) {
-                nums[j] = nums[j - 1];
-            }
-            nums[j] = cur;
-        }
-</code></pre>
-<h4 id="4-快速排序">4. 快速排序</h4>
-<h4 id="5-归并排序">5. 归并排序</h4>
-<p>基本思想：把数组一分为二，递归地为这两个数组排序，再合并。<br>
-<img src="https://boatrainlsz.github.io/post-images/1595425340452.jpg" alt="" loading="lazy"><br>
-对于两个分别有序的子数组，如何合并成一个有序的大数组？如下图所示：<br>
-<img src="https://boatrainlsz.github.io/post-images/1595426043718.jpg" alt="" loading="lazy"><br>
-<img src="https://boatrainlsz.github.io/post-images/1595426068198.jpg" alt="" loading="lazy"><br>
-思路就是，开辟一个辅助的数组aux[]，挨个比较两个子数组中的值aux[i]，aux[j]，把较小的那个放到原数组的k位置。如下图所示：<br>
-<img src="https://boatrainlsz.github.io/post-images/1595426969939.jpg" alt="" loading="lazy"><br>
-上图中，i位置上的O要大于j位置上的M，所以k位置上应该放置M，然后j++，j指向S，继续上述比较。<br>
-代码如下：</p>
-<pre><code class="language-java">private void mergeSort(int[] nums) {
-        //递归地将数组分为两个子数组,分别为其排序,再合并
-        int[] aux = new int[nums.length];
-        _mergeSort(nums, aux, 0, nums.length - 1);
-    }
-</code></pre>
-<pre><code class="language-java">private void _mergeSort(int[] nums, int[] aux, int lo, int hi) {
-        if (hi &lt;= lo) return;
-        //为什么不用mid = (hi+lo)/2，因为hi，lo特别大的时候有可能相加会溢出
-        int mid = lo + (hi - lo) / 2;
-        //分为两个数组，分别为其排序，排序完成后，[lo,mid]是有序的，[mid+1,hi]是有序的
-        _mergeSort(nums, aux, lo, mid);
-        _mergeSort(nums, aux, mid + 1, hi);
-        /**
-         * 优化1，如果nums[mid]&lt;nums[mid+1]了，就不需要merge了。
-         * 因为nums[mid]是[lo,mid]中最大的，nums[mid+1]是[mid+1,hi]中最小的
-         * 前面最大的都小于后面最小的了，那肯定是有序的了。
-         * 这对于近乎有序的数组，排序效率会提高很多
-         *if (nums[mid] &gt; nums[mid + 1]) {
-         *             merge(nums, aux, lo, mid, hi);
-         *         }
-         */
-        //合并
-        merge(nums, aux, lo, mid, hi);
-
-    }
-</code></pre>
-<pre><code class="language-java">   /**
-     * 把[lo,mid],[mid+1,hi]这两个分别有序的数组合并成大的有序数组
-     * @param nums 原数组
-     * @param aux 辅助数组
-     * @param lo 
-     * @param mid
-     * @param hi
-     */
-    private void merge(int[] nums, int[] aux, int lo, int mid, int hi) {
-        //将nums的[lo,hi]复制到aux数组
-        for (int i = lo; i &lt;= hi; i++) {
-            aux[i] = nums[i];
-        }
-        int i = lo;
-        int j = mid + 1;
-        for (int k = lo; k &lt;= hi; k++) {
-            //i用完了
-            if (i &gt; mid) nums[k] = aux[j++];
-                //j用完了
-            else if (j &gt; hi) nums[k] = aux[i++];
-                //比较i,j元素的大小
-            else if (aux[i] &lt; aux[j])
-                nums[k] = aux[i++];
-            else nums[k] = aux[j++];
-        }
-    }
-</code></pre>
 ]]></content>
     </entry>
 </feed>
