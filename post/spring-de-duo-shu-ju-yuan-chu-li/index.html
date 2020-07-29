@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Spring的多数据源处理 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1596006178917">
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1596010267018">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="Spring的多数据源处理 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
@@ -11,8 +11,9 @@
 
 
 
-    <meta name="description" content="最近开发过程中，看到了大佬们封装的基础组件，其中就包括多数据源的切换，觉得可以学习一下，特此记录。
-" />
+    <meta name="description" content="最近开发过程中，看到了大佬们封装的基础组件，其中就包括多数据源的切换，觉得可以学习一下，特此记录。源码的追踪其实没那么难，抓住主线，配合IDEA的Drop Frame功能，很容易就能明白其中奥秘。
+1 向Spring注册多数据源的配置
+pu..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -22,7 +23,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1596006178917" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1596010267018" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -82,18 +83,320 @@
                 2020-07-29
               </span>
               <span>
-                1 min read
+                8 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>最近开发过程中，看到了大佬们封装的基础组件，其中就包括多数据源的切换，觉得可以学习一下，特此记录。</p>
+                <p>最近开发过程中，看到了大佬们封装的基础组件，其中就包括多数据源的切换，觉得可以学习一下，特此记录。源码的追踪其实没那么难，抓住主线，配合IDEA的Drop Frame功能，很容易就能明白其中奥秘。</p>
+<h3 id="1-向spring注册多数据源的配置">1 向Spring注册多数据源的配置</h3>
+<pre><code class="language-java">public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar, EnvironmentAware {
+
+    private static Logger logger = LoggerFactory.getLogger(DynamicDataSourceRegister.class);
+
+    //如配置文件中未指定数据源类型，使用该默认值
+    //private static final Object DATASOURCE_TYPE_DEFAULT = &quot;org.apache.tomcat.jdbc.pool.DataSource&quot;;
+    private static final Object DATASOURCE_TYPE_DEFAULT = &quot;com.alibaba.druid.pool.DruidDataSource&quot;;
+    private static final Object DATASOURCE_DRIVER_CLASS_NAME_DEFAULT = &quot;com.mysql.jdbc.Driver&quot;;
+
+    private ConversionService conversionService = new DefaultConversionService();
+
+    private PropertyValues dataSourcePropertyValues;
+
+    // 默认数据源
+    private DataSource defaultDataSource;
+
+    private Map&lt;String, DataSource&gt; customDataSources = new HashMap&lt;String, DataSource&gt;();
+
+    /**
+     * 加载多数据源配置
+     */
+    @Override
+    public void setEnvironment(Environment environment) {
+        logger.info(&quot;DynamicDataSourceRegister.setEnvironment()&quot;);
+        initDefaultDataSource(environment);
+        initCustomDataSources(environment);
+    }
+
+    /**
+     * 加载主数据源配置.
+     *
+     * @param env
+     */
+    private void initDefaultDataSource(Environment env) {
+        // 读取主数据源
+        RelaxedPropertyResolver propertyResolver = new RelaxedPropertyResolver(env, &quot;spring.datasource.&quot;);
+        Map&lt;String, Object&gt; dsMap = new HashMap&lt;String, Object&gt;();
+        dsMap.put(&quot;type&quot;, propertyResolver.getProperty(&quot;type&quot;));
+        dsMap.put(&quot;driverClassName&quot;, StringUtils.isEmpty(propertyResolver.getProperty(&quot;driverClassName&quot;)) ? DATASOURCE_DRIVER_CLASS_NAME_DEFAULT : propertyResolver.getProperty(&quot;driverClassName&quot;));
+        dsMap.put(&quot;url&quot;, propertyResolver.getProperty(&quot;url&quot;));
+        dsMap.put(&quot;username&quot;, propertyResolver.getProperty(&quot;username&quot;));
+        dsMap.put(&quot;password&quot;, propertyResolver.getProperty(&quot;password&quot;));
+
+        //创建数据源;
+        defaultDataSource = buildDataSource(dsMap);
+        dataBinder(defaultDataSource, env, dsMap);
+
+        if (defaultDataSource instanceof DruidDataSource) {
+            try {
+                ((DruidDataSource) defaultDataSource).init();
+            } catch (SQLException e) {
+                logger.error(&quot;DRUID 数据源初始化失败&quot;, e);
+            }
+        }
+    }
+
+    /**
+     * 初始化更多数据源
+     *
+     */
+    private void initCustomDataSources(Environment env) {
+        // 读取配置文件获取更多数据源，也可以通过defaultDataSource读取数据库获取更多数据源
+        RelaxedPropertyResolver propertyResolver = new RelaxedPropertyResolver(env, &quot;custom.datasource.&quot;);
+        String dsPrefixs = propertyResolver.getProperty(&quot;names&quot;);
+        if (StringUtils.hasText(dsPrefixs)) {
+            for (String dsPrefix : dsPrefixs.split(&quot;,&quot;)) {// 多个数据源
+                Map&lt;String, Object&gt; dsMap = propertyResolver.getSubProperties(dsPrefix + &quot;.&quot;);
+                DataSource ds = buildDataSource(dsMap);
+                customDataSources.put(dsPrefix, ds);
+                dataBinder(ds, env, dsMap);
+                if (ds instanceof DruidDataSource) {
+                    try {
+                        ((DruidDataSource) ds).init();
+                    } catch (SQLException e) {
+                        logger.error(&quot;DRUID 数据源初始化失败&quot;, e);
+                    }
+                }
+            }
+        }
+
+    }
+
+    /**
+     * 创建datasource.
+     *
+     * @param dsMap
+     * @return
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public DataSource buildDataSource(Map&lt;String, Object&gt; dsMap) {
+
+//        DruidDataSource druidDataSource = new DruidDataSource();
+
+        Object type = dsMap.get(&quot;type&quot;);
+        if (type == null) {
+            type = DATASOURCE_TYPE_DEFAULT;// 默认DataSource
+        }
+        Class&lt;? extends DataSource&gt; dataSourceType;
+
+        try {
+            dataSourceType = (Class&lt;? extends DataSource&gt;) Class.forName((String) type);
+            String driverClassName = dsMap.get(&quot;driverClassName&quot;).toString();
+            String url = dsMap.get(&quot;url&quot;).toString();
+            String username = dsMap.get(&quot;username&quot;).toString();
+            String password = dsMap.get(&quot;password&quot;).toString();
+            DataSourceBuilder factory = DataSourceBuilder.create().driverClassName(driverClassName).url(url).username(username).password(password).type(dataSourceType);
+            return factory.build();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 为DataSource绑定更多数据
+     *
+     * @param dataSource
+     * @param env
+     * @param dsMap
+     */
+    private void dataBinder(DataSource dataSource, Environment env, Map&lt;String, Object&gt; dsMap) {
+        RelaxedDataBinder dataBinder = new RelaxedDataBinder(dataSource);
+        dataBinder.setConversionService(conversionService);
+        dataBinder.setIgnoreNestedProperties(false);//false
+        dataBinder.setIgnoreInvalidFields(false);//false
+        dataBinder.setIgnoreUnknownFields(true);//true
+
+
+        //if (dataSourcePropertyValues == null) {
+        Map&lt;String, Object&gt; rpr = new RelaxedPropertyResolver(env, &quot;spring.datasource&quot;).getSubProperties(&quot;.&quot;);
+        Map&lt;String, Object&gt; values = new HashMap&lt;&gt;(dsMap);
+        //找出默认数据源不在自定义数据源配置文件中的配置并添加到自定义数据源的属性中
+        Sets.SetView&lt;String&gt; difference = Sets.difference(rpr.keySet(), values.keySet());
+        if (!CollectionUtils.isEmpty(difference)) {
+            for (String key : difference) {
+                if (rpr.get(key) != null) {
+                    values.put(key, rpr.get(key));
+                }
+            }
+        }
+
+        // 排除已经设置的属性
+        values.remove(&quot;type&quot;);
+        values.remove(&quot;driverClassName&quot;);
+        values.remove(&quot;url&quot;);
+        values.remove(&quot;username&quot;);
+        values.remove(&quot;password&quot;);
+
+        dataSourcePropertyValues = new MutablePropertyValues(values);
+        //}
+        dataBinder.bind(dataSourcePropertyValues);
+
+    }
+
+
+    @Override
+    public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
+        logger.info(&quot;DynamicDataSourceRegister.registerBeanDefinitions()&quot;);
+        Map&lt;Object, Object&gt; targetDataSources = new HashMap&lt;Object, Object&gt;();
+        // 将主数据源添加到更多数据源中
+        targetDataSources.put(&quot;dataSource&quot;, defaultDataSource);
+        DynamicDataSourceContextHolder.dataSourceIds.add(&quot;dataSource&quot;);
+        // 添加更多数据源
+        if (!CollectionUtils.isEmpty(customDataSources)) {
+            targetDataSources.putAll(customDataSources);
+            for (String key : customDataSources.keySet()) {
+                DynamicDataSourceContextHolder.dataSourceIds.add(key);
+            }
+        }
+
+
+        // 创建DynamicDataSource
+        GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
+        beanDefinition.setBeanClass(DynamicDataSource.class);
+
+        beanDefinition.setSynthetic(true);
+        MutablePropertyValues mpv = beanDefinition.getPropertyValues();
+        //添加属性：AbstractRoutingDataSource.defaultTargetDataSource
+        mpv.addPropertyValue(&quot;defaultTargetDataSource&quot;, defaultDataSource);
+        mpv.addPropertyValue(&quot;targetDataSources&quot;, targetDataSources);
+        registry.registerBeanDefinition(&quot;dataSource&quot;, beanDefinition);
+    }
+}
+</code></pre>
+<p>DynamicDataSourceRegister类的作用就是读取配置文件(包括本地配置文件和配置中心文件)，并向Spring上下文环境注册，即上面的setEnvironment方法。</p>
+<h3 id="2-使用threadlocal保存数据源名字">2 使用ThreadLocal保存数据源名字</h3>
+<pre><code class="language-java">public class DynamicDataSourceContextHolder {
+
+    /*
+     * 当使用ThreadLocal维护变量时，ThreadLocal为每个使用该变量的线程提供独立的变量副本，
+     * 所以每一个线程都可以独立地改变自己的副本，而不会影响其它线程所对应的副本。
+     */
+    private static final ThreadLocal&lt;String&gt; contextHolder = new ThreadLocal&lt;String&gt;();
+    /*
+     * 管理所有的数据源id;
+     * 主要是为了判断数据源是否存在;
+     */
+    public static List&lt;String&gt; dataSourceIds = new ArrayList&lt;String&gt;();
+
+    /**
+     * 使用setDataSourceType设置当前的
+     *
+     * @param dataSourceType
+     */
+    public static void setDataSourceType(String dataSourceType) {
+        contextHolder.set(dataSourceType);
+    }
+
+    public static String getDataSourceType() {
+        return contextHolder.get();
+    }
+
+    public static void clearDataSourceType() {
+        contextHolder.remove();
+    }
+
+    /**
+     * 判断指定DataSrouce当前是否存在
+     *
+     * @param dataSourceId
+     * @return
+     * @author SHANHY
+     * @create 2016年1月24日
+     */
+    public static boolean containsDataSource(String dataSourceId) {
+        return dataSourceIds.contains(dataSourceId);
+    }
+}
+</code></pre>
+<h3 id="3-自定义更换数据源切面">3 自定义更换数据源切面</h3>
+<p>这里首先定义了一个TargetDataSource注解：</p>
+<pre><code class="language-java">/**
+ * 在方法上使用，用于指定使用哪个数据源
+ */
+@Target({ElementType.METHOD, ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface TargetDataSource {
+    String value();
+}
+</code></pre>
+<p>项目中是这样使用的：</p>
+<pre><code class="language-java">@TargetDataSource(&quot;operation&quot;)
+public int save(User user) {
+        //进行数据库操作
+}
+</code></pre>
+<p>这里就指明了save方法要使用operation库。<br>
+那到底这是怎么生效的呢？其实熟悉注解的就知道，注解常配合切面来实现对方法的拦截，切面的定义如下：</p>
+<pre><code class="language-java">@Aspect
+@Order(-10)
+//@Component
+public class DynamicDataSourceAspect {
+
+    private static Logger logger = LoggerFactory.getLogger(DynamicDataSourceAspect.class);
+
+    /*
+     * @Before(&quot;@annotation(ds)&quot;)
+     * 的意思是：
+     *
+     * @Before：在方法执行之前进行执行：
+     * @annotation(targetDataSource)：
+     * 会拦截注解targetDataSource的方法，否则不拦截;
+     */
+    @Before(&quot;@annotation(targetDataSource)&quot;)
+    public void changeDataSource(JoinPoint point, TargetDataSource targetDataSource) throws Throwable {
+        //获取当前的指定的数据源;
+        String dsId = targetDataSource.value();
+        //如果不在我们注入的所有的数据源范围之内，那么输出警告信息，系统自动使用默认的数据源。
+        if (!DynamicDataSourceContextHolder.containsDataSource(dsId)) {
+            logger.error(&quot;数据源[{}]不存在，使用默认数据源 &gt; {}&quot; + targetDataSource.value() + point.getSignature());
+        } else {
+            logger.info(&quot;Use DataSource : {} &gt; {}&quot; + targetDataSource.value() + point.getSignature());
+            //找到的话，那么设置到动态数据源上下文中。
+            DynamicDataSourceContextHolder.setDataSourceType(targetDataSource.value());
+        }
+    }
+
+    @After(&quot;@annotation(targetDataSource)&quot;)
+    public void restoreDataSource(JoinPoint point, TargetDataSource targetDataSource) {
+        logger.info(&quot;Revert DataSource : {} &gt; {}&quot; + targetDataSource.value() + point.getSignature());
+        //方法执行完毕之后，销毁当前数据源信息，进行垃圾回收。
+        DynamicDataSourceContextHolder.clearDataSourceType();
+    }
+
+}
+</code></pre>
+<p>切面主要做了两件事：一是为当前执行线程设置数据源，二是方法执行完毕后，销毁线程的数据源信息。</p>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#1-%E5%90%91spring%E6%B3%A8%E5%86%8C%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E7%9A%84%E9%85%8D%E7%BD%AE">1 向Spring注册多数据源的配置</a></li>
+<li><a href="#2-%E4%BD%BF%E7%94%A8threadlocal%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E6%BA%90%E5%90%8D%E5%AD%97">2 使用ThreadLocal保存数据源名字</a></li>
+<li><a href="#3-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%9B%B4%E6%8D%A2%E6%95%B0%E6%8D%AE%E6%BA%90%E5%88%87%E9%9D%A2">3 自定义更换数据源切面</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
               </div>
             </div>
           </article>
