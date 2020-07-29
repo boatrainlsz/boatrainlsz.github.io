@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-07-29T08:11:11.417Z</updated>
+    <updated>2020-07-29T08:22:19.472Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -306,6 +306,40 @@ public class DynamicDataSourceAspect {
 }
 </code></pre>
 <p>切面主要做了两件事：一是为当前执行线程设置数据源，二是方法执行完毕后，销毁线程的数据源信息。</p>
+<h3 id="4-spring使用设置好的数据源进行连接">4 Spring使用设置好的数据源进行连接</h3>
+<pre><code class="language-java">public class DynamicDataSource extends AbstractRoutingDataSource {
+   
+    /*
+     * 代码中的determineCurrentLookupKey方法取得一个字符串，
+     * 该字符串将与配置文件中的相应字符串进行匹配以定位数据源，配置文件，即applicationContext.xml文件中需要要如下代码：(non-Javadoc)
+     * @see org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource#determineCurrentLookupKey()
+     */
+    @Override
+    protected Object determineCurrentLookupKey() {
+       /*
+        * DynamicDataSourceContextHolder代码中使用setDataSourceType
+        * 设置当前的数据源，在路由类中使用getDataSourceType进行获取，
+        *  交给AbstractRoutingDataSource进行注入使用。
+        */
+       return DynamicDataSourceContextHolder.getDataSourceType();
+    }
+}
+</code></pre>
+<p>这一步主要看AbstractRoutingDataSource的determineTargetDataSource方法：</p>
+<pre><code class="language-java">protected DataSource determineTargetDataSource() {
+		Assert.notNull(this.resolvedDataSources, &quot;DataSource router not initialized&quot;);
+		Object lookupKey = determineCurrentLookupKey();
+		DataSource dataSource = this.resolvedDataSources.get(lookupKey);
+		if (dataSource == null &amp;&amp; (this.lenientFallback || lookupKey == null)) {
+			dataSource = this.resolvedDefaultDataSource;
+		}
+		if (dataSource == null) {
+			throw new IllegalStateException(&quot;Cannot determine target DataSource for lookup key [&quot; + lookupKey + &quot;]&quot;);
+		}
+		return dataSource;
+	}
+</code></pre>
+<p>而其中的determineCurrentLookupKey方法正好被上面的DynamicDataSource类重写了，这样就拿到了自定义的数据源名字，Spring再去匹配已经注册的数据源。</p>
 ]]></content>
     </entry>
     <entry>
