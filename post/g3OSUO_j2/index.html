@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Java系列 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1596161655824">
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1596161939057">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="Java系列 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
@@ -27,7 +27,7 @@ JDK1.1：jar文..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1596161655824" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1596161939057" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -132,7 +132,7 @@ JDK1.1：jar文..." />
 <h3 id="序号待定-java源文件-字节码-机器码">序号待定 Java源文件、字节码、机器码</h3>
 <h4 id="流程概览">流程概览</h4>
 <p>首先要搞清楚编译器的前端和后端分别是<a href="https://stackoverflow.com/questions/9765414/compiler-front-end-back-end">干啥的</a><br>
-简单来说，前端面向高级语言，负责词法分析,、语法分析、生成 AST 树。后端复制根据 AST 树生成目标平台相关的目标代码。要想更加深入地了解编译原理，推荐看看<a href="https://www.bilibili.com/video/av32233569/?spm_id_from=333.788.videocard.1">中科大的公开课</a>。<br>
+简单来说，前端面向高级语言，负责词法分析,、语法分析、生成 AST 树。后端负责根据 AST 树生成目标平台相关的目标代码。要想更加深入地了解编译原理，推荐看看<a href="https://www.bilibili.com/video/av32233569/?spm_id_from=333.788.videocard.1">中科大的公开课</a>。<br>
 从一个java文件，到最后被CPU运行，大概要经过以下几步：（参考<a href="https://stackoverflow.com/questions/1326071/is-java-a-compiled-or-an-interpreted-programming-language">Stackoverflow的回答</a>）<br>
 <img src="https://boatrainlsz.github.io/post-images/1594907520862.png" alt="" loading="lazy"><br>
 从笼统的编译原理角度来说，图中的<strong>Java编译器</strong>属于编译器的前端，<strong>Java解释器</strong>和<strong>JIT编译器</strong>属于编译器的后端。<br>
