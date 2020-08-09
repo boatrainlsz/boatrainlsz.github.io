@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-08-08T15:00:52.830Z</updated>
+    <updated>2020-08-09T12:36:02.251Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -10,6 +10,19 @@
     <logo>https://boatrainlsz.github.io/images/avatar.png</logo>
     <icon>https://boatrainlsz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 画船听雨眠</rights>
+    <entry>
+        <title type="html"><![CDATA[black list && white list]]></title>
+        <id>https://boatrainlsz.github.io/post/black-list-and-white-list/</id>
+        <link href="https://boatrainlsz.github.io/post/black-list-and-white-list/">
+        </link>
+        <updated>2020-08-09T12:34:49.000Z</updated>
+        <content type="html"><![CDATA[<h4 id="1黑名单">1.黑名单</h4>
+<p>著名的<a href="https://github.com/996icu/996.ICU">996ICU</a></p>
+<p>未知名人士整理的<a href="https://docs.qq.com/sheet/DV3dNRUh5RlJWZ051?tab=bb08j2">腾讯文档</a></p>
+<h4 id="2白名单">2.白名单</h4>
+<p><a href="https://github.com/formulahendry/955.WLB">955WLB</a></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Spring的多数据源处理]]></title>
         <id>https://boatrainlsz.github.io/post/spring-de-duo-shu-ju-yuan-chu-li/</id>
@@ -589,49 +602,6 @@ c100.7 8.3 195.3 44 280 108 55.3 42 101.7 93 139 153l9 14c2.7-4 5.7-8.7 9-14
 <p><a href="https://blog.freessl.cn/ssl-cert-format-introduce/">这篇文章</a>解释的很详细。</p>
 <h4 id="5-结语">5 结语</h4>
 <p>这个问题的解决让我对证书存在的意义，证书之间的关系有了更加清晰的认识，感觉SSL这一块还不是很熟，得好好补补课。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[算法代码中的边界条件]]></title>
-        <id>https://boatrainlsz.github.io/post/suan-fa-dai-ma-zhong-de-bian-jie-tiao-jian/</id>
-        <link href="https://boatrainlsz.github.io/post/suan-fa-dai-ma-zhong-de-bian-jie-tiao-jian/">
-        </link>
-        <updated>2020-06-29T13:41:39.000Z</updated>
-        <content type="html"><![CDATA[<link rel="stylesheet"
-      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<script src="//cdn.bootcss.com/highlightjs-line-numbers.js/1.1.0/highlightjs-line-numbers.min.js"></script>
-<script>hljs.initLineNumbersOnLoad();</script>
-<p>很多时候，代码的边界判定比较蛋疼，写错了一点，整个程序就不会按照你想要的方式运行。<br>
-关键在于：<strong>确定变量的实际意义，并在程序中至始至终维护这个意义。</strong><br>
-以二分查找为例，解释放在了注释里：</p>
-<pre><code class="language-java">public class BinarySearch {
-    /**
-     * @param array  已经升序排列的数组
-     * @param n      数组长度
-     * @param target 要查找的目标值
-     * @return
-     */
-    int binarySearch(int[] array, int n, int target) {
-        //意义：在[l,r]区间内寻找target
-        int l = 0, r = n - 1;
-        //l=r时，就是一个元素，[l,r]区间仍然是有意义的
-        while (l &lt;= r) {
-            int mid = (l + r) / 2;
-            if (array[mid] == target)
-                return mid;
-            if (target &gt; array[mid])
-                //array[mid]已经被判定为不等于target，那么左边界自然不用包括mid了
-                l = mid + 1;
-            else
-                r = mid - 1;
-        }
-        return -1;
-    }
-}
-</code></pre>
-<p>从始至终，[l,r]区间的意义就是：在[l,r]区间内寻找target。在后续的左边界移动、右边界移动操作中，都是在维护这个意义。这里的[l,r]其实就是个<a href="https://www.wikiwand.com/zh-hans/%E5%BE%AA%E7%8E%AF%E4%B8%8D%E5%8F%98%E9%87%8F">循环不变量</a></p>
 ]]></content>
     </entry>
 </feed>

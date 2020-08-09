@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Java系列 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1596898849329">
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1596976558515">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="Java系列 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
@@ -27,7 +27,7 @@ JDK1.1：jar文..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1596898849329" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1596976558515" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -129,7 +129,7 @@ JDK1.1：jar文..." />
 <h3 id="5-java的class文件">5 Java的class文件</h3>
 <p>class文件的详细结构见<a href="https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html">Oracle的这篇文档</a>，这里重点说一下常量池。<br>
 其实常量池非常类似于其他语言中的<a href="https://www.wikiwand.com/zh-hans/%E7%AC%A6%E5%8F%B7%E8%A1%A8">符号表</a>，它的作用在于：存储编译期间生成的字面量和符号引用，并在类加载后存放到方法区中的运行时常量池中。字面量是在<strong>编译期间</strong>就确定了的，而符号引用只能在<strong>运行时</strong>才能经过虚拟机的转换得到真正的内存地址。可以把常量池理解为菜谱，它记录了一道菜需要盐、酱油、味精等材料，真正做菜时，照着菜谱找到这些材料的真正存放地址，并拿来用。这里的盐、酱油、味精就是符号引用，它们在厨房里的存放地点就是真正的内存地址，厨师就是虚拟机。class文件的查看推荐使用IDEA的<a href="https://plugins.jetbrains.com/plugin/9248-jclasslib-bytecode-viewer">jclasslib Bytecode viewer插件</a>。</p>
-<h3 id="序号待定-java源文件-字节码-机器码">序号待定 Java源文件、字节码、机器码</h3>
+<h3 id="6-java源文件-字节码-机器码">6 Java源文件、字节码、机器码</h3>
 <h4 id="流程概览">流程概览</h4>
 <p>首先要搞清楚编译器的前端和后端分别是<a href="https://stackoverflow.com/questions/9765414/compiler-front-end-back-end">干啥的</a><br>
 简单来说，前端面向高级语言，负责词法分析,、语法分析、生成 AST 树。后端负责根据 AST 树生成目标平台相关的目标代码。要想更加深入地了解编译原理，推荐看看<a href="https://www.bilibili.com/video/av32233569/?spm_id_from=333.788.videocard.1">中科大的公开课</a>。<br>
@@ -148,13 +148,13 @@ JDK1.1：jar文..." />
 <img src="https://boatrainlsz.github.io/post-images/1594907750600.jpg" alt="" loading="lazy"><br>
 J9虚拟采用采样的方法，HotSpot采用计数器的方法。HotSpot更进一步，为每个方法维护了两个计数器：<strong>方法调用计数器</strong>（Invocation Counter）和<strong>回边计数器</strong>（BackEdge Counter，回边是指在控制流往回跳转，比如循环体）。当虚拟机运行参数确定的前提下，这两个计数器都有一个明确的阈值，计数器阈值一旦溢出，就会触发即时编译。<br>
 方法调用计数器的默认阈值：Client模式下1500次、Server模式下10000次，可通过-***XX：CompileThreshold***参数指定。</p>
-<h3 id="序号待定-java的热点代码探测">序号待定 Java的热点代码探测</h3>
+<h3 id="7-java的热点代码探测">7 Java的热点代码探测</h3>
 <figure data-type="image" tabindex="1"><img src="https://boatrainlsz.github.io/post-images/1593676010125.jpg" alt="" loading="lazy"></figure>
-<h3 id="序号待定-java问题排查工具一把梭">序号待定 Java问题排查工具一把梭</h3>
+<h3 id="8-java问题排查工具一把梭">8 Java问题排查工具一把梭</h3>
 <p>https://docs.oracle.com/javase/8/docs/technotes/tools/unix/jstat.html<br>
 https://www.jianshu.com/p/b448c21d2e71<br>
 https://docs.oracle.com/javase/8/docs/technotes/guides/troubleshoot/toc.html</p>
-<h3 id="序号待定-并发专题">序号待定 并发专题</h3>
+<h3 id="9-并发专题">9 并发专题</h3>
 <h4 id="正本清源创建线程的几种方式">正本清源，创建线程的几种方式</h4>
 <p>翻开<a href="https://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html">Oracle官网说明</a>：</p>
 <blockquote>
@@ -427,15 +427,15 @@ pool-1-thread-9释放了许可证
 <li><a href="#3-java%E7%9A%84%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B">3 Java的内存模型</a></li>
 <li><a href="#4-java%E7%9A%84%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6">4 Java的垃圾回收</a></li>
 <li><a href="#5-java%E7%9A%84class%E6%96%87%E4%BB%B6">5 Java的class文件</a></li>
-<li><a href="#%E5%BA%8F%E5%8F%B7%E5%BE%85%E5%AE%9A-java%E6%BA%90%E6%96%87%E4%BB%B6-%E5%AD%97%E8%8A%82%E7%A0%81-%E6%9C%BA%E5%99%A8%E7%A0%81">序号待定 Java源文件、字节码、机器码</a>
+<li><a href="#6-java%E6%BA%90%E6%96%87%E4%BB%B6-%E5%AD%97%E8%8A%82%E7%A0%81-%E6%9C%BA%E5%99%A8%E7%A0%81">6 Java源文件、字节码、机器码</a>
 <ul>
 <li><a href="#%E6%B5%81%E7%A8%8B%E6%A6%82%E8%A7%88">流程概览</a></li>
 <li><a href="#%E7%83%AD%E7%82%B9%E4%BB%A3%E7%A0%81%E7%9A%84%E6%A3%80%E6%B5%8B">热点代码的检测</a></li>
 </ul>
 </li>
-<li><a href="#%E5%BA%8F%E5%8F%B7%E5%BE%85%E5%AE%9A-java%E7%9A%84%E7%83%AD%E7%82%B9%E4%BB%A3%E7%A0%81%E6%8E%A2%E6%B5%8B">序号待定 Java的热点代码探测</a></li>
-<li><a href="#%E5%BA%8F%E5%8F%B7%E5%BE%85%E5%AE%9A-java%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E5%B7%A5%E5%85%B7%E4%B8%80%E6%8A%8A%E6%A2%AD">序号待定 Java问题排查工具一把梭</a></li>
-<li><a href="#%E5%BA%8F%E5%8F%B7%E5%BE%85%E5%AE%9A-%E5%B9%B6%E5%8F%91%E4%B8%93%E9%A2%98">序号待定 并发专题</a>
+<li><a href="#7-java%E7%9A%84%E7%83%AD%E7%82%B9%E4%BB%A3%E7%A0%81%E6%8E%A2%E6%B5%8B">7 Java的热点代码探测</a></li>
+<li><a href="#8-java%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E5%B7%A5%E5%85%B7%E4%B8%80%E6%8A%8A%E6%A2%AD">8 Java问题排查工具一把梭</a></li>
+<li><a href="#9-%E5%B9%B6%E5%8F%91%E4%B8%93%E9%A2%98">9 并发专题</a>
 <ul>
 <li><a href="#%E6%AD%A3%E6%9C%AC%E6%B8%85%E6%BA%90%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F">正本清源，创建线程的几种方式</a></li>
 <li><a href="#%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7%E7%B1%BB">并发控制工具类</a>
