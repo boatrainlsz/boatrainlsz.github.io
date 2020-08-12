@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Java系列 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1597159288285">
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1597242170767">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="Java系列 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
@@ -27,7 +27,7 @@ JDK1.1：jar文..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1597159288285" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1597242170767" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -230,6 +230,8 @@ slee需要指定时间，而wait不需要<br>
             e.printStackTrace();
         }
 </code></pre>
+<h5 id="线程的异常处理">线程的异常处理</h5>
+<p>用main线程中试图用try catch住thread1的线程的异常肯定是不行的，因为catch只能catch住自己线程的异常，子线程是管不到的。可以用UncaughtExceptionHandler来捕获，具体<a href="https://my.oschina.net/percylee/blog/1510272">看这篇</a>。</p>
 <h4 id="并发控制工具类">并发控制工具类</h4>
 <p>Semaphore、CyclicBarrier、Phaser、CountDownLatch、Exchanger、Condition</p>
 <table>
@@ -496,6 +498,7 @@ pool-1-thread-9释放了许可证
 <ul>
 <li><a href="#threadsleep%E5%92%8Cobjectwait%E5%BC%82%E5%90%8C">Thread.sleep()和Object.wait()异同</a></li>
 <li><a href="#threadjoin">Thread.join()</a></li>
+<li><a href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86">线程的异常处理</a></li>
 </ul>
 </li>
 <li><a href="#%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7%E7%B1%BB">并发控制工具类</a>
