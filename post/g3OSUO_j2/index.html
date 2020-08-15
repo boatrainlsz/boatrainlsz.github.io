@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Java系列 | 画船听雨眠</title>
-<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1597242170767">
+<link rel="shortcut icon" href="https://boatrainlsz.github.io/favicon.ico?v=1597500230506">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://boatrainlsz.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="Java系列 | 画船听雨眠 - Atom Feed" href="https://boatrainlsz.github.io/atom.xml">
@@ -27,7 +27,7 @@ JDK1.1：jar文..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://boatrainlsz.github.io">
-  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1597242170767" alt="">
+  <img class="avatar" src="https://boatrainlsz.github.io/images/avatar.png?v=1597500230506" alt="">
   </a>
   <h1 class="site-title">
     画船听雨眠
@@ -87,7 +87,7 @@ JDK1.1：jar文..." />
                 2020-06-23
               </span>
               <span>
-                17 min read
+                20 min read
               </span>
               
             </div>
@@ -469,6 +469,172 @@ pool-1-thread-9释放了许可证
 }
 </code></pre>
 <p>正如开头那个表格总结的，Condition其实就是原生synchronized的升级版。Conditon之于Lock，就如synchronized之于Object.wait()/notify()。</p>
+<h4 id="内存模型-对象模型-内存区域">内存模型、对象模型、内存区域</h4>
+<h5 id="内存模型">内存模型</h5>
+<figure data-type="image" tabindex="2"><img src="https://boatrainlsz.github.io/post-images/1597467886894.png" alt="" loading="lazy"></figure>
+<h5 id="对象模型">对象模型</h5>
+<figure data-type="image" tabindex="3"><img src="https://boatrainlsz.github.io/post-images/1597466296354.svg" alt="" loading="lazy"></figure>
+<h4 id="八种单例模式">八种单例模式</h4>
+<h5 id="静态常量的饿汉式">静态常量的饿汉式</h5>
+<p>简单，线程不安全，不推荐</p>
+<pre><code class="language-java">/**
+ * 饿汉式：使用静态变量的单例模式
+ */
+public class Singleton1 {
+    private static final Singleton1 INSTANCE = new Singleton1();
+
+    //构造器私有，防止外部创建实例
+    private Singleton1() {
+
+    }
+
+    public static Singleton1 getInstance() {
+        return INSTANCE;
+    }
+}
+</code></pre>
+<h5 id="静态代码块的饿汉式">静态代码块的饿汉式</h5>
+<p>简单，线程不安全，不推荐</p>
+<pre><code class="language-java">/**
+ * 饿汉式：使用静态代码块的单例模式
+ */
+public class Singleton2 {
+    private static final Singleton2 INSTANCE;
+
+    static {
+        INSTANCE = new Singleton2();
+    }
+
+    //构造器私有，防止外部创建实例
+    private Singleton2() {
+
+    }
+
+    public static Singleton2 getInstance() {
+        return INSTANCE;
+    }
+}
+</code></pre>
+<h5 id="静态变量的懒汉式">静态变量的懒汉式</h5>
+<p>懒加载，线程不安全，不推荐</p>
+<pre><code class="language-java">public class Singleton3 {
+    private static Singleton3 INSTANCE;
+
+    //构造器私有，防止外部创建实例
+    private Singleton3() {
+
+    }
+
+    public static Singleton3 getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new Singleton3();
+        }
+        return INSTANCE;
+    }
+}
+</code></pre>
+<h5 id="静态变量的线程安全懒汉式">静态变量的线程安全懒汉式</h5>
+<p>解决了Singleton3的线程安全问题，但是效率低下</p>
+<pre><code class="language-java">/**
+ * 懒汉式：使用静态变量的单例模式
+ * 线程安全
+ * Singleton3的线程安全版本，不推荐使用,效率低下，每次getInstance都需要加锁
+ */
+public class Singleton4 {
+    private static Singleton4 INSTANCE;
+
+    //构造器私有，防止外部创建实例
+    private Singleton4() {
+
+    }
+
+    public synchronized static Singleton4 getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new Singleton4();
+        }
+        return INSTANCE;
+    }
+}
+</code></pre>
+<h5 id="貌似是线程安全的高效率懒汉式">貌似是线程安全的高效率懒汉式</h5>
+<pre><code class="language-java">/**
+ * 懒汉式：使用静态变量的单例模式
+ * 线程不安全
+ * 本意是解决Singleton4的效率低下问题，却还是线程不安全
+ * T1，T2同时进入INSTANCE == null条件，T1获取到锁-&gt;T1创建实例-&gt;T1释放锁-&gt;T2获取锁-&gt;T2再次创建实例
+ */
+public class Singleton5 {
+    private static Singleton5 INSTANCE;
+
+    //构造器私有，防止外部创建实例
+    private Singleton5() {
+
+    }
+
+    public static Singleton5 getInstance() {
+        if (INSTANCE == null) {
+            synchronized (Singleton5.class) {
+                INSTANCE = new Singleton5();
+            }
+        }
+        return INSTANCE;
+    }
+}
+</code></pre>
+<h5 id="线程安全且高效率懒汉式-双重检查">线程安全且高效率懒汉式-双重检查</h5>
+<pre><code class="language-java">/**
+ * 懒汉式：双重检查
+ * 线程安全
+ * 解决Singleton5的效的线程不安全问题
+ * T1，T2同时进入INSTANCE == null条件，T1获取到锁-&gt;T1创建实例-&gt;释放锁-&gt;T2获取锁-&gt;INSTANCE不为空，T2直接返回
+ * 为什么需要volatile？
+ * 一、保证可见性：保证T1构造出的实例，T2能立即感知到
+ * 二、禁止指令重排序：防止构造器构造出不完整的实例
+ * 详见：
+ * https://stackoverflow.com/questions/7855700/why-is-volatile-used-in-double-checked-lockinghttps://stackoverflow.com/questions/7855700/why-is-volatile-used-in-double-checked-locking
+ * https://www.wikiwand.com/en/Double-checked_locking#/Usage_in_Java
+ */
+public class Singleton6 {
+    private volatile static Singleton6 INSTANCE;
+
+    //构造器私有，防止外部创建实例
+    private Singleton6() {
+
+    }
+
+    public static Singleton6 getInstance() {
+        if (INSTANCE == null) {
+            synchronized (Singleton6.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new Singleton6();
+                }
+            }
+        }
+        return INSTANCE;
+    }
+}
+</code></pre>
+<h5 id="静态内部类式单例">静态内部类式单例</h5>
+<p>内部类的<a href="https://www.zhihu.com/question/64212569">特性</a>决定了它是懒加载，JVM的类加载机制决定了它是线程安全的。</p>
+<pre><code class="language-java">/**
+ * 懒汉式：静态内部类方式
+ */
+public class Singleton7 {
+
+    //构造器私有，防止外部创建实例
+    private Singleton7() {
+
+    }
+
+    public static Singleton7 getInstance() {
+        return SingletonInstance.INSTANCE;
+    }
+
+    private static class SingletonInstance {
+        private static final Singleton7 INSTANCE = new Singleton7();
+    }
+}
+</code></pre>
 
               </div>
               <div class="toc-container">
@@ -506,6 +672,23 @@ pool-1-thread-9释放了许可证
 <li><a href="#countdownlatch">CountDownLatch</a></li>
 <li><a href="#semaphore">Semaphore</a></li>
 <li><a href="#condition">Condition</a></li>
+</ul>
+</li>
+<li><a href="#%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B-%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B-%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F">内存模型、对象模型、内存区域</a>
+<ul>
+<li><a href="#%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B">内存模型</a></li>
+<li><a href="#%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B">对象模型</a></li>
+</ul>
+</li>
+<li><a href="#%E5%85%AB%E7%A7%8D%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F">八种单例模式</a>
+<ul>
+<li><a href="#%E9%9D%99%E6%80%81%E5%B8%B8%E9%87%8F%E7%9A%84%E9%A5%BF%E6%B1%89%E5%BC%8F">静态常量的饿汉式</a></li>
+<li><a href="#%E9%9D%99%E6%80%81%E4%BB%A3%E7%A0%81%E5%9D%97%E7%9A%84%E9%A5%BF%E6%B1%89%E5%BC%8F">静态代码块的饿汉式</a></li>
+<li><a href="#%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F%E7%9A%84%E6%87%92%E6%B1%89%E5%BC%8F">静态变量的懒汉式</a></li>
+<li><a href="#%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F%E7%9A%84%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E6%87%92%E6%B1%89%E5%BC%8F">静态变量的线程安全懒汉式</a></li>
+<li><a href="#%E8%B2%8C%E4%BC%BC%E6%98%AF%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E9%AB%98%E6%95%88%E7%8E%87%E6%87%92%E6%B1%89%E5%BC%8F">貌似是线程安全的高效率懒汉式</a></li>
+<li><a href="#%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B8%94%E9%AB%98%E6%95%88%E7%8E%87%E6%87%92%E6%B1%89%E5%BC%8F-%E5%8F%8C%E9%87%8D%E6%A3%80%E6%9F%A5">线程安全且高效率懒汉式-双重检查</a></li>
+<li><a href="#%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%E5%BC%8F%E5%8D%95%E4%BE%8B">静态内部类式单例</a></li>
 </ul>
 </li>
 </ul>
