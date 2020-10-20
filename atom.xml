@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boatrainlsz.github.io</id>
     <title>画船听雨眠</title>
-    <updated>2020-08-16T10:43:19.074Z</updated>
+    <updated>2020-10-20T09:34:27.063Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boatrainlsz.github.io"/>
     <link rel="self" href="https://boatrainlsz.github.io/atom.xml"/>
@@ -10,6 +10,15 @@
     <logo>https://boatrainlsz.github.io/images/avatar.png</logo>
     <icon>https://boatrainlsz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 画船听雨眠</rights>
+    <entry>
+        <title type="html"><![CDATA[准备迁移博客]]></title>
+        <id>https://boatrainlsz.github.io/post/zhun-bei-qian-yi-bo-ke/</id>
+        <link href="https://boatrainlsz.github.io/post/zhun-bei-qian-yi-bo-ke/">
+        </link>
+        <updated>2020-10-20T09:33:20.000Z</updated>
+        <content type="html"><![CDATA[<p>准备迁移到语雀上去，Gridea还是有一些不完善的地方。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[black list && white list]]></title>
         <id>https://boatrainlsz.github.io/post/black-list-and-white-list/</id>
@@ -464,144 +473,6 @@ c100.7 8.3 195.3 44 280 108 55.3 42 101.7 93 139 153l9 14c2.7-4 5.7-8.7 9-14
         </link>
         <updated>2020-07-14T14:40:29.000Z</updated>
         <content type="html"><![CDATA[<p>http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[由一次SunCertPathBuilderException说起]]></title>
-        <id>https://boatrainlsz.github.io/post/you-yi-ci-suncertpathbuilderexception-yin-fa-de-si-kao/</id>
-        <link href="https://boatrainlsz.github.io/post/you-yi-ci-suncertpathbuilderexception-yin-fa-de-si-kao/">
-        </link>
-        <updated>2020-07-14T01:18:10.000Z</updated>
-        <content type="html"><![CDATA[<h4 id="0-问题描述">0 问题描述</h4>
-<p>最近和甲方爸爸调试接口，接口地址给的是https的，调用接口报如下错误：</p>
-<pre><code class="language-java">Exception in thread &quot;main&quot; javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
-</code></pre>
-<p>随即Google之，发现是https证书的问题。<br>
-在浏览器中打开接口地址，可以看到这个证书的根证书是CFCA EV颁发的：<br>
-<img src="https://boatrainlsz.github.io/post-images/1594715055840.jpg" alt="" loading="lazy"><br>
-浏览器的证书列表和Java的证书列表里没有这个根证书，所以这个根证书和由这个根证书签发的子证书都是不可信的。关于CFCA的风评，可以参考V2EX的<a href="https://v2ex.com/t/651187">这个帖子</a>。</p>
-<h4 id="1-解决办法">1 解决办法</h4>
-<p>解决办法也很简单，一是代码里面设置信任所有证书，二是把这个CFCA EV根证书植入信任的证书列表去。</p>
-<h5 id="11-信任所有证书">1.1 信任所有证书</h5>
-<p>这种方式是最危险的，完全舍弃了SSL带来的安全性，生产环境千万不要使用。代码如下：</p>
-<pre><code class="language-java">final TrustManager[] trustAllCerts = new TrustManager[]{
-                new X509TrustManager() {
-                    @Override
-                    public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                    }
-
-                    @Override
-                    public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                    }
-
-                    @Override
-                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                        return new java.security.cert.X509Certificate[]{};
-                    }
-                }
-        };
-        // Install the all-trusting trust manager
-        final SSLContext sslContext = SSLContext.getInstance(&quot;SSL&quot;);
-        sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
-        // Create an ssl socket factory with our all-trusting manager
-        final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.sslSocketFactory(sslSocketFactory, (X509TrustManager) trustAllCerts[0]);
-        builder.hostnameVerifier(new HostnameVerifier() {
-            @Override
-            public boolean verify(String hostname, SSLSession session) {
-                return true;
-            }
-        });
-        OkHttpClient okHttpClient = builder.connectTimeout((long) connectTimeout, TimeUnit.MILLISECONDS)
-                .readTimeout((long) readTimeout, TimeUnit.MILLISECONDS).build();
-</code></pre>
-<h5 id="12-将证书植入信任列表">1.2 将证书植入信任列表</h5>
-<h6 id="121-首先使用openssl的命令下载证书">1.2.1 首先使用openssl的命令下载证书：</h6>
-<pre><code class="language-shell">openssl s_client -connect ip:port -showcerts &gt; mycerfile.cer
-</code></pre>
-<h6 id="122-然后使用java的keytool将cer文件转换为jks文件并导入">1.2.2 然后使用Java的keytool将cer文件转换为jks文件并导入</h6>
-<pre><code class="language-shell">keytool -importcert -file mycerfile.cer -keystore myjksfile.jks -alias &quot;mycert&quot;
-</code></pre>
-<h6 id="123-也可以用代码将生成好的myjksfilejks文件导入">1.2.3 也可以用代码将生成好的myjksfile.jks文件导入</h6>
-<p>我使用的是okhttp框架，代码如下：</p>
-<pre><code class="language-java">public class HttpTest {
-    public static void main(String[] args) throws Exception {
-        //获取keyStore
-        KeyStore keyStore = readKeyStore();
-        SSLContext sslContext = SSLContext.getInstance(&quot;SSL&quot;);
-        TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
-        trustManagerFactory.init(keyStore);
-        KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-        keyManagerFactory.init(keyStore, &quot;whatever&quot;.toCharArray());
-        sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), new SecureRandom());
-        HostnameVerifier hostnameVerifier = new HostnameVerifier() {
-            @Override
-            public boolean verify(String hostname, SSLSession session) {
-                return true;
-            }
-        };
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .hostnameVerifier(hostnameVerifier)
-                .sslSocketFactory(sslContext.getSocketFactory())
-                .build();
-        Request request = (new Request.Builder()).url(&quot;https://10.139.103.59:7685/test/&quot;).get().build();
-        Call call = okHttpClient.newCall(request);
-        Response execute = call.execute();
-        System.out.println(execute.body().string());
-
-    }
-
-    public static KeyStore readKeyStore() throws Exception {
-        KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
-
-        //填写keystore的密码，默认是changeit
-        char[] password = &quot;password&quot;.toCharArray();
-
-        java.io.FileInputStream fis = null;
-        try {
-            fis = new java.io.FileInputStream(&quot;C:\\Users\\Luo\\Desktop\\myjksfile.jks&quot;);
-            ks.load(fis, password);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (fis != null) {
-                fis.close();
-            }
-        }
-        return ks;
-    }
-}
-</code></pre>
-<p>代码中值得注意一点的是，创建了一个HostnameVerifier：</p>
-<pre><code class="language-java">HostnameVerifier hostnameVerifier = new HostnameVerifier() {
-            @Override
-            public boolean verify(String hostname, SSLSession session) {
-                return true;
-            }
-        };
-</code></pre>
-<p>这是因为okhttp会校验证书中的CN和url中的ip地址，不匹配的话会抛出SSLPeerUnverifiedException：<br>
-<img src="https://boatrainlsz.github.io/post-images/1594721075978.jpg" alt="" loading="lazy"><br>
-由于我使用的是10.139.103.59这个代理地址，肯定是不匹配的，所以定义了一个HostnameVerifier，无条件返回true。</p>
-<h6 id="124-也可以借助keystore-explorer这个软件导入">1.2.4 也可以借助<a href="https://keystore-explorer.org/">KeyStore Explorer</a>这个软件导入</h6>
-<h4 id="2-信任链">2 信任链</h4>
-<p>关于https的信任链，<a href="https://www.wikiwand.com/zh-hans/%E4%BF%A1%E4%BB%BB%E9%8F%88">维基百科</a>解释得很清楚。</p>
-<h4 id="3-查看证书">3 查看证书</h4>
-<h5 id="31-查看浏览器信任的证书列表">3.1 查看浏览器信任的证书列表</h5>
-<p>以Chrome为例，在设置中搜索证书，即可查看,如下图：<br>
-<img src="https://boatrainlsz.github.io/post-images/1594730027685.jpg" alt="" loading="lazy"><br>
-<img src="https://boatrainlsz.github.io/post-images/1594730038484.jpg" alt="" loading="lazy"></p>
-<h5 id="32-查看java信任的证书列表">3.2 查看Java信任的证书列表</h5>
-<p>Java的证书都存在jre/lib/security/cacerts文件中，这是Java定义的keystore文件，可以使用Java的keytool工具查看：</p>
-<pre><code class="language-shell">keytool -keystore &quot;C:\Program Files\Java\jre1.8.0_241\lib\security\cacerts&quot;-storepass changeit -list
-</code></pre>
-<p>也可以使用<a href="https://keystore-explorer.org/">KeyStore Explorer</a>软件查看：<br>
-<img src="https://boatrainlsz.github.io/post-images/1594730493108.jpg" alt="" loading="lazy"></p>
-<h4 id="4-关于证书的格式">4 关于证书的格式</h4>
-<p><a href="https://blog.freessl.cn/ssl-cert-format-introduce/">这篇文章</a>解释的很详细。</p>
-<h4 id="5-结语">5 结语</h4>
-<p>这个问题的解决让我对证书存在的意义，证书之间的关系有了更加清晰的认识，感觉SSL这一块还不是很熟，得好好补补课。</p>
 ]]></content>
     </entry>
 </feed>
