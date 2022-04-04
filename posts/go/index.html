@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/boatrainlsz.github.io\/posts\/go\/"
-        },"genre": "posts","keywords": "go, register","wordcount":  404 ,
+        },"genre": "posts","keywords": "go, register","wordcount":  1012 ,
         "url": "https:\/\/boatrainlsz.github.io\/posts\/go\/","datePublished": "2022-04-02T21:35:40+08:00","dateModified": "2022-04-02T21:35:40+08:00","publisher": {
             "@type": "Organization",
             "name": "boatrain"},"author": {
@@ -77,8 +77,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">基于寄存器调用惯例的Go语言接口调用机制</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>boatrain</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-02">2022-04-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 404 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-02">2022-04-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1012 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -90,6 +90,10 @@
       <ul>
         <li><a href="#摘要">摘要</a></li>
         <li><a href="#go版本说明">Go版本说明</a></li>
+        <li><a href="#样例代码">样例代码</a></li>
+        <li><a href="#接口的内存布局">接口的内存布局</a></li>
+        <li><a href="#寄存器">寄存器</a></li>
+        <li><a href="#反汇编">反汇编</a></li>
       </ul>
     </li>
   </ul>
@@ -107,6 +111,50 @@
 <p>Go 1.17 <a href="https://go.dev/doc/go1.17#compiler" target="_blank" rel="noopener noreffer">implemented</a> a new way of passing function arguments and results using registers instead of the stack on 64-bit x86 architecture on selected operating systems. Go 1.18 expands the supported platforms to include 64-bit ARM (<code>GOARCH=arm64</code>), big- and little-endian 64-bit PowerPC (<code>GOARCH=ppc64</code>, <code>ppc64le</code>), as well as 64-bit x86 architecture (<code>GOARCH=amd64</code>) on all operating systems. On 64-bit ARM and 64-bit PowerPC systems, benchmarking shows typical performance improvements of 10% or more.</p>
 </blockquote>
 <p>本篇文章基于最新的Go 1.18，架构为AMD64。</p>
+<h3 id="样例代码">样例代码</h3>
+<p>本篇文章用<a href="https://www.wikiwand.com/en/Bubble_sort" target="_blank" rel="noopener noreffer">冒泡排序算法</a>中的内层循环来讲解：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">bubbleUp</span><span class="p">(</span><span class="nx">x</span> <span class="nx">sort</span><span class="p">.</span><span class="nx">Interface</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">n</span> <span class="o">:=</span> <span class="nx">x</span><span class="p">.</span><span class="nf">Len</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nx">x</span><span class="p">.</span><span class="nf">Less</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">x</span><span class="p">.</span><span class="nf">Swap</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>这里的sort.Interface是Go标准库里的接口，其定义如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">Interface</span> <span class="kd">interface</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">Len</span><span class="p">()</span> <span class="kt">int</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">Less</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">j</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">bool</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">Swap</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">j</span> <span class="kt">int</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>只要实现了sort.Interface接口，就可以当作bubbleUp函数的参数x，但最常用的还是slice。</p>
+<h3 id="接口的内存布局">接口的内存布局</h3>
+<p>接口在Go runtime中的内部表示如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">iface</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">tab</span>  <span class="o">*</span><span class="nx">itab</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">data</span> <span class="nx">unsafe</span><span class="p">.</span><span class="nx">Pointer</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>在64位机器上，tab和data都是64bit，其中itab类型定义如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">itab</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">inter</span> <span class="o">*</span><span class="nx">interfacetype</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">_type</span> <span class="o">*</span><span class="nx">_type</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">hash</span>  <span class="kt">uint32</span> <span class="c1">// copy of _type.hash. Used for type switches.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nx">_</span>     <span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="kt">byte</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">fun</span>   <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="kt">uintptr</span> <span class="c1">// variable sized. fun[0]==0 means _type does not implement inter.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></div><p>这里重点关注fun字段，它是一个可变大小的函数指针数组，这就是分派表</p>
+<h3 id="寄存器">寄存器</h3>
+<p>目前在AMD64架构上，Go依次使用以下寄存器用作函数调用：</p>
+<blockquote>
+<p>RAX, RBX, RCX, RDI, RSI, R8, R9, R10, R11</p>
+</blockquote>
+<p>有时候，一个参数会占用多个寄存器，比如上面说的iface接口，它占用64*2=128bit，那么如果接口值被当作第一个参数传给函数，则其tab字段和data字段将分别占据RAX和RBX寄存器，如果接口值被当作第二个参数传给函数，此时，第一个参数已经占据了RAX，则其tab字段和data字段将分别占据RBX和RCX寄存器，以此类推。顺便提一下，Go语言使用的Plan9汇编语言不使用前缀R来访问这些寄存器(RAX, RBX, RCX, RDI, RSI)，而是直接用AX，BX等名字。</p>
+<h3 id="反汇编">反汇编</h3>
+<p>使用如下命令将样例代码反汇编：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">go tool compile -S bubble.go
+</span></span></code></pre></div><blockquote>
+<p>关于Go语言的汇编入门，可以参考<a href="https://xargin.com/plan9-assembly/" target="_blank" rel="noopener noreffer">这篇文章</a></p>
+</blockquote>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
