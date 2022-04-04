@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/boatrainlsz.github.io\/posts\/go\/"
-        },"genre": "posts","keywords": "go, register","wordcount":  1690 ,
+        },"genre": "posts","keywords": "go, register","wordcount":  2117 ,
         "url": "https:\/\/boatrainlsz.github.io\/posts\/go\/","datePublished": "2022-04-02T21:35:40+08:00","dateModified": "2022-04-02T21:35:40+08:00","publisher": {
             "@type": "Organization",
             "name": "boatrain"},"author": {
@@ -77,8 +77,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">基于寄存器调用惯例的Go语言接口调用机制</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>boatrain</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-02">2022-04-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1690 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-02">2022-04-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2117 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -134,7 +134,7 @@
 </span></span><span class="line"><span class="cl">  <span class="nx">tab</span>  <span class="o">*</span><span class="nx">itab</span>
 </span></span><span class="line"><span class="cl">  <span class="nx">data</span> <span class="nx">unsafe</span><span class="p">.</span><span class="nx">Pointer</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>在64位机器上，tab和data都是64bit，其中itab类型定义如下：</p>
+</span></span></code></pre></div><p>在64位机器上，tab和data都是64bit，共128bit，也就是两个4字，其中itab类型定义如下：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">itab</span> <span class="kd">struct</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="nx">inter</span> <span class="o">*</span><span class="nx">interfacetype</span>
 </span></span><span class="line"><span class="cl">  <span class="nx">_type</span> <span class="o">*</span><span class="nx">_type</span>
@@ -178,17 +178,31 @@
 0x0026 00038 (bubble.go:4)      MOVQ    BX, AX
 0x0029 00041 (bubble.go:4)      CALL    CX
 </code></pre><h4 id="参数暂存">参数暂存</h4>
-<p>函数开始，如上文所述，接口值将占据<code>AX</code>，<code>BX</code>寄存器。<code>MOVQ    AX, &quot;&quot;.x+64(SP)</code>和<code>MOVQ    BX, &quot;&quot;.x+72(SP)</code>将接口值暂存到栈上(SP：Stack Pointer)，以便为后续<code>AX</code>，<code>BX</code>寄存器的使用腾出空间。</p>
+<p>函数开始，如上文所述，接口值将占据<code>AX</code>，<code>BX</code>寄存器：其中AX为<code>MOVQ    AX, &quot;&quot;.x+64(SP)</code>和<code>MOVQ    BX, &quot;&quot;.x+72(SP)</code>将接口值复制到栈上(SP：Stack Pointer)，以便为后续<code>AX</code>，<code>BX</code>寄存器的使用腾出空间。</p>
 <h4 id="找到函数调用地址">找到函数调用地址</h4>
 <p>接下来，准备调用<code>x.Len()</code>，此时，就需要找到要调用的函数，而这个函数的入口地址就存放在<code>24(AX)</code>，其原理是这样的：</p>
 <ul>
-<li>如前所述，传递给函数bubbleUp的参数x，其值存放在<code>AX</code>，<code>BX</code>寄存器。</li>
-<li>根据iface的内存布局，<code>AX</code>寄存器存放的正是指向itab的指针</li>
+<li>如前所述，传递给函数bubbleUp的参数<code>x</code>，其值存放在<code>AX</code>，<code>BX</code>寄存器。</li>
+<li>根据<code>iface</code>的内存布局，<code>AX</code>寄存器存放的正是指向itab的指针</li>
 <li><code>24(AX)</code>意思是<code>AX+24</code>，这里24是十进制，表示指针地址+偏移量24bytes</li>
 <li><code>itab</code>中24bytes偏移量正是指向<code>itab</code>中的<code>fun</code>字段，也就是接口中的第一个函数的地址被放置在寄存器<code>CX</code>中</li>
 <li>而<code>sort.Interface</code>接口的第一个方法正是<code>Len()</code>方法，所以最后，<code>x</code>的<code>Len()</code>方法的地址就存放在<code>CX</code>寄存器中了</li>
 </ul>
 <h4 id="调用函数">调用函数</h4>
+<p>函数地址找到了，接下来就是调用函数了。因为<code>Len()</code>方法没有参数，所以唯一一个需要传递的参数就是函数的接收者(receiver)，注意到在之前的操作中已经把接口的<code>tab</code>字段和<code>data</code>字段将分别存放到了<code>AX</code>和<code>BX</code>寄存器，<code>data</code>字段正是存放了实际的接口值，也就是函数的接收者，所以接下来使用<code>MOVQ    BX, AX</code>将函数的接收者放在<code>AX</code>寄存器中，然后用<code>CALL    CX</code>调用函数。</p>
+<h4 id="函数返回值">函数返回值</h4>
+<p><code>Len()</code>方法返回一个整数<code>n</code>，存放在<code>AX</code>寄存器中，这里将返回值存放到了栈上，因为接下来<code>AX</code>寄存器将用作其他用途：</p>
+<pre tabindex="0"><code class="language-assembly" data-lang="assembly">0x002b 00043 (bubble.go:4)      MOVQ    AX, &#34;&#34;.n+24(SP)
+</code></pre><h4 id="开始循环">开始循环</h4>
+<p>接下来的代码就是for循环的汇编实现：</p>
+<pre tabindex="0"><code class="language-assembly" data-lang="assembly">0x0030 00048 (bubble.go:4)      MOVL    $1, CX
+0x0035 00053 (bubble.go:5)      JMP     69                  ---&gt;\
+0x0037 00055 (bubble.go:5)      MOVQ    &#34;&#34;.i+32(SP), DX         |
+0x003c 00060 (bubble.go:5)      LEAQ    1(DX), CX               |
+0x0040 00064 (bubble.go:5)      MOVQ    &#34;&#34;.n+24(SP), AX         |
+0x0045 00069 (bubble.go:5)      CMPQ    AX, CX              &lt;---/
+0x0048 00072 (bubble.go:5)      JLE     142
+</code></pre><p>首先将<code>CX</code>寄存器赋初始值1，然后跳转到第69行<code>CMPQ    AX, CX</code>(注意此时<code>AX</code>中的值为<code>n</code>)，也就是比较<code>n</code>和<code>i</code>的大小，并且当<code>i&gt;=n</code>时将跳出循环。第55行至64行就是<code>i++</code>的实现。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
