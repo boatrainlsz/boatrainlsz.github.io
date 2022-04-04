@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/boatrainlsz.github.io\/posts\/go\/"
-        },"genre": "posts","keywords": "go, register","wordcount":  2117 ,
+        },"genre": "posts","keywords": "go, register","wordcount":  2640 ,
         "url": "https:\/\/boatrainlsz.github.io\/posts\/go\/","datePublished": "2022-04-02T21:35:40+08:00","dateModified": "2022-04-02T21:35:40+08:00","publisher": {
             "@type": "Organization",
             "name": "boatrain"},"author": {
@@ -77,8 +77,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">基于寄存器调用惯例的Go语言接口调用机制</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>boatrain</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-02">2022-04-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2117 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-02">2022-04-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2640 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -198,12 +198,51 @@
 <pre tabindex="0"><code class="language-assembly" data-lang="assembly">0x0030 00048 (bubble.go:4)      MOVL    $1, CX
 0x0035 00053 (bubble.go:5)      JMP     69                  ---&gt;\
 0x0037 00055 (bubble.go:5)      MOVQ    &#34;&#34;.i+32(SP), DX         |
-0x003c 00060 (bubble.go:5)      LEAQ    1(DX), CX               |
+0x003c 00060 (bubble.go:5)      LEAQ    1(DX), CX               |i++
 0x0040 00064 (bubble.go:5)      MOVQ    &#34;&#34;.n+24(SP), AX         |
 0x0045 00069 (bubble.go:5)      CMPQ    AX, CX              &lt;---/
 0x0048 00072 (bubble.go:5)      JLE     142
-</code></pre><p>首先将<code>CX</code>寄存器赋初始值1，然后跳转到第69行<code>CMPQ    AX, CX</code>(注意此时<code>AX</code>中的值为<code>n</code>)，也就是比较<code>n</code>和<code>i</code>的大小，并且当<code>i&gt;=n</code>时将跳出循环。第55行至64行就是<code>i++</code>的实现。</p>
-</div><div class="post-footer" id="post-footer">
+0x004a 00074 (bubble.go:5)      MOVQ    CX, &#34;&#34;.i+32(SP)
+0x004f 00079 (bubble.go:6)      MOVQ    &#34;&#34;.x+64(SP), DX
+0x0054 00084 (bubble.go:6)      MOVQ    32(DX), SI
+0x0058 00088 (bubble.go:6)      LEAQ    -1(CX), DI
+0x005c 00092 (bubble.go:6)      MOVQ    DI, &#34;&#34;..autotmp_4+40(SP)
+0x0061 00097 (bubble.go:6)      MOVQ    &#34;&#34;.x+72(SP), AX
+0x0066 00102 (bubble.go:6)      MOVQ    CX, BX
+0x0069 00105 (bubble.go:6)      MOVQ    DI, CX
+0x006c 00108 (bubble.go:6)      CALL    SI
+0x006e 00110 (bubble.go:6)      TESTB   AL, AL
+0x0070 00112 (bubble.go:6)      JEQ     55
+0x0072 00114 (bubble.go:7)      MOVQ    &#34;&#34;.x+64(SP), DX
+0x0077 00119 (bubble.go:7)      MOVQ    40(DX), SI
+0x007b 00123 (bubble.go:7)      MOVQ    &#34;&#34;.x+72(SP), AX
+0x0080 00128 (bubble.go:7)      MOVQ    &#34;&#34;.i+32(SP), BX
+0x0085 00133 (bubble.go:7)      MOVQ    &#34;&#34;..autotmp_4+40(SP), CX
+0x008a 00138 (bubble.go:7)      CALL    SI
+0x008c 00140 (bubble.go:7)      JMP     55
+0x008e 00142 (bubble.go:10)     PCDATA  $1, $-1
+0x008e 00142 (bubble.go:10)     MOVQ    48(SP), BP
+</code></pre><p><code>i++</code>的实现：首先将<code>CX</code>寄存器赋初始值1，然后跳转到第69行<code>CMPQ    AX, CX</code>(注意此时<code>AX</code>中的值为<code>n</code>)，也就是比较<code>n</code>和<code>i</code>的大小，并且当<code>i&gt;=n</code>时将跳出循环(<code>JLE     142</code>)。第55行至64行就是<code>i++</code>的实现。</p>
+<p>调用<code>x.Less()</code>方法：回想一下，<code>itab</code>中的第一个方法<code>Len()</code>方法的偏移量为24bytes，所以第二个方法，<code>Less()</code>方法的偏移量是32bytes。这里首先将存放于栈上的<code>iface</code>值复制到<code>DX</code>寄存器中，然后再将<code>Less()</code>方法的地址放入<code>SI</code>寄存器，到第105行为止，都是在进行调用<code>x.Less()</code>方法的准备工作。执行到第105行时，此时：</p>
+<ul>
+<li><code>Less()</code>方法的接收者<code>x</code>在<code>AX</code>寄存器中</li>
+<li><code>i</code>在<code>BX</code>寄存器中</li>
+<li><code>i</code>-1在<code>CX</code>寄存器中</li>
+</ul>
+<p><code>Less()</code>方法返回值存放在<code>AL</code>寄存器中，0代表false，1代表true，这两行代码判断<code>Less()</code>方法返回值，若为false，则直接跳到55行，继续下个循环，否则继续执行<code>Swap()</code>方法：</p>
+<pre tabindex="0"><code>0x0072 00114 (bubble.go:7)      MOVQ    &#34;&#34;.x+64(SP), DX
+0x0077 00119 (bubble.go:7)      MOVQ    40(DX), SI
+0x007b 00123 (bubble.go:7)      MOVQ    &#34;&#34;.x+72(SP), AX
+0x0080 00128 (bubble.go:7)      MOVQ    &#34;&#34;.i+32(SP), BX
+0x0085 00133 (bubble.go:7)      MOVQ    &#34;&#34;..autotmp_4+40(SP), CX
+0x008a 00138 (bubble.go:7)      CALL    SI
+</code></pre><p>紧跟着就是for循环的回边语句：</p>
+<pre tabindex="0"><code class="language-assembly" data-lang="assembly">0x008c 00140 (bubble.go:15)  JMP  55
+</code></pre><p>最后就是函数的尾言和返回语句：</p>
+<pre tabindex="0"><code class="language-assembly" data-lang="assembly">0x0093 00147 (bubble.go:10)     ADDQ    $56, SP
+0x0097 00151 (bubble.go:10)     RET
+0x0098 00152 (bubble.go:10)     N
+</code></pre></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
