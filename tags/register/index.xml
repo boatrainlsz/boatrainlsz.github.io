@@ -9,6 +9,6 @@
     <pubDate>Sat, 02 Apr 2022 21:35:40 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://boatrainlsz.github.io/posts/go/</guid>
-    <description><![CDATA[本文是对此文章的学习与翻译。]]></description>
+    <description><![CDATA[本文是对此文章的学习与翻译。 摘要 其实这个机制和Java以及C++的接口调用机制差不多，都是基于itable，不过Java由于虚拟机规范中没有]]></description>
 </item></channel>
 </rss>
