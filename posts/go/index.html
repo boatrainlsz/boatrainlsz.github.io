@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/boatrainlsz.github.io\/posts\/go\/"
-        },"genre": "posts","keywords": "go, register","wordcount":  1012 ,
+        },"genre": "posts","keywords": "go, register","wordcount":  1690 ,
         "url": "https:\/\/boatrainlsz.github.io\/posts\/go\/","datePublished": "2022-04-02T21:35:40+08:00","dateModified": "2022-04-02T21:35:40+08:00","publisher": {
             "@type": "Organization",
             "name": "boatrain"},"author": {
@@ -77,8 +77,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">基于寄存器调用惯例的Go语言接口调用机制</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>boatrain</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-02">2022-04-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1012 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-02">2022-04-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1690 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -93,7 +93,7 @@
         <li><a href="#样例代码">样例代码</a></li>
         <li><a href="#接口的内存布局">接口的内存布局</a></li>
         <li><a href="#寄存器">寄存器</a></li>
-        <li><a href="#反汇编">反汇编</a></li>
+        <li><a href="#汇编代码">汇编代码</a></li>
       </ul>
     </li>
   </ul>
@@ -142,19 +142,53 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nx">_</span>     <span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="kt">byte</span>
 </span></span><span class="line"><span class="cl">  <span class="nx">fun</span>   <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="kt">uintptr</span> <span class="c1">// variable sized. fun[0]==0 means _type does not implement inter.
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
-</span></span></code></pre></div><p>这里重点关注fun字段，它是一个可变大小的函数指针数组，这就是分派表</p>
+</span></span></code></pre></div><p>这里重点关注<code>fun</code>字段，它是一个可变大小的函数指针数组，这就是分派表</p>
 <h3 id="寄存器">寄存器</h3>
 <p>目前在AMD64架构上，Go依次使用以下寄存器用作函数调用：</p>
 <blockquote>
 <p>RAX, RBX, RCX, RDI, RSI, R8, R9, R10, R11</p>
 </blockquote>
 <p>有时候，一个参数会占用多个寄存器，比如上面说的iface接口，它占用64*2=128bit，那么如果接口值被当作第一个参数传给函数，则其tab字段和data字段将分别占据RAX和RBX寄存器，如果接口值被当作第二个参数传给函数，此时，第一个参数已经占据了RAX，则其tab字段和data字段将分别占据RBX和RCX寄存器，以此类推。顺便提一下，Go语言使用的Plan9汇编语言不使用前缀R来访问这些寄存器(RAX, RBX, RCX, RDI, RSI)，而是直接用AX，BX等名字。</p>
-<h3 id="反汇编">反汇编</h3>
+<h3 id="汇编代码">汇编代码</h3>
 <p>使用如下命令将样例代码反汇编：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">go tool compile -S bubble.go
 </span></span></code></pre></div><blockquote>
 <p>关于Go语言的汇编入门，可以参考<a href="https://xargin.com/plan9-assembly/" target="_blank" rel="noopener noreffer">这篇文章</a></p>
 </blockquote>
+<p>得到的完整汇编代码见<a href="https://gist.github.com/boatrainlsz/d36c1d24e3a55ad752eb96ec5b6789c0" target="_blank" rel="noopener noreffer">gist</a>。</p>
+<p>略去下面这段<a href="https://www.wikiwand.com/en/Function_prologue_and_epilogue" target="_blank" rel="noopener noreffer">函数序言</a>：</p>
+<pre tabindex="0"><code class="language-assembly" data-lang="assembly">&#34;&#34;.bubbleUp STEXT size=182 args=0x10 locals=0x38 funcid=0x0 align=0x0
+        0x0000 00000 (bubble.go:3)      TEXT    &#34;&#34;.bubbleUp(SB), ABIInternal, $56-16
+        0x0000 00000 (bubble.go:3)      CMPQ    SP, 16(R14)
+        0x0004 00004 (bubble.go:3)      PCDATA  $0, $-2
+        0x0004 00004 (bubble.go:3)      JLS     152
+        0x000a 00010 (bubble.go:3)      PCDATA  $0, $-1
+        0x000a 00010 (bubble.go:3)      SUBQ    $56, SP
+        0x000e 00014 (bubble.go:3)      MOVQ    BP, 48(SP)
+        0x0013 00019 (bubble.go:3)      LEAQ    48(SP), BP
+</code></pre><p>略去下面这段GC相关代码：</p>
+<pre tabindex="0"><code class="language-assembly" data-lang="assembly">0x0018 00024 (bubble.go:3)      FUNCDATA        $0, gclocals·09cf9819fc716118c209c2d2155a3632(SB)
+0x0018 00024 (bubble.go:3)      FUNCDATA        $1, gclocals·69c1753bd5f81501d95132d08af04464(SB)
+0x0018 00024 (bubble.go:3)      FUNCDATA        $5, &#34;&#34;.bubbleUp.arginfo1(SB)
+0x0018 00024 (bubble.go:3)      FUNCDATA        $6, &#34;&#34;.bubbleUp.argliveinfo(SB)
+</code></pre><p>重点来分析函数主体代码：</p>
+<pre tabindex="0"><code class="language-assembly" data-lang="assembly">0x0018 00024 (bubble.go:4)      MOVQ    AX, &#34;&#34;.x+64(SP)
+0x001d 00029 (bubble.go:4)      MOVQ    BX, &#34;&#34;.x+72(SP)
+0x0022 00034 (bubble.go:4)      MOVQ    24(AX), CX
+0x0026 00038 (bubble.go:4)      MOVQ    BX, AX
+0x0029 00041 (bubble.go:4)      CALL    CX
+</code></pre><h4 id="参数暂存">参数暂存</h4>
+<p>函数开始，如上文所述，接口值将占据<code>AX</code>，<code>BX</code>寄存器。<code>MOVQ    AX, &quot;&quot;.x+64(SP)</code>和<code>MOVQ    BX, &quot;&quot;.x+72(SP)</code>将接口值暂存到栈上(SP：Stack Pointer)，以便为后续<code>AX</code>，<code>BX</code>寄存器的使用腾出空间。</p>
+<h4 id="找到函数调用地址">找到函数调用地址</h4>
+<p>接下来，准备调用<code>x.Len()</code>，此时，就需要找到要调用的函数，而这个函数的入口地址就存放在<code>24(AX)</code>，其原理是这样的：</p>
+<ul>
+<li>如前所述，传递给函数bubbleUp的参数x，其值存放在<code>AX</code>，<code>BX</code>寄存器。</li>
+<li>根据iface的内存布局，<code>AX</code>寄存器存放的正是指向itab的指针</li>
+<li><code>24(AX)</code>意思是<code>AX+24</code>，这里24是十进制，表示指针地址+偏移量24bytes</li>
+<li><code>itab</code>中24bytes偏移量正是指向<code>itab</code>中的<code>fun</code>字段，也就是接口中的第一个函数的地址被放置在寄存器<code>CX</code>中</li>
+<li>而<code>sort.Interface</code>接口的第一个方法正是<code>Len()</code>方法，所以最后，<code>x</code>的<code>Len()</code>方法的地址就存放在<code>CX</code>寄存器中了</li>
+</ul>
+<h4 id="调用函数">调用函数</h4>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
